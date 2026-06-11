@@ -1,14 +1,10 @@
-# Inventory Tree — VCF Content Factory Example Adapter
+# Inventory Tree — VCF Content Factory vCommunity
 
-> Generated from `describe.xml` v0.1.0.1. Do not edit — regenerated on every build.
-
-**Traversal Spec:** Example Infrastructure
+> Generated from `describe.xml` v1.0.0.2. Do not edit — regenerated on every build.
 
 ## Traversal Tree
 
-- **Example Adapter** (`example_adapter`)
-  - **Example World** (`World`)
-    - **Example Resource** (`ExampleResource`)
+
 
 > \* = identifying (unique) key
 
@@ -16,5 +12,4 @@
 
 | Kind | Display Label | Identifying Keys | Parent(s) |
 |------|--------------|-----------------|-----------|
-| `World` | Example World | `world_id` * | Example Adapter |
-| `ExampleResource` | Example Resource | `id` * | Example World |
+| `vCommunityWorld` | vCommunity World | `world_id` * | — |

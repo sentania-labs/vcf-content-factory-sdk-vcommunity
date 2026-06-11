@@ -1,132 +1,169 @@
-# VCF Content Factory — SDK adapter template
+# VCF Content Factory vCommunity
 
-A minimal, fully-wired skeleton for a **Tier 2 Java SDK management-pack adapter**
-for VCF Operations, built and released independently of the VCF Content Factory.
+A **Tier 2 Java SDK management-pack adapter** for VCF Operations — a native
+rewrite of [`vmbro/VCF-Operations-vCommunity`](https://github.com/vmbro/VCF-Operations-vCommunity)
+(Onur Yuzseven, CC-licensed) that kills the Python Integration SDK /
+Docker-on-Cloud-Proxy runtime. The adapter runs natively in the collector like
+the compliance reference adapter.
 
-This template tracks the current framework v2 idioms used by the production
-adapters (`compliance`, `unifi`). The example adapter discovers one
-`ExampleResource` kind under a `World` traversal anchor and pushes one metric and
-one property per resource — replace the resource kinds, endpoints, and metric
-keys with your target system, keeping the SHAPE.
+## What it does
 
-## Documentation
+Reads vCenter over vim25 SOAP and pushes the `vCommunity|` property/metric
+namespace onto **existing** VMWARE resources (ARIA_OPS-style stitching — no new
+object types):
 
-Every SDK pak ships a standard docset under [`docs/`](docs/README.md):
-a generated inventory-tree diagram (kinds + identifying keys), plus
-hand-curated `overview.md` and `installing.md` prose pages. The two prose
-pages are scaffolded once by `docs-gen` and then curated — in this template
-they carry placeholder guidance telling you what to write when you
-instantiate a pak. Regenerate the derived files (diagram, inventory tree,
-`docs/README.md`) on every build; never hand-edit them.
+- **ClusterComputeResource** — vSphere HA / DRS / EVC configuration + DRS Score.
+- **HostSystem** — advanced system settings, VIB packages, install date,
+  licensing (+ Remaining Days), physical NIC uplinks.
+- **VirtualMachine** — VM options, advanced parameters, SCSI controllers,
+  recursive snapshot count, and (opt-in) Windows guest-ops: services, OS info,
+  and event logs via the vim25 GuestOperationsManager.
 
-## What's here
+A single synthetic `vCommunityWorld` resource carries per-cycle operability
+metrics (counts stitched, guest-ops attempts/degradations, config-file status).
 
-```
-adapter.yaml                              # name, version, build_number, adapter_kind, entry_class
-describe.xml                              # adapter descriptor (ResourceKinds, metrics, credentials)
-resources/resources.properties            # nameKey -> display strings
-icons/icons.yaml                          # ResourceKind -> icon mapping (optional)
-src/com/vcfcf/adapters/example/           # adapter Java source
-  ExampleAdapter.java                     #   the adapter (heavily commented — read this first)
-  ExampleApiClient.java                   #   thin REST client
-  ExampleConfig.java                      #   typed config POJO
-.github/workflows/build-pak-on-tag.yml    # CI: tag v* -> build .pak -> attach to Release
-CHANGELOG.md                              # one line per build
-```
+See [`REFERENCE.md`](REFERENCE.md) for the full key catalog and
+[`docs/`](docs/README.md) for the inventory-tree docset.
 
-There is **no `lib/` of bundled jars** (C2 pak shape — see below).
+## Relationship to the original (side-by-side fork)
 
-## Instantiating a new pak
+This is a **distinct adapter kind** (`vcfcf_vcommunity`), not an in-place upgrade
+of the original (`VCFOperationsvCommunity`). Installing a same-identity classic
+pak over the installed containerized pak silently split-brains the platform (the
+kind stays `DOCKERIZED`, the Java JAR is never wired in, instance creation
+fails). The two can coexist.
 
-1. **Create the repo from this template.** Click **Use this template** to create
-   `sentania-labs/vcf-content-factory-sdk-<name>`.
-2. **Register it in the factory.** Add one line to the factory's
-   `context/managed_paks.md` registry so `scripts/bootstrap_managed_paks.sh`
-   clones it into the gitignored `content/sdk-adapters/<name>/` working tree.
-3. **Rename the skeleton.** Pick your `adapter_kind` (snake_case) and apply it
-   consistently across:
-   - `adapter.yaml` — `adapter_kind`, `entry_class`, `name`, `description`;
-   - `describe.xml` — the `AdapterKind` key, the type-7 instance `ResourceKind`
-     key, credential/resource kinds, identifiers, groups, attributes;
-   - `resources/resources.properties` — the display strings;
-   - `icons/icons.yaml` — the resource-kind icon map;
-   - the Java package/class names and the `ADAPTER_KIND` constant.
-4. **Build out collection.** Replace the example HTTP calls and per-resource
-   collect logic. Keep the load-bearing idioms documented at the top of
-   `ExampleAdapter.java` — especially **collect-path discovery** (mandatory on
-   VCF Ops 9.0.2, which never calls `onDiscover()`), `componentLogger(Class)`,
-   cooperative cancellation, and loud-failure (no sentinel for an unreadable
-   value).
+### Migration runbook
+
+1. **Uninstall the original** containerized pak (`iSDK_VCFOperationsvCommunity`).
+   Its adapter instances and credentials cascade away on uninstall.
+2. **Install this pak** (`vcfcf_vcommunity`).
+3. **Recreate adapter instances and credentials** against the new kind — there
+   is no instance/credential carry-over across a kind change.
+
+Because this adapter writes the *same* `vCommunity|` keys onto the *same*
+VMware-owned resource UUIDs, historical metric/property series remain
+mechanically continuous through the migration. This is a happy side effect of
+key-namespace continuity, **not** a supported upgrade guarantee.
+
+## Configuration
+
+### Credentials (two kinds)
+
+- **vCenter Credential** (required) — `user` / `password`.
+- **Windows Guest Credential** (optional) — `winUser` / `winPass`, used only for
+  Windows guest-ops. Leave it unset to disable guest-ops cleanly.
+
+### Windows Monitoring
+
+An adapter-instance enum: `Disabled` (default) | `Services` | `Event Logs` |
+`Services + Event Logs`. Guest-ops runs only when this is non-Disabled AND a
+Windows Guest Credential is set; otherwise it is skipped (non-fatal). One
+unreachable or mis-credentialed guest never aborts the collection cycle.
+
+### Central check-list files
+
+Collection of advanced settings / VIBs / VM params / services / event IDs is
+gated by six XML check-lists in the VCF Ops **central configuration-file store**
+(`Administration → Configuration Files`, path `SolutionConfig/`). The pak ships
+byte-identical defaults under `content/files/solutionconfig/`; they import into
+the central store at install with **everything commented out**, so each gated
+collector emits nothing until an admin uncomments entries. The six adapter-
+instance `*_config_file` fields hold the file NAME (no path, no `.xml`); point
+one at a renamed central file to customize without editing the bundled default.
+
+The adapter fetches the named files via the SDK-injected Suite API channel each
+cycle and caches the last-good parse — a transient fetch failure degrades to the
+previous cycle's lists (never silently to empty), and `test()` plus the
+`vCommunityWorld` `config_file_status` property report per-file status.
+
+## Events (TOOLSET GAP #1)
+
+The original emits Windows event-log entries and host install-date read failures
+as foreign-resource **events**. The factory Suite API facade exposes only
+property/stat push (no foreign-resource event endpoint), so this release degrades
+them to **alertable properties** (`vCommunity|Guest OS|Last Event|…`,
+`vCommunity|Configuration|Install Date|Read Error`) — visible and symptom-able,
+never silently dropped. Real foreign-resource events are a v1.1 deliverable once
+the push path is proven.
+
+## Known gaps & roadmap (v1)
+
+This is a v1 release shipped with documented gaps that close in later builds —
+nothing below is a silent degradation; each is visible in the artifact and
+alertable or surfaced where it matters.
+
+### Carried into v1.1
+
+- **Foreign-resource event push (TOOLSET GAP #1).** Windows event-log entries
+  and host install-date read failures ship as alertable **properties**
+  (`vCommunity|Guest OS|Last Event|…`, `vCommunity|Configuration|Install
+  Date|Read Error`) rather than real foreign-resource events, because the
+  factory Suite API facade exposes only property/stat push (no event endpoint).
+  Visible and symptom-able, never dropped. Real events land in v1.1 once the
+  push path is proven. (See the Events section above.)
+- **Positional `Last Event` keys may churn (NIT 1).** Event properties are keyed
+  by position (`vCommunity|Guest OS|Last Event|{n}|…`), so as new events arrive
+  the same `{n}` slot can describe a different event cycle-to-cycle. v1.1 moves
+  to stable event-id keys (folds in with the real-event work).
+
+### Deferred to v2
+
+- **Guest-ops scope and concurrency.** Windows guest-ops is single-threaded with
+  a **120 s per-VM poll ceiling**, and when enabled it runs against **all
+  Windows VMs in scope** (no per-VM opt-in). Per-VM scoping is a v2 deliverable.
+  One unreachable or mis-credentialed guest never aborts the cycle.
+
+### EMPIRICAL-VERIFY at install
+
+These behaviours are designed and code-complete but have **not** been verified
+against a live appliance — confirm them during the first install:
+
+- The credential dialog renders **both** kinds (vCenter + Windows Guest) and
+  accepts an instance with the Windows Guest credential left unset (guest-ops
+  cleanly disabled).
+- vim25 surfaces used beyond the compliance-proven set resolve on the target
+  vCenter(s): GuestOperationsManager, `QueryAssignedLicenses`,
+  `fetchSoftwarePackages` / `installDate`, and `EvcManager`.
+- Suite API config-file fetch (`SolutionConfig/<name>.xml`) succeeds when the
+  adapter runs on a **remote collector** / cloud proxy, not just the analytics
+  node.
 
 ## Local dev build (preview)
 
-The official `.pak` is built by CI on a tag (next section). For a local preview,
-use the factory's builder. The Broadcom SDK jar (`vrops-adapters-sdk-2.2.jar`) is
-**not** shipped — supply it from your appliance:
+The official `.pak` is built by CI on a tag. For a local preview the Broadcom SDK
+jar (`vrops-adapters-sdk-2.2.jar`) is **not** shipped — supply it from your
+appliance:
 
 ```sh
-# Obtain the SDK jar once from a VCF Ops appliance:
-#   scp root@<appliance>:/usr/lib/vmware-vcops/common-lib/vrops-adapters-sdk-2.2.jar .
+# Cheap loop first — exhaust this before building a pak:
+python3 -m vcfops_managementpacks validate-sdk content/sdk-adapters/vcommunity
 
-# Either pass it explicitly:
-python3 -m vcfops_managementpacks build-sdk content/sdk-adapters/<name> \
-  --sdk-jar /path/to/vrops-adapters-sdk-2.2.jar -o dist
-
-# ...or set it once in the environment:
+# scp root@<appliance>:/usr/lib/vmware-vcops/common-lib/vrops-adapters-sdk-2.2.jar .
 export VCFCF_SDK_JAR=/path/to/vrops-adapters-sdk-2.2.jar
-python3 -m vcfops_managementpacks build-sdk content/sdk-adapters/<name> -o dist
+python3 -m vcfops_managementpacks build-sdk content/sdk-adapters/vcommunity -o dist
 ```
 
-Validate first (the cheap loop — exhaust this before building a pak):
+`vcfcf-adapter-base.jar` is provided by the builder; you do **not** commit it.
 
-```sh
-python3 -m vcfops_managementpacks validate-sdk content/sdk-adapters/<name>
-```
+## CI release contract
 
-The framework jar (`vcfcf-adapter-base.jar`) is provided by the builder; you do
-**not** commit it.
-
-## CI release contract (the official artifact)
-
-This repo is the **single source of truth** for its `.pak`. The shippable artifact
-is built by CI, never on a laptop:
-
-1. Author + commit + push to `main`.
-2. **Push a `vX.Y.Z` tag.** The `build-pak-on-tag` workflow:
-   - pulls the published `sdk-buildkit` tarball from the factory's Releases,
-   - fetches the private Broadcom SDK jar from
-     `sentania-labs/vcf-content-factory-sdk-runtime` (release `sdk-2.2`),
-   - builds the `.pak` deterministically (no agent, no factory checkout),
-   - gates on `pak-compare` (zero BLOCKING required), and
-   - attaches the `.pak` to the tag's GitHub Release.
-
-That Release asset **is** the release. A factory `/publish` that references this
-pak emits only a **pointer** to the latest Release — it never rebuilds or mirrors
-the binary.
-
-### Required org/repo secret
-
-`SDK_RUNTIME_TOKEN` — a fine-grained, read-only PAT scoped to
-`sentania-labs/vcf-content-factory-sdk-runtime` with **Contents: read**. The
-Broadcom SDK jar is stored as a private release asset there and is never bundled
-in this repo or the buildkit (C2 redistribution constraint). Add the secret as an
-Actions secret (repo or org level) **before** pushing a release tag. See the
-workflow header for the runner/JDK/buildkit knobs.
+The shippable `.pak` is built by CI, never on a laptop: commit + push to `main`,
+then push a `vX.Y.Z` tag. The `build-pak-on-tag` workflow pulls the published
+`sdk-buildkit`, fetches the private Broadcom SDK jar (`SDK_RUNTIME_TOKEN`
+secret), builds deterministically, gates on `pak-compare`, and attaches the
+`.pak` to the tag's GitHub Release. That Release asset **is** the release.
 
 ## C2 pak shape — no bundled jars
 
-This pak **never** carries `vrops-adapters-sdk` or any Broadcom jar:
+This pak never carries `vrops-adapters-sdk` or any Broadcom jar.
+`vcfcf-adapter-base.jar` comes from the buildkit at build time;
+`vrops-adapters-sdk-*.jar` is on the appliance classpath at runtime and supplied
+to the compiler by the consumer. `.gitignore` ignores `lib/*.jar`.
 
-- `vcfcf-adapter-base.jar` (the VCF-CF framework) is provided by the buildkit and
-  copied into the pak's `lib/` at build time.
-- `vrops-adapters-sdk-*.jar` is on the appliance's shared classpath at runtime and
-  is supplied to the *compiler* by the consumer (`--sdk-jar` / `VCFCF_SDK_JAR`);
-  it is never placed in the pak.
+## Attribution
 
-`.gitignore` ignores `lib/*.jar` so a stray jar can't be committed.
-
-## Bundled content (optional)
-
-For an adapter that ships dashboards/views, add a `bundled_content:` block to
-`adapter.yaml` and co-locate the YAML **in this repo** under `views/` and
-`dashboards/` (paths resolve relative to `adapter.yaml`).
+Native Java SDK rewrite of `vmbro/VCF-Operations-vCommunity` by Onur Yuzseven
+(CC-licensed). Some original collectors (`host_install_date`,
+`vm_scsi_controller_type`) carry dual attribution to Onur Yuzseven and Scott
+Bowe; that dual attribution is preserved.
