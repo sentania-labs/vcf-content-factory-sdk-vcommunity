@@ -1,0 +1,16 @@
+# Icon mapping for the example/template adapter.
+#
+# Keys correspond to describe.xml ResourceKind key attributes. Values are icon
+# filenames resolved against:
+#   1. This directory (drop project-specific .svg overrides here), then
+#   2. vcfops_managementpacks/templates/icons/ (shared library) at build time.
+#
+# This file is optional — the builder falls back to a default icon when it is
+# absent or a kind is unmapped. Rename the keys when you adapt the template.
+
+adapter_kind_icon: default.svg
+
+resource_kinds:
+  example_adapter: default.svg   # adapter instance (type=7)
+  World:           world.svg
+  ExampleResource: default.svg

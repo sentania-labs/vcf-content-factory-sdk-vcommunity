@@ -1,0 +1,29 @@
+# adapter.yaml — pak metadata for the example/template adapter.
+#
+# Field conventions match the production adapters (compliance, unifi):
+#   adapter_kind  snake_case kind; MUST equal the AdapterKind key in describe.xml
+#                 and ADAPTER_KIND in your *Adapter.java.
+#   entry_class   fully-qualified adapter class.
+#   name          display name; prose prefix "VCF Content Factory" (no brackets).
+#   version       semantic version of the pak.
+#   build_number  bump on every build; CHANGELOG.md gets a matching one-liner.
+#   tier          2 for Java SDK adapters.
+#   released      false while authoring; the official release is the .pak CI
+#                 builds on a v* git tag.
+#
+# For a pak that bundles dashboards/views, add a bundled_content: block and
+# co-locate the YAML in this repo under views/ and dashboards/ (paths resolve
+# relative to this file).
+adapter_kind: example_adapter
+entry_class: com.vcfcf.adapters.example.ExampleAdapter
+name: VCF Content Factory Example Adapter
+description: >
+  Minimal framework-v2 Tier 2 SDK adapter skeleton. Discovers one
+  ExampleResource kind under a World traversal anchor via collect-path
+  discovery, and pushes one metric and one property per resource. Copy this
+  repo and replace the example resource kinds, endpoints, and metric keys with
+  your target system.
+version: 0.1.0
+build_number: 1
+tier: 2
+released: false
