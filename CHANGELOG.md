@@ -18,6 +18,45 @@ detail in `README.md` ("Known gaps & roadmap").
   `fetchSoftwarePackages`/`installDate`, `EvcManager`); Suite API config fetch
   from a remote collector / cloud proxy.
 
+## 1.0.0.3 (2026-06-16)
+
+- feat(adapter): close HostSystem **Licensing** parity gap (10 keys). Resolve
+  `licenseAssignmentManager` correctly via `licenseManager.licenseAssignmentManager`
+  (build-2 read it off ServiceContent where it does not exist, so every host
+  licensing key silently dropped on devel). Per assigned license now emits
+  `vCommunity|Licensing:<name>|Name`/`License Key`/`License Expiration Date`/
+  `Edition Key` (PROP) + `Remaining Days` (STAT). `<name>` is dynamic; no
+  hardcoded license names. `Remaining Days` is skipped (never a sentinel) when
+  expiration is absent/unparseable.
+- feat(adapter): close VirtualMachine **Guest OS** parity gap (6 PROP keys) from
+  VMware-Tools guest info (vim25 `guest.detailedData` + `runtime.bootTime`), so
+  they populate on non-Windows guests too (no Windows credential / guest-ops
+  required), matching prod verbatim: `vCommunity|Guest OS|Operating System|`
+  `Name`/`OS Architecture`/`BuildNumber`/`Release ID`/`Version`/`Last Boot Up
+  Time`. Each field is pushed only when the guest reports it — unreported =
+  skipped, never a sentinel.
+- feat(adapter): emit the legacy **`Config` SCSI alias** alongside the canonical
+  `Configuration` path for like-for-like parity:
+  `vCommunity|Config|SCSI Controllers|Count` (STAT) +
+  `vCommunity|Config|SCSI Controllers|<bus>|Type` (PROP, pipe-delimited index).
+- fix(adapter): F2 diagnosability. A total collect failure (vCenter
+  unreachable / DNS NXDOMAIN / refused / timeout) now throws an actionable,
+  secret-free message and maps to `RESOURCE_STATUS_DOWN`, so the instance turns
+  red instead of a silent DATA_RECEIVING-with-0-metrics cycle (the NXDOMAIN
+  episode). `VCommunityVSphereClient.post()` now parses and surfaces the SOAP
+  `<faultstring>`/`<localizedMessage>` on non-2xx (REDACTING session-id /
+  password tokens per `rules/no-secrets-on-disk.md`) instead of discarding the
+  fault body, so login/connection failures are diagnosable; the Login failure
+  message carries the faultstring.
+- fix(adapter): harden the F2 SOAP-fault `redactSecrets` backstop to cover the
+  full DEF-001 secret-in-path token family — additionally strip `_sid`,
+  `passwd`, and `account` tokens (`(?i)(_sid|passwd|account)\s*[=:]\s*\S+`)
+  alongside the existing `vmware_soap_session`/`password`. Defense-in-depth per
+  `rules/no-secrets-on-disk.md`; not reachable on the current path (only
+  server-authored fault responses are surfaced, never the client request), but
+  keeps the redactor's coverage in lock-step with the lesson so a future
+  request-echoing code path can't leak. Build-3 review WARNING-1.
+
 ## 1.0.0.2 (2026-06-10)
 
 - fix(adapter): vCenter-scope foreign-resource resolution (the MOID-trap fix —

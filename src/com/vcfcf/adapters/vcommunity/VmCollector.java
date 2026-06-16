@@ -144,6 +144,28 @@ final class VmCollector {
         for (ScsiController c : ctrls) {
             props.put("vCommunity|Configuration|SCSI Controllers:" + c.busNumber
                     + "|Type", c.friendlyType);
+            // Legacy `Config` alias the prod original ALSO emits alongside the
+            // canonical `Configuration` path (same underlying data, second key
+            // path) — note the pipe-delimited index `|<bus>|Type`, not the
+            // colon-delimited `:<bus>|Type` of the Configuration path. Emitted
+            // verbatim for like-for-like parity.
+            props.put("vCommunity|Config|SCSI Controllers|" + c.busNumber
+                    + "|Type", c.friendlyType);
+        }
+        // Legacy `Config` count alias (METRIC), parity with the prod original.
+        stats.put("vCommunity|Config|SCSI Controllers|Count",
+                (double) ctrls.size());
+
+        // Guest OS / Operating System — VMware-Tools guest info (vim25 guest.*),
+        // NOT the Windows-only in-guest PowerShell path. Populates for every VM
+        // whose tools report it (including non-Windows guests), matching the
+        // prod original verbatim. Each key is pushed only when the guest
+        // actually reported it; an unreported field is SKIPPED, never a sentinel
+        // (the cardinal unreadable-is-not-a-value rule).
+        Map<String, String> osInfo = vs.vmGuestOsInfo(vm);
+        for (Map.Entry<String, String> e : osInfo.entrySet()) {
+            props.put("vCommunity|Guest OS|Operating System|" + e.getKey(),
+                    e.getValue());
         }
     }
 

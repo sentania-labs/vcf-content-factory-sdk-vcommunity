@@ -58,9 +58,19 @@ public final class VCommunityVSphereClient {
     private volatile MoRef viewManager;
     private volatile MoRef rootFolder;
     private volatile MoRef sessionManager;
+    private volatile MoRef licenseManager;
     private volatile MoRef licenseAssignmentManager;
     private volatile MoRef guestOperationsManager;
     private volatile String aboutInstanceUuid;
+
+    /**
+     * The most recent SOAP {@code <faultstring>} parsed from a non-2xx response
+     * (REDACTED of any secrets per {@code rules/no-secrets-on-disk.md}). Lets the
+     * connect/login path surface a diagnosable reason instead of a bare
+     * "no response", without throwing from the many optional-read call sites
+     * where a non-2xx is a legitimate null-skip.
+     */
+    private volatile String lastFaultString;
 
     public VCommunityVSphereClient(String hostPort, String username,
             String password, SSLSocketFactory sslFactory, boolean trustAll,
@@ -94,7 +104,15 @@ public final class VCommunityVSphereClient {
         this.viewManager = moRefOf(rv, "viewManager");
         this.rootFolder = moRefOf(rv, "rootFolder");
         this.sessionManager = moRefOf(rv, "sessionManager");
-        this.licenseAssignmentManager = moRefOf(rv, "licenseAssignmentManager");
+        // ServiceContent exposes licenseManager directly; the
+        // licenseAssignmentManager is a PROPERTY of the LicenseManager
+        // (licenseManager.licenseAssignmentManager), NOT a direct field of
+        // ServiceContent — resolved lazily after login (see
+        // licenseAssignmentManager()). Reading it off ServiceContent (the
+        // build-2 bug) always returned null, which silently dropped every
+        // host-licensing key on devel.
+        this.licenseManager = moRefOf(rv, "licenseManager");
+        this.licenseAssignmentManager = null;
         this.guestOperationsManager = moRefOf(rv, "guestOperationsManager");
         Element about = firstDirectChild(rv, "about");
         if (about != null) {
@@ -111,9 +129,14 @@ public final class VCommunityVSphereClient {
                 + "<userName>" + xmlEscape(username) + "</userName>"
                 + "<password>" + xmlEscape(password) + "</password>"  // REDACT-SECRET
                 + "</Login>";
+        this.lastFaultString = null;
         Document loginResp = post(loginBody, "urn:vim25/Login", false);
         if (loginResp == null) {
-            throw new Exception("Login failed (no response / SOAP fault)");
+            String fault = lastFaultString;
+            throw new Exception("Login to vCenter '" + hostLabel()
+                    + "' failed: " + (fault != null ? fault
+                            : "no response / SOAP fault (check vCenter "
+                            + "reachability and credentials)"));
         }
         if (sessionCookie == null) {
             throw new Exception("Login succeeded but no session cookie returned");
@@ -134,6 +157,7 @@ public final class VCommunityVSphereClient {
         viewManager = null;
         rootFolder = null;
         sessionManager = null;
+        licenseManager = null;
         licenseAssignmentManager = null;
         aboutInstanceUuid = null;
     }
@@ -161,6 +185,15 @@ public final class VCommunityVSphereClient {
     }
 
     public String getVCenterInstanceUuid() { return aboutInstanceUuid; }
+
+    /** The vCenter host[:port] for actionable error messages (no secrets). */
+    private String hostLabel() {
+        String u = vcenterUrl;
+        if (u == null) return "<unknown>";
+        u = u.replaceFirst("^https?://", "");
+        int slash = u.indexOf('/');
+        return slash >= 0 ? u.substring(0, slash) : u;
+    }
 
     /** The active vim25 session cookie (guest-ops file transfers ride it). */
     public String sessionCookie() { return sessionCookie; }
@@ -418,6 +451,21 @@ public final class VCommunityVSphereClient {
     }
 
     /**
+     * Lazily resolve {@code licenseManager.licenseAssignmentManager} (a
+     * LicenseAssignmentManager MoRef). Cached after the first successful read.
+     * Returns null when the LicenseManager is absent or the property cannot be
+     * read (caller emits no licensing keys — never a sentinel).
+     */
+    private MoRef licenseAssignmentManager() throws Exception {
+        MoRef cached = licenseAssignmentManager;
+        if (cached != null) return cached;
+        if (licenseManager == null) return null;
+        MoRef lam = getMoRefProperty(licenseManager, "licenseAssignmentManager");
+        if (lam != null) licenseAssignmentManager = lam;
+        return lam;
+    }
+
+    /**
      * {@code licenseAssignmentManager.QueryAssignedLicenses(hostMoid)}. Returns
      * the assigned-license records. Empty when the host has none / unreadable.
      */
@@ -425,10 +473,11 @@ public final class VCommunityVSphereClient {
             throws Exception {
         ensureConnected();
         List<LicenseInfo> out = new ArrayList<>();
-        if (licenseAssignmentManager == null || hostMoid == null) return out;
+        MoRef lam = licenseAssignmentManager();
+        if (lam == null || hostMoid == null) return out;
         String body = "<QueryAssignedLicenses xmlns=\"urn:vim25\">"
-                + "<_this type=\"" + xmlEscape(licenseAssignmentManager.type)
-                + "\">" + xmlEscape(licenseAssignmentManager.value) + "</_this>"
+                + "<_this type=\"" + xmlEscape(lam.type)
+                + "\">" + xmlEscape(lam.value) + "</_this>"
                 + "<entityId>" + xmlEscape(hostMoid) + "</entityId>"
                 + "</QueryAssignedLicenses>";
         Document resp = post(body, "urn:vim25/QueryAssignedLicenses", true);
@@ -488,6 +537,68 @@ public final class VCommunityVSphereClient {
     public String vmGuestFamily(MoRef vm) throws Exception {
         ensureConnected();
         return getStringProperty(vm, "guest.guestFamily");
+    }
+
+    /**
+     * VMware-Tools guest OS information, the analogue of the original adapter's
+     * {@code Guest OS|Operating System} block but sourced from vim25 guest
+     * info (not an in-guest PowerShell run), so it populates for every VM whose
+     * tools report it — including non-Windows guests — exactly as the prod
+     * original emits it.
+     *
+     * <p>Two reflection-tolerant sources, both null-skip on absence:
+     * <ul>
+     *   <li>{@code guest.detailedData} — the VMware Tools detailed key/value
+     *       array (vSphere 8+/newer tools): {@code prettyName}, {@code architecture},
+     *       {@code buildNumber}, {@code releaseId}, {@code version}.</li>
+     *   <li>{@code runtime.bootTime} — Last Boot Up Time.</li>
+     * </ul>
+     *
+     * <p>Returns a map keyed by the SHORT field name the caller maps to the
+     * {@code vCommunity|Guest OS|Operating System|...} keys. A key absent from
+     * the map means the guest did not report it (the caller skips it — never a
+     * sentinel; unreadable is not a value).
+     */
+    public Map<String, String> vmGuestOsInfo(MoRef vm) throws Exception {
+        ensureConnected();
+        Map<String, String> out = new LinkedHashMap<>();
+
+        // guest.detailedData: repeated <detailedData><key>..</key><value>..</value>
+        Element detailed = walkToNode(vm, dot("guest.detailedData"));
+        if (detailed != null) {
+            // The walk lands on the first <detailedData> element; collect all
+            // sibling key/value pairs under guest. Re-read the parent <guest>
+            // node so every detailedData entry is visible.
+            Element guest = walkToNode(vm, dot("guest"));
+            List<Element> entries = (guest != null)
+                    ? childrenByLocalName(guest, "detailedData")
+                    : java.util.Collections.singletonList(detailed);
+            for (Element e : entries) {
+                String k = childText(e, "key");
+                String val = childText(e, "value");
+                if (k == null || val == null || val.isEmpty()) continue;
+                switch (k) {
+                    case "prettyName":   putShort(out, "Name", val); break;
+                    case "architecture": putShort(out, "OS Architecture", val); break;
+                    case "buildNumber":  putShort(out, "BuildNumber", val); break;
+                    case "releaseId":    putShort(out, "Release ID", val); break;
+                    case "version":      putShort(out, "Version", val); break;
+                    default: /* other detailedData keys not part of the contract */
+                }
+            }
+        }
+
+        // Last Boot Up Time <- runtime.bootTime (a real vim DateTime; skip if absent)
+        String bootTime = getStringProperty(vm, "runtime.bootTime");
+        if (bootTime != null && !bootTime.isEmpty()) {
+            putShort(out, "Last Boot Up Time", bootTime);
+        }
+
+        return out;
+    }
+
+    private static void putShort(Map<String, String> m, String k, String v) {
+        if (v != null && !v.isEmpty()) m.put(k, v);
     }
 
     /**
@@ -788,9 +899,68 @@ public final class VCommunityVSphereClient {
                 ? conn.getInputStream() : conn.getErrorStream();
         byte[] respBytes = drain(is);
         conn.disconnect();
-        if (code < 200 || code >= 300) return null;
+        if (code < 200 || code >= 300) {
+            // Parse and surface the SOAP <faultstring> instead of discarding the
+            // body (the build-2 behavior that made login/connection failures
+            // undiagnosable). Secrets are never echoed: vim25 faults carry a
+            // human message, and we additionally redact any token-shaped run.
+            String fault = extractFaultString(respBytes);
+            if (fault != null) {
+                this.lastFaultString = fault;
+                logWarn("vSphere SOAP " + soapAction + " -> HTTP " + code
+                        + " fault: " + fault);
+            } else {
+                logWarn("vSphere SOAP " + soapAction + " -> HTTP " + code
+                        + " (no SOAP faultstring in body)");
+            }
+            return null;
+        }
         if (respBytes == null || respBytes.length == 0) return null;
         return parseXml(new String(respBytes, StandardCharsets.UTF_8));
+    }
+
+    /** Last parsed SOAP faultstring (redacted), or null. */
+    public String lastFaultString() { return lastFaultString; }
+
+    /**
+     * Pull {@code <faultstring>} (and, when present, the vim25
+     * {@code <localizedMessage>}) out of a SOAP 1.1 fault body. Returns null
+     * when the body is empty or carries no fault. Redacts any token/secret-shaped
+     * substring so a session id or password never lands in a log line
+     * ({@code rules/no-secrets-on-disk.md}).
+     */
+    private static String extractFaultString(byte[] body) {
+        if (body == null || body.length == 0) return null;
+        Document doc = parseXml(new String(body, StandardCharsets.UTF_8));
+        if (doc == null) return null;
+        Element fs = firstByLocalName(doc.getDocumentElement(), "faultstring");
+        String msg = (fs != null) ? elementText(fs) : null;
+        Element lm = firstByLocalName(doc.getDocumentElement(), "localizedMessage");
+        String localized = (lm != null) ? elementText(lm) : null;
+        String combined;
+        if (msg != null && localized != null && !localized.equals(msg)) {
+            combined = msg + " (" + localized + ")";
+        } else if (msg != null) {
+            combined = msg;
+        } else {
+            combined = localized;
+        }
+        return redactSecrets(combined);
+    }
+
+    /**
+     * Strip anything that looks like a session id or credential token from a
+     * message before it is logged. Conservative: redacts {@code vmware_soap_session}
+     * cookie values and any long opaque token run.
+     */
+    private static String redactSecrets(String s) {
+        if (s == null) return null;
+        String r = s.replaceAll("(?i)(vmware_soap_session\\s*[=:]\\s*)\\S+",
+                "$1<redacted>");
+        r = r.replaceAll("(?i)(password\\s*[=:]\\s*)\\S+", "$1<redacted>");
+        r = r.replaceAll("(?i)((?:_sid|passwd|account)\\s*[=:]\\s*)\\S+",
+                "$1<redacted>");
+        return r;
     }
 
     private void captureCookie(HttpURLConnection conn) {

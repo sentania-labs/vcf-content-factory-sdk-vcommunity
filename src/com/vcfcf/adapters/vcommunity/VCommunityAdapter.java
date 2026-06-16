@@ -277,8 +277,22 @@ public final class VCommunityAdapter extends VcfCfAdapter<VCommunityConfig> {
 
             @Override
             public ResourceStatusEnum mapCollectException(Exception e) {
-                if (e instanceof java.net.ConnectException) {
-                    return ResourceStatusEnum.RESOURCE_STATUS_DOWN;
+                // A total collect failure (vCenter unreachable / DNS NXDOMAIN /
+                // connection refused) must NOT look like a silent
+                // DATA_RECEIVING-with-0-metrics cycle (the NXDOMAIN episode).
+                // Map the connectivity faults to DOWN so the adapter-instance /
+                // world status turns red with the actionable message thrown from
+                // collectWorld(); everything else is ERROR. Either way the
+                // framework sets a non-DATA_RECEIVING status and logs the message.
+                Throwable t = e;
+                while (t != null) {
+                    if (t instanceof java.net.UnknownHostException
+                            || t instanceof java.net.ConnectException
+                            || t instanceof java.net.NoRouteToHostException
+                            || t instanceof java.net.SocketTimeoutException) {
+                        return ResourceStatusEnum.RESOURCE_STATUS_DOWN;
+                    }
+                    t = t.getCause();
                 }
                 return ResourceStatusEnum.RESOURCE_STATUS_ERROR;
             }
@@ -304,7 +318,30 @@ public final class VCommunityAdapter extends VcfCfAdapter<VCommunityConfig> {
             return;
         }
 
-        vsphere.ensureConnected();
+        // Connect to vCenter. A total failure here (unreachable host, DNS
+        // NXDOMAIN, refused connection, login fault) is rethrown with an
+        // actionable, secret-free message and propagated so the framework's
+        // onCollect catch sets the world resource status via
+        // mapCollectException() (DOWN for connectivity faults) — NOT a silent
+        // DATA_RECEIVING-with-0-metrics cycle. The NXDOMAIN episode is the
+        // motivating failure: cannot resolve/connect must turn the instance red.
+        try {
+            vsphere.ensureConnected();
+        } catch (java.net.UnknownHostException uhe) {
+            throw new java.net.UnknownHostException("vCommunity collection failed: "
+                    + "cannot resolve vCenter host '" + config.vcenterHost
+                    + "' (DNS NXDOMAIN). Check the vCenter Server adapter-instance "
+                    + "field and collector DNS.");
+        } catch (java.net.ConnectException | java.net.NoRouteToHostException
+                | java.net.SocketTimeoutException ne) {
+            throw new Exception("vCommunity collection failed: cannot connect to "
+                    + "vCenter '" + config.vcenterHost + ":" + config.port
+                    + "' (" + ne.getClass().getSimpleName() + ": "
+                    + ne.getMessage() + "). Check vCenter reachability/port.", ne);
+        }
+        // Other connect-time errors (login fault, etc.) propagate as-is;
+        // VCommunityVSphereClient already builds a secret-free,
+        // faultstring-bearing message that the framework logs + statuses.
 
         // Scope foreign-resource resolution to THIS instance's vCenter (the
         // MOID-trap fix) — a bare MOID is not unique across vCenters. The UUID

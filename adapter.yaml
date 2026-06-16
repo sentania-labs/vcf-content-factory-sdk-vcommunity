@@ -1,6 +1,6 @@
 name: "VCF Content Factory vCommunity"
 version: "1.0.0"
-build_number: 2
+build_number: 3
 adapter_kind: "vcfcf_vcommunity"
 entry_class: "com.vcfcf.adapters.vcommunity.VCommunityAdapter"
 tier: 2
