@@ -1,0 +1,22 @@
+id: 0ef97d2c-770b-4c74-9c82-28a766164a39
+name: VM Disk Latency Distribution
+description: "Distribution of VMs by their Disk Write Latency. It's using the 20-second\
+  \ Peak metric, not the average metric. \n\nIt's showing the 99th percentile, and\
+  \ not the peak. This balances between false positive (showing outlier) and too late.\n\
+  99th is chosen and not 95th as it's designed for early warning. \n\nThe bar chart\
+  \ is segregated into different buckets. Each bucket is color coded, showing different\
+  \ threshold.\nWrite latency is used as read latency tends to be much lower due to\
+  \ cache."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: virtualDisk|20_sec_peak_totalLatency_average
+  display_name: .
+  unit: msec
+  transformation: PERCENTILE
+  percentile: 99
+time_window:
+  unit: WEEKS
+  count: 1

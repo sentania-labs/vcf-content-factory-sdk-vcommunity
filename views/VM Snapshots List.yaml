@@ -1,0 +1,31 @@
+id: 7d0d858d-628d-49e9-b076-4fb15d757cc3
+name: VM Snapshots List
+description: Lists the summary of the Snapshots size and days for VM in your environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: Instance Name
+  display_name: Instance Name
+- attribute: diskspace:262|snapshot:snapshot-1|name
+  display_name: Name
+- attribute: diskspace:262|snapshot:snapshot-1|numberOfDays
+  display_name: Age
+  yellow_bound: 1.0
+  orange_bound: 4.0
+  red_bound: 16.0
+  ascending_range: false
+- attribute: diskspace:262|snapshot:snapshot-1|used
+  display_name: Size
+  unit: gb
+  yellow_bound: 0.1
+  orange_bound: 4.0
+  red_bound: 16.0
+  ascending_range: false
+- attribute: diskspace:262|snapshot:snapshot-1|accessTime
+  display_name: Last Accessed
+  unit: auto
+  transformation: TIMESTAMP
+time_window:
+  unit: DAYS
+  count: 7

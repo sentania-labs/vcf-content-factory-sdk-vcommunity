@@ -1,0 +1,10 @@
+id: 44e2c78f-8332-4f16-ba3a-eed89a6d24d5
+name: "Number of Resource Pools"
+resource_kinds:
+  - resource_kind_key: ClusterComputeResource
+    adapter_kind_key: VMWARE
+description: >
+  Total number of resource pools
+unit_id: ""
+formula: |
+  count(${adaptertype=VMWARE, objecttype=ResourcePool, attribute=badge|health, depth=3})

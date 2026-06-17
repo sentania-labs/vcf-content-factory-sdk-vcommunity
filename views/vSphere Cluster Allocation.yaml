@@ -1,0 +1,18 @@
+id: 18dae631-fa3f-4a08-9cf5-00d89878ca29
+name: vSphere Cluster Allocation
+description: Trend line of cluster allocation. This complements the demand model as
+  demand model cannot account for newly provisioned VMs that are not yet active. It's
+  used in Capacity Management context, hence it's showing 3 months time horizon and
+  the value is hourly averaged.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: trend
+columns:
+- attribute: cpu|vcpus_to_cores_allocation_ratio
+  display_name: CPU
+- attribute: mem|virtual_to_physical_memory_allocation_ratio
+  display_name: Memory
+time_window:
+  unit: MONTHS
+  count: 3

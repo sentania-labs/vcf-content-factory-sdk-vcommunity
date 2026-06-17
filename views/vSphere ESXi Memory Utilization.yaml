@@ -1,0 +1,28 @@
+id: 87399ea9-d93a-4591-b15b-d30a9003972e
+name: vSphere ESXi Memory Utilization
+description: Trend line of ESXi host memory utilization. Value is in GB, so the actual
+  quantity is known. It's used in Capacity Management context, hence it's showing
+  3 months time horizon and the value is hourly averaged to show the big picture.
+  Total, Usable Capacity and actual consumed are shown. It's healthy for consumed
+  to be very high as ESXi uses memory as cache. So long Active is low and Balloon
+  is 0, ESXi is not under memory pressure.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: trend
+columns:
+- attribute: mem|host_provisioned
+  display_name: Total
+  unit: gb
+- attribute: mem|host_usable
+  display_name: Usable
+  unit: gb
+- attribute: mem|consumed_average
+  display_name: Consumed
+  unit: gb
+- attribute: mem|total_need
+  display_name: Utilization
+  unit: gb
+time_window:
+  unit: WEEKS
+  count: 1

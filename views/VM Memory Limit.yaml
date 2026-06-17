@@ -1,0 +1,17 @@
+id: 6db204b2-0315-4488-8cbc-bbe33c74dac9
+name: VM Memory Limit
+description: Count of VMs with memory limit. Limit results in unpredictable performance
+  problem, especially those with low threshold. Limit also incurs operational overhead
+  to manage.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+presentation: pie-chart
+columns:
+- attribute: config|cpuAllocation|limit
+  display_name: config|cpuAllocation|limit
+  unit: auto
+time_window:
+  unit: DAYS
+  count: 7

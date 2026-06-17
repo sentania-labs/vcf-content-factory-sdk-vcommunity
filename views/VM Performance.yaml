@@ -1,0 +1,98 @@
+id: c9fe7a11-79e3-4e98-9cba-8d732b15d150
+name: VM Performance
+description: "List of VMs and their utilization. It's used in Performance, not Capacity\
+  \ Management context. To support proactive operations, the worst value in the last\
+  \ 1 day is shown. \n\nAs this focuses on performance, powered off VMs are excluded."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: config|hardware|numCpu
+  display_name: vCPU
+  yellow_bound: 12.0
+  orange_bound: 24.0
+  red_bound: 48.0
+  ascending_range: false
+- attribute: cpu|usagemhz_average
+  display_name: CPU Usage
+  unit: ghz
+  transformation: MAX
+  yellow_bound: 10.0
+  orange_bound: 20.0
+  red_bound: 40.0
+  ascending_range: false
+- attribute: config|cpuAllocation|limit
+  display_name: CPU Limit
+  unit: ghz
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 0.3
+  ascending_range: false
+- attribute: config|hardware|memoryKB
+  display_name: Memory
+  unit: gb
+  yellow_bound: 32.0
+  orange_bound: 64.0
+  red_bound: 128.0
+  ascending_range: false
+- attribute: config|memoryAllocation|limit
+  display_name: Memory Limit
+  unit: gb
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 0.3
+  ascending_range: false
+- attribute: mem|balloonPct
+  display_name: Balloon
+  unit: percent
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 10.0
+  ascending_range: false
+- attribute: mem|consumed_average
+  display_name: Consumed
+  unit: gb
+  yellow_bound: 32.0
+  orange_bound: 64.0
+  red_bound: 128.0
+  ascending_range: false
+- attribute: mem|compressed_average
+  display_name: Compressed
+  unit: gb
+  yellow_bound: 0.5
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: false
+- attribute: net|usage_average
+  display_name: Network Usage
+  unit: mbitsps
+  transformation: MAX
+  yellow_bound: 250.0
+  orange_bound: 500.0
+  red_bound: 1000.0
+  ascending_range: false
+- attribute: virtualDisk:Aggregate of all instances|usage
+  display_name: Disk Throughput
+  unit: mbitsps
+  transformation: MAX
+  yellow_bound: 250.0
+  orange_bound: 500.0
+  red_bound: 1000.0
+  ascending_range: false
+- attribute: virtualDisk:Aggregate of all instances|commandsAveraged_average
+  display_name: Disk IOPS
+  transformation: MAX
+  yellow_bound: 250.0
+  orange_bound: 500.0
+  red_bound: 1000.0
+  ascending_range: false
+- attribute: summary|guest|fullName
+  display_name: Guest OS
+- attribute: config|version
+  display_name: Hardware Version
+- attribute: summary|guest|toolsRunningStatus
+  display_name: Tools
+  red_bound: Guest Tools Not Running
+time_window:
+  unit: DAYS
+  count: 1

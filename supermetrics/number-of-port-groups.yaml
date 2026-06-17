@@ -1,0 +1,10 @@
+id: 48a5dd9e-6caf-4590-bca4-95072c5554f1
+name: "Number of Port Groups"
+resource_kinds:
+  - resource_kind_key: VmwareDistributedVirtualSwitch
+    adapter_kind_key: VMWARE
+description: >
+  Count of port groups in a distributed switch
+unit_id: ""
+formula: |
+  count(${adaptertype=VMWARE, objecttype=DistributedVirtualPortgroup, attribute=badge|health, depth=1})

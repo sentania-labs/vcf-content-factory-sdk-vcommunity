@@ -1,0 +1,81 @@
+id: 6efeb9b2-3c38-4842-8ee9-88f6b25e5460
+name: vSphere Resource Pool List
+description: List of resource pools. Pay attention to resource pool with limit, shares
+  and reservation.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ResourcePool
+columns:
+- attribute: summary|number_running_vms
+  display_name: Running VM
+- attribute: cpu|capacity_contentionPct
+  display_name: CPU Contention
+  unit: percent
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 10.0
+  ascending_range: false
+- attribute: config|cpuAllocation|limit
+  display_name: CPU Limit
+  unit: auto
+  yellow_bound: 0.0
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: false
+- attribute: config|cpuAllocation|reservation
+  display_name: CPU Reservation
+  unit: ghz
+  yellow_bound: 1.0
+  orange_bound: 100.0
+  red_bound: 200.0
+  ascending_range: false
+- attribute: config|cpuAllocation|shares|shares
+  display_name: CPU Shares
+  red_bound: 2001.0
+  ascending_range: true
+- attribute: cpu|usagemhz_average
+  display_name: Usage
+  unit: ghz
+- attribute: cpu|effective_limit
+  display_name: Effective Limit
+  unit: ghz
+- attribute: config|cpuAllocation|expandableReservation
+  display_name: Expandable CPU?
+  yellow_bound: 0.2
+  orange_bound: 0.1
+  red_bound: 0.0
+  ascending_range: true
+- attribute: mem|host_contentionPct
+  display_name: Memory Contention
+  unit: percent
+  yellow_bound: 1.0
+  orange_bound: 2.0
+  red_bound: 4.0
+  ascending_range: false
+- attribute: config|memoryAllocation|limit
+  display_name: Memory Limit
+  unit: gb
+  yellow_bound: 0.0
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: false
+- attribute: config|memoryAllocation|reservation
+  display_name: Memory Reservation
+  unit: gb
+  yellow_bound: 1.0
+  orange_bound: 1000.0
+  red_bound: 2000.0
+  ascending_range: false
+- attribute: config|memoryAllocation|shares|shares
+  display_name: Memory Shares
+  red_bound: 81921.0
+  ascending_range: true
+- attribute: config|memoryAllocation|expandableReservation
+  display_name: Expandable Memory?
+  yellow_bound: 0.2
+  orange_bound: 0.1
+  red_bound: 0.0
+  ascending_range: true
+time_window:
+  unit: DAYS
+  count: 7

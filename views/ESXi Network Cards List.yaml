@@ -1,0 +1,19 @@
+id: e77a32c0-16f4-4d3e-aabe-0d1354154d4b
+name: ESXi Network Cards List
+description: List the summary of the network properties associated with the Distributed
+  Virtual Switch for the selected Host System in your environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: Instance Name
+- attribute: net:vmnic0|speed
+  display_name: Actual Speed
+- attribute: net:vmnic0|configuredSpeed
+  display_name: Configured Speed
+- attribute: net:vmnic0|nicDriver
+  display_name: Driver
+time_window:
+  unit: DAYS
+  count: 7

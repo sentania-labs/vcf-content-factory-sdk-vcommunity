@@ -1,0 +1,14 @@
+id: 0c704ccf-1016-4d83-9d8c-649e18e2dc68
+name: "vSphere Cluster Worst VM CPU Ready"
+resource_kinds:
+  - resource_kind_key: ClusterComputeResource
+    adapter_kind_key: VMWARE
+description: >
+  The highest CPU Ready of all VMs in the cluster. This is using 20 second
+  average instead of 5 minute average to give a leading indicator.
+
+  For details, see VCF Operations Transformation book and vSphere Metrics book,
+  which are parts of Operationalize Your World.
+unit_id: percent
+formula: |
+  max(${adaptertype=VMWARE, objecttype=VirtualMachine, attribute=cpu|20_sec_peak_readyPct, depth=2})

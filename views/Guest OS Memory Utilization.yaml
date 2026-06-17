@@ -1,0 +1,22 @@
+id: 40152c12-1d12-440c-b79e-e9d172deb9a1
+name: Guest OS Memory Utilization
+description: Trend line of VM memory utilization. Value is in GB, so the actual quantity
+  is known. It's used in Capacity Management context, hence it's showing 3 months
+  time horizon and the value is daily averaged to show the big picture. Total and
+  Memory Needed are shown. Memory Needed is used as it does not measure what the Guest
+  OS uses, but what it needs. Windows/Linux uses cache as part of memory management,
+  and this needs to be accounted for in sizing.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: trend
+columns:
+- attribute: mem|guest_provisioned
+  display_name: Configured
+  unit: gb
+- attribute: guest|mem.needed_latest
+  display_name: Needed
+  unit: gb
+time_window:
+  unit: MONTHS
+  count: 3

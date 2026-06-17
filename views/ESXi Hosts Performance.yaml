@@ -1,0 +1,57 @@
+id: 653ba701-c9df-4f98-9dd1-8b1d6b57612e
+name: ESXi Hosts Performance
+description: List of ESXi hosts and their key performance. Because it focuses on proactive
+  monitoring, the worst counter is shown. The Performance SLA uses a high standard,
+  hence both the 95th percentile and worst are shown. 95th is used instead of 99th
+  because there can be false positive from Network counter.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: performance|kpi_pct
+  display_name: Worst Performance
+  unit: percent
+  transformation: MIN
+  yellow_bound: 99.0
+  orange_bound: 97.0
+  red_bound: 95.0
+  ascending_range: true
+- attribute: performance|kpi_pct
+  display_name: 95th Percentile
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 99.0
+  orange_bound: 97.0
+  red_bound: 95.0
+  ascending_range: true
+- attribute: cpu|max_cpu_ready
+  display_name: Max CPU Ready
+  transformation: MAX
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 7.5
+  ascending_range: false
+- attribute: mem|max_vm_mem_contention
+  display_name: Max RAM Contention
+  transformation: MAX
+  yellow_bound: 1.0
+  orange_bound: 3.0
+  red_bound: 5.0
+  ascending_range: false
+- attribute: cpu|percentage_of_vms_facing_cpu_ready
+  display_name: '% VMs with CPU Ready'
+  transformation: MAX
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 7.5
+  ascending_range: false
+- attribute: mem|percentage_of_vms_facing_memory_contention
+  display_name: '% VMs with RAM Contention'
+  transformation: MAX
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 7.5
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 1

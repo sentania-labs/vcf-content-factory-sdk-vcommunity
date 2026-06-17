@@ -1,0 +1,79 @@
+id: b669d11e-3eb1-41b1-9f56-b5a5823ba385
+name: Guest OS Utilization List
+description: "While the object is VM, what is being sized is the Guest OS inside VM.\
+  \ The external footprint is not relevant in this context. \n\nList of powered on\
+  \ VMs and their capacity utilization. For memory, Guest OS metrics are used. Notice\
+  \ the metrics use different percentile, that is appropriate for the metric.\n\n\
+  Creation Date is added as new VM tends to be lowly utilized."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: config|hardware|numCpu
+  display_name: vCPU
+  yellow_bound: 8.0
+  orange_bound: 16.0
+  red_bound: 24.0
+  ascending_range: false
+- attribute: cpu|net_run
+  display_name: Run at 99P
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 99
+  yellow_bound: 75.0
+  orange_bound: 85.0
+  red_bound: 95.0
+  ascending_range: false
+- attribute: cpu|net_run
+  display_name: Run at 95P
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 70.0
+  orange_bound: 80.0
+  red_bound: 90.0
+  ascending_range: false
+- attribute: cpu|usage_average
+  display_name: CPU Cycle
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+- attribute: guest|cpu_queue
+  display_name: CPU Q
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 3.0
+  orange_bound: 9.0
+  red_bound: 27.0
+  ascending_range: false
+- attribute: cpu|vcpu_usage_disparity
+  display_name: Usage Disparity
+  unit: percent
+  transformation: AVG
+  yellow_bound: 15.0
+  orange_bound: 30.0
+  red_bound: 60.0
+  ascending_range: false
+- attribute: config|hardware|memoryKB
+  display_name: Memory
+  unit: gb
+  yellow_bound: 64.0
+  orange_bound: 128.0
+  red_bound: 196.0
+  ascending_range: false
+- attribute: guest|mem.free_latest
+  display_name: Free Memory
+  unit: gb
+  transformation: PERCENTILE
+  percentile: 5
+  yellow_bound: 0.5
+  orange_bound: 0.25
+  red_bound: 0.125
+  ascending_range: true
+- attribute: config|createDate
+  display_name: Creation Date
+  unit: week
+  transformation: TIMESTAMP
+time_window:
+  unit: WEEKS
+  count: 1

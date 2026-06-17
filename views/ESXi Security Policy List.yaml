@@ -1,0 +1,16 @@
+id: c91284fc-127a-483f-8ed2-84cc161c44ad
+name: ESXi Security Policy List
+description: List of ESXi services and their status. Ensure this matches security
+  best practices and your expectation for the host
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: Services
+- attribute: config|security|service:Direct Console UI|policy
+  display_name: Policy
+  red_bound: 'off'
+time_window:
+  unit: DAYS
+  count: 7

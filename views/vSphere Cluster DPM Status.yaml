@@ -1,0 +1,14 @@
+id: 9030cd79-ee63-42a2-9f03-7b2ac3f56d22
+name: vSphere Cluster DPM Status
+description: vSphere Cluster DPM configuration status, where true = enabled.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|dpmConfiginfo|enabled
+  display_name: DPM Enabled?
+time_window:
+  unit: DAYS
+  count: 7

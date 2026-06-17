@@ -1,10 +1,165 @@
 name: "VCF Content Factory vCommunity"
 version: "1.0.0"
-build_number: 3
+build_number: 7
 adapter_kind: "vcfcf_vcommunity"
 entry_class: "com.vcfcf.adapters.vcommunity.VCommunityAdapter"
 tier: 2
 released: false
+bundled_content:
+  symptoms:
+    - symptoms/esxi-host-nic-disconnected.yaml
+    - symptoms/windows-service-down.yaml
+  alerts:
+    - alerts/esxi-host-nic-disconnected.yaml
+    - alerts/windows-service-down.yaml
+  supermetrics:
+    - supermetrics/esxi-bad-network-packets.yaml
+    - supermetrics/network-speed-degradation.yaml
+    - supermetrics/esxi-host-availability.yaml
+    - supermetrics/esxi-hosts-average-availability.yaml
+    - supermetrics/unavailable-esxi-host.yaml
+    - supermetrics/clusters-availability.yaml
+    - supermetrics/vsphere-cluster-cpu-co-stop.yaml
+    - supermetrics/vsphere-cluster-cpu-ready.yaml
+    - supermetrics/vsphere-cluster-worst-vm-cpu-co-stop.yaml
+    - supermetrics/vsphere-cluster-worst-vm-cpu-ready.yaml
+    - supermetrics/vsphere-cluster-worst-vm-memory-contention.yaml
+    - supermetrics/vsphere-cluster-memory-ballooned.yaml
+    - supermetrics/vsphere-cluster-memory-contention.yaml
+    - supermetrics/vsphere-cluster-memory-zip-swap.yaml
+    - supermetrics/vsphere-cluster-vmotions.yaml
+    - supermetrics/vsphere-cluster-sla-leading-indicator.yaml
+    - supermetrics/cpu-reservation.yaml
+    - supermetrics/cpu-usable-capacity-utilization.yaml
+    - supermetrics/memory-reservation.yaml
+    - supermetrics/cascading-resource-pools.yaml
+    - supermetrics/number-of-resource-pools.yaml
+    - supermetrics/vsphere-vm-memory-zip-swap.yaml
+    - supermetrics/vsphere-vm-performance.yaml
+    - supermetrics/share-per-gb-of-memory.yaml
+    - supermetrics/share-per-vcpu.yaml
+    - supermetrics/number-of-vm.yaml
+    - supermetrics/number-of-port-groups.yaml
+    - supermetrics/total-non-default-settings.yaml
+    - supermetrics/total-network-configuration-issues.yaml
+    - supermetrics/total-network-speed-degradation.yaml
+    - supermetrics/vsphere-cluster-worst-esxi-bad-network-packets.yaml
+    - supermetrics/business-application-tier-performance.yaml
+    - supermetrics/vsphere-cluster-performance.yaml
+    - supermetrics/vsphere-clusters-not-green.yaml
+    - supermetrics/vsphere-clusters-performance.yaml
+    - supermetrics/business-application-performance.yaml
+    - supermetrics/business-applications-performance.yaml
+  views:
+    - views/Datastore Performance List.yaml
+    - views/ESXi BIOS version distribution.yaml
+    - views/ESXi CPU Models.yaml
+    - views/ESXi CPU Speed.yaml
+    - views/ESXi Cluster Settings.yaml
+    - views/ESXi Configuration List.yaml
+    - views/ESXi Distribution by CPU GHz.yaml
+    - views/ESXi Distribution by CPU Socket.yaml
+    - views/ESXi Distribution by Core Counts.yaml
+    - views/ESXi Distribution by Memory Size.yaml
+    - views/ESXi Distribution by NIC Count.yaml
+    - views/ESXi Distribution by NIC Speed.yaml
+    - views/ESXi Distribution by Storage Path Counts.yaml
+    - views/ESXi Distribution by Versions.yaml
+    - views/ESXi High Memory Trend.yaml
+    - views/ESXi Host Details vCommunity.yaml
+    - views/ESXi Host Hardware vCommunity.yaml
+    - views/ESXi Host License Information vCommunity.yaml
+    - views/ESXi Host Maintenance Mode vCommunity.yaml
+    - views/ESXi Host NIC Details.yaml
+    - views/ESXi Host Power State vCommunity.yaml
+    - views/ESXi Host Versions vCommunity.yaml
+    - views/ESXi Hosts Performance.yaml
+    - views/ESXi HyperThread Capability.yaml
+    - views/ESXi Network Cards List.yaml
+    - views/ESXi Network Interfaces.yaml
+    - views/ESXi Packages.yaml
+    - views/ESXi Power Management BIOS.yaml
+    - views/ESXi Power Management.yaml
+    - views/ESXi Security Policy List.yaml
+    - views/ESXi Storage Adapters.yaml
+    - views/ESXi Switch property.yaml
+    - views/ESXi Utilization List.yaml
+    - views/Guest OS CPU Queue Trend.yaml
+    - views/Guest OS List of Services.yaml
+    - views/Guest OS Memory Paging Trend.yaml
+    - views/Guest OS Memory Utilization.yaml
+    - views/Guest OS Partition List.yaml
+    - views/Guest OS Utilization List.yaml
+    - views/VM CPU Limit.yaml
+    - views/VM CPU Ready Distribution.yaml
+    - views/VM CPU Size Distribution.yaml
+    - views/VM CPU Utilization.yaml
+    - views/VM Capacity Consumption.yaml
+    - views/VM Details vCommunity.yaml
+    - views/VM Disk Latency Distribution.yaml
+    - views/VM Distribution by CPU Reservation.yaml
+    - views/VM Distribution by CPU Share.yaml
+    - views/VM Distribution by Capacity Remaining.yaml
+    - views/VM Distribution by Disk Size.yaml
+    - views/VM Distribution by Memory Reservation.yaml
+    - views/VM Distribution by Memory Share.yaml
+    - views/VM Distribution by Time Remaining.yaml
+    - views/VM Memory Contention Distribution.yaml
+    - views/VM Memory Limit.yaml
+    - views/VM Memory Size Distribution.yaml
+    - views/VM Network Configuration.yaml
+    - views/VM Performance List.yaml
+    - views/VM Performance.yaml
+    - views/VM Shares by RP.yaml
+    - views/VM Snapshot Size.yaml
+    - views/VM Snapshots List.yaml
+    - views/VM Storage Configuration.yaml
+    - views/VM Virtual Disks counts.yaml
+    - views/VM Virtual Disks.yaml
+    - views/VM with RDM disks.yaml
+    - views/Windows Services vCommunity.yaml
+    - views/vSphere Cluster Admission Control Policy.yaml
+    - views/vSphere Cluster Allocation.yaml
+    - views/vSphere Cluster CPU Utilization.yaml
+    - views/vSphere Cluster Configuration List.yaml
+    - views/vSphere Cluster DPM Status.yaml
+    - views/vSphere Cluster DRS Automation Level.yaml
+    - views/vSphere Cluster DRS Automation Status.yaml
+    - views/vSphere Cluster DRS Status.yaml
+    - views/vSphere Cluster Distribution by CPU Reservation.yaml
+    - views/vSphere Cluster HA Admission Control status.yaml
+    - views/vSphere Cluster HA Status.yaml
+    - views/vSphere Cluster Memory Reservation.yaml
+    - views/vSphere Cluster Memory Utilization.yaml
+    - views/vSphere Cluster Resource Management.yaml
+    - views/vSphere Cluster Utilization.yaml
+    - views/vSphere Clusters by datastores count.yaml
+    - views/vSphere Clusters distribution by ESXi count.yaml
+    - views/vSphere Data Centers Inventory.yaml
+    - views/vSphere Distributed Switch Configuration.yaml
+    - views/vSphere ESXi CPU Utilization.yaml
+    - views/vSphere ESXi Memory Utilization.yaml
+    - views/vSphere Port Group Configuration.yaml
+    - views/vSphere Port Group Forged Transmit Allowed.yaml
+    - views/vSphere Port Group MAC Address Change.yaml
+    - views/vSphere Port Group Promiscuous Mode Allowed.yaml
+    - views/vSphere Resource Pool Configuration.yaml
+    - views/vSphere Resource Pool List.yaml
+    - views/vSphere Switch Version.yaml
+    - views/vSphere VMs Context.yaml
+  dashboards:
+    - dashboards/Cluster Performance 2.0.yaml
+    - dashboards/Critical Business Applications.yaml
+    - dashboards/ESXi Configuration 2.0.yaml
+    - dashboards/ESXi Host Details.yaml
+    - dashboards/VM Capacity new.yaml
+    - dashboards/VM Details.yaml
+    - dashboards/VM Performance 2.0.yaml
+    - dashboards/VM Storage Configuration.yaml
+    - dashboards/vSphere Cluster Capacity new.yaml
+    - dashboards/vSphere Cluster Configuration 2.0.yaml
+    - dashboards/vSphere Network Configuration 2.0.yaml
+    - dashboards/vSphere Resource Management.yaml
 description: >
   Native Java SDK rewrite of the Python Integration SDK management pack
   vmbro/VCF-Operations-vCommunity (Onur Yuzseven, CC-licensed). Kills the

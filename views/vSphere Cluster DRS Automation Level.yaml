@@ -1,0 +1,15 @@
+id: 9e427b59-a30a-475c-bafc-a1943d9f2f0d
+name: vSphere Cluster DRS Automation Level
+description: DRS Automation level. Ensure it matches the purpose of the cluster and
+  DRS best practices.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|drsconfig|vmotionRate
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

@@ -554,10 +554,16 @@ public final class VCommunityVSphereClient {
      *   <li>{@code runtime.bootTime} — Last Boot Up Time.</li>
      * </ul>
      *
-     * <p>Returns a map keyed by the SHORT field name the caller maps to the
-     * {@code vCommunity|Guest OS|Operating System|...} keys. A key absent from
-     * the map means the guest did not report it (the caller skips it — never a
-     * sentinel; unreadable is not a value).
+     * <p>Returns a map keyed by the prod original's six canonical
+     * {@code OS }-prefixed property names ({@code OS Name}, {@code OS Version},
+     * {@code OS BuildNumber}, {@code OS Architecture}, {@code OS Last Boot Up Time},
+     * {@code OS Release ID}) which the caller pushes verbatim onto
+     * {@code vCommunity|Guest OS|Operating System|...}. Using the original's exact
+     * key names makes this VMware-Tools path a benign non-Windows superset of the
+     * original's Windows-CSV path (ported content referencing those names finds
+     * data on every VM whose tools report it). A key absent from the map means the
+     * guest did not report it (the caller skips it — never a sentinel; unreadable
+     * is not a value).
      */
     public Map<String, String> vmGuestOsInfo(MoRef vm) throws Exception {
         ensureConnected();
@@ -578,11 +584,11 @@ public final class VCommunityVSphereClient {
                 String val = childText(e, "value");
                 if (k == null || val == null || val.isEmpty()) continue;
                 switch (k) {
-                    case "prettyName":   putShort(out, "Name", val); break;
+                    case "prettyName":   putShort(out, "OS Name", val); break;
                     case "architecture": putShort(out, "OS Architecture", val); break;
-                    case "buildNumber":  putShort(out, "BuildNumber", val); break;
-                    case "releaseId":    putShort(out, "Release ID", val); break;
-                    case "version":      putShort(out, "Version", val); break;
+                    case "buildNumber":  putShort(out, "OS BuildNumber", val); break;
+                    case "releaseId":    putShort(out, "OS Release ID", val); break;
+                    case "version":      putShort(out, "OS Version", val); break;
                     default: /* other detailedData keys not part of the contract */
                 }
             }
@@ -591,7 +597,7 @@ public final class VCommunityVSphereClient {
         // Last Boot Up Time <- runtime.bootTime (a real vim DateTime; skip if absent)
         String bootTime = getStringProperty(vm, "runtime.bootTime");
         if (bootTime != null && !bootTime.isEmpty()) {
-            putShort(out, "Last Boot Up Time", bootTime);
+            putShort(out, "OS Last Boot Up Time", bootTime);
         }
 
         return out;

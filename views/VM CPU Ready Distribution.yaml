@@ -1,0 +1,21 @@
+id: 3b0e097b-b3f1-453f-adc9-ad47c9c5ca4c
+name: VM CPU Ready Distribution
+description: "Distribution of VMs by their CPU Ready. It's using the 20-second Peak\
+  \ metric, not the average metric. \n\nIt's showing the 99th percentile, and not\
+  \ the peak. This balances between false positive (showing outlier) and too late.\n\
+  99th is chosen and not 95th as it's designed for early warning. \n\nThe bar chart\
+  \ is segregated into different buckets. Each bucket is color coded, showing different\
+  \ threshold."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: cpu|20_sec_peak_readyPct
+  display_name: .
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 99
+time_window:
+  unit: DAYS
+  count: 1

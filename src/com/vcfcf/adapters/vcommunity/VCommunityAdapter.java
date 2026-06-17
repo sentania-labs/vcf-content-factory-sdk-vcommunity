@@ -123,14 +123,19 @@ public final class VCommunityAdapter extends VcfCfAdapter<VCommunityConfig> {
     }
 
     private VCommunityConfig buildConfig(ResourceConfig rc) {
+        // Single combined credential ("vsphere_user"): all four fields are read
+        // from the one bound credential — getCredentialField reads
+        // ResourceConfig.getResourceCredential() regardless of kind, so the
+        // Windows guest creds now actually reach the guest-ops path.
         return new VCommunityConfig(
-                getIdentifier(rc, "vcenter_host"),
+                getIdentifier(rc, "host"),
                 getIdentifier(rc, "port"),
                 getCredentialField(rc, "user"),
                 getCredentialField(rc, "password"),         // REDACT-SECRET
                 getCredentialField(rc, "winUser"),
                 getCredentialField(rc, "winPass"),          // REDACT-SECRET
-                getIdentifier(rc, "windows_monitoring"),
+                getIdentifier(rc, "serviceMonitoring"),
+                getIdentifier(rc, "winEventMonitoring"),
                 getIdentifier(rc, "allowInsecure"),
                 getIdentifier(rc, "esxi_adv_settings_config_file"),
                 getIdentifier(rc, "esxi_vib_driver_config_file"),

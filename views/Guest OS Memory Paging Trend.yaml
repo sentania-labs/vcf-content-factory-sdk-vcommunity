@@ -1,0 +1,22 @@
+id: df2e3054-5db5-478f-bb7d-fbcaccd7960e
+name: Guest OS Memory Paging Trend
+description: Trend line of memory performance at Guest OS levels. There is no counters
+  that VM level that maps to this counter, so if this counter is blank then install
+  Tools. It's used in Performance Management context, hence it's showing 1 week time
+  horizon and the value is not averaged.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: trend
+columns:
+- attribute: guest|page.outRate_latest
+  display_name: Page Out
+- attribute: guest|page.inRate_latest
+  display_name: Page In
+  yellow_bound: 1000.0
+  orange_bound: 5000.0
+  red_bound: 25000.0
+  ascending_range: false
+time_window:
+  unit: WEEKS
+  count: 1

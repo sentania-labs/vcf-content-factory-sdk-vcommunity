@@ -1,0 +1,20 @@
+id: 810958f4-e511-4e44-afaa-c04956768daf
+name: ESXi Host License Information vCommunity
+description: ESXi Host License Information vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: Instance Name
+- attribute: vCommunity|Licensing:Evaluation Mode|Edition Key
+  display_name: Edition
+- attribute: vCommunity|Licensing:Evaluation Mode|License Key
+  display_name: Key
+- attribute: vCommunity|Licensing:Evaluation Mode|License Expiration Date
+  display_name: Expiration Date
+- attribute: vCommunity|Licensing:Evaluation Mode|Remaining Days
+  display_name: Days to Expire
+time_window:
+  unit: DAYS
+  count: 7

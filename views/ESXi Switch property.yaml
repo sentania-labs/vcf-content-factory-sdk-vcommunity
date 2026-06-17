@@ -1,0 +1,43 @@
+id: 6f0a54e7-c3a5-42bb-a989-fda47cf1c50a
+name: ESXi Switch property
+description: List of ESXi hosts connected to the distributed switch, along with their
+  key network properties.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VmwareDistributedVirtualSwitch
+columns:
+- attribute: Instance Name
+  display_name: ESXi
+- attribute: host:10.156.17.100|config_outofsync
+  display_name: Config Out of Sync
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 1.0
+  ascending_range: false
+- attribute: host:10.156.17.100|teaming_mismatch
+  display_name: Teaming Mismatch
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 1.0
+  ascending_range: false
+- attribute: host:10.156.17.100|mtu_mismatch
+  display_name: MTU Mismatch
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 1.0
+  ascending_range: false
+- attribute: host:10.156.17.100|mtu_unsupported
+  display_name: Unsupported MTU
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 1.0
+  ascending_range: false
+- attribute: host:10.156.17.100|vlans_unsupported
+  display_name: Unsupported VLAN
+  yellow_bound: 0.1
+  orange_bound: 0.2
+  red_bound: 1.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 7

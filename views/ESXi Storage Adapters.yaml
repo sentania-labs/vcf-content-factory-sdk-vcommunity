@@ -1,0 +1,15 @@
+id: 8069cc3c-0866-4b7a-850d-1b82ab5f080e
+name: ESXi Storage Adapters
+description: List of HBA (host based adapter) and their driver type. Ensure this matches
+  best practices and the expected setting for the adapter.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: Instance Name
+- attribute: storageAdapter:vmhba0|hbaDriver
+  display_name: Driver
+time_window:
+  unit: DAYS
+  count: 7

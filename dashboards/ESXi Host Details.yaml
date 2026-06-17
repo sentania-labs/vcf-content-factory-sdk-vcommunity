@@ -1,0 +1,347 @@
+id: d6c4fc3f-c517-403e-ac3a-ec86c5e14624
+name: ESXi Host Details
+name_path: vCommunity
+shared: true
+widgets:
+- id: 02d3f6ad-5ee3-4fe0-a0cf-81a2f2659e02
+  type: View
+  title: ESXi Host Details
+  coords:
+    x: 1
+    y: 6
+    w: 7
+    h: 9
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: ESXi Host Details vCommunity
+- id: 7a1b09a3-536d-4117-b54e-6bcbc00e5795
+  type: View
+  title: ESXi Host Versions
+  coords:
+    x: 1
+    y: 1
+    w: 3
+    h: 5
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: ESXi Host Versions vCommunity
+- id: 2d607052-a783-4a36-886b-d6426449cd2a
+  type: View
+  title: ESXi Host Models
+  coords:
+    x: 4
+    y: 1
+    w: 3
+    h: 5
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: ESXi Host Hardware vCommunity
+- id: 42ed956e-bf95-487d-9817-db40536e6d60
+  type: PropertyList
+  title: Advanced System Settings (for selected ESXi Host)
+  coords:
+    x: 5
+    y: 15
+    w: 4
+    h: 10
+  property_list:
+    properties:
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|CBRC.DCacheMemReserved
+      metric_name: vCommunity|Configuration|Advanced System Settings|CBRC.DCacheMemReserved
+      color_method: 1
+      label: CBRC.DCacheMemReserved
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|CBRC.Enable
+      metric_name: vCommunity|Configuration|Advanced System Settings|CBRC.Enable
+      color_method: 1
+      label: CBRC.Enable
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.log.level
+      metric_name: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.log.level
+      color_method: 1
+      label: Config.HostAgent.log.level
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.plugins.solo.enableMob
+      metric_name: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.plugins.solo.enableMob
+      color_method: 1
+      label: Config.HostAgent.plugins.solo.enableMob
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.ssl.minPrivateKeyLength
+      metric_name: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.ssl.minPrivateKeyLength
+      color_method: 1
+      label: Config.HostAgent.ssl.minPrivateKeyLength
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.ticketing.thumbprintTypes
+      metric_name: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.ticketing.thumbprintTypes
+      color_method: 1
+      label: Config.HostAgent.ticketing.thumbprintTypes
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.vmacore.soap.maxSessionCount
+      metric_name: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.vmacore.soap.maxSessionCount
+      color_method: 1
+      label: Config.HostAgent.vmacore.soap.maxSessionCount
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.vmacore.soap.sessionTimeout
+      metric_name: vCommunity|Configuration|Advanced System Settings|Config.HostAgent.vmacore.soap.sessionTimeout
+      color_method: 1
+      label: Config.HostAgent.vmacore.soap.sessionTimeout
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|COW.COWMaxHeapSizeMB
+      metric_name: vCommunity|Configuration|Advanced System Settings|COW.COWMaxHeapSizeMB
+      color_method: 1
+      label: COW.COWMaxHeapSizeMB
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|COW.COWMaxREPageCacheszMB
+      metric_name: vCommunity|Configuration|Advanced System Settings|COW.COWMaxREPageCacheszMB
+      color_method: 1
+      label: COW.COWMaxREPageCacheszMB
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Security.AccountLockFailures
+      metric_name: vCommunity|Configuration|Advanced System Settings|Security.AccountLockFailures
+      color_method: 1
+      label: Security.AccountLockFailures
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Security.AccountUnlockTime
+      metric_name: vCommunity|Configuration|Advanced System Settings|Security.AccountUnlockTime
+      color_method: 1
+      label: Security.AccountUnlockTime
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Security.PasswordMaxDays
+      metric_name: vCommunity|Configuration|Advanced System Settings|Security.PasswordMaxDays
+      color_method: 1
+      label: Security.PasswordMaxDays
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Syslog.global.auditRecord.storageDirectory
+      metric_name: vCommunity|Configuration|Advanced System Settings|Syslog.global.auditRecord.storageDirectory
+      color_method: 1
+      label: Syslog.global.auditRecord.storageDirectory
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Syslog.global.logDir
+      metric_name: vCommunity|Configuration|Advanced System Settings|Syslog.global.logDir
+      color_method: 1
+      label: Syslog.global.logDir
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Syslog.global.certificate.checkSSLCerts
+      metric_name: vCommunity|Configuration|Advanced System Settings|Syslog.global.certificate.checkSSLCerts
+      color_method: 1
+      label: Syslog.global.certificate.checkSSLCerts
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Syslog.global.logFiltersEnable
+      metric_name: vCommunity|Configuration|Advanced System Settings|Syslog.global.logFiltersEnable
+      color_method: 1
+      label: Syslog.global.logFiltersEnable
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Syslog.global.logHost
+      metric_name: vCommunity|Configuration|Advanced System Settings|Syslog.global.logHost
+      color_method: 1
+      label: Syslog.global.logHost
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|Syslog.global.logLevel
+      metric_name: vCommunity|Configuration|Advanced System Settings|Syslog.global.logLevel
+      color_method: 1
+      label: Syslog.global.logLevel
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|UserVars.DcuiTimeOut
+      metric_name: vCommunity|Configuration|Advanced System Settings|UserVars.DcuiTimeOut
+      color_method: 1
+      label: UserVars.DcuiTimeOut
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|UserVars.ESXiShellTimeOut
+      metric_name: vCommunity|Configuration|Advanced System Settings|UserVars.ESXiShellTimeOut
+      color_method: 1
+      label: UserVars.ESXiShellTimeOut
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|UserVars.SuppressHyperthreadWarning
+      metric_name: vCommunity|Configuration|Advanced System Settings|UserVars.SuppressHyperthreadWarning
+      color_method: 1
+      label: UserVars.SuppressHyperthreadWarning
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: vCommunity|Configuration|Advanced System Settings|UserVars.SuppressShellWarning
+      metric_name: vCommunity|Configuration|Advanced System Settings|UserVars.SuppressShellWarning
+      color_method: 1
+      label: UserVars.SuppressShellWarning
+    visual_theme: 0
+    depth: 1
+    show_metric_full_name: true
+- id: c32b88f5-243c-42e2-9068-1b6cee2b8b46
+  type: View
+  title: Packages (for selected ESXi Host)
+  coords:
+    x: 9
+    y: 15
+    w: 4
+    h: 10
+  view: ESXi Packages
+- id: 9d0139c1-279e-4572-9196-c19b5201ed62
+  type: PropertyList
+  title: Properties (for selected ESXi Host)
+  coords:
+    x: 1
+    y: 15
+    w: 4
+    h: 10
+  property_list:
+    properties:
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: runtime|powerState
+      metric_name: Runtime|Power State
+      color_method: 1
+      label: Power State
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: runtime|connectionState
+      metric_name: Runtime|Connection State
+      color_method: 1
+      label: Connection State
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: runtime|maintenanceState
+      metric_name: Runtime|Maintenance State
+      color_method: 1
+      label: Maintenance State
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: config|hyperThread|active
+      metric_name: Configuration|Hyperthreading|Active
+      color_method: 1
+      label: Hyperthreading Enabled
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: config|vsanEnabled
+      metric_name: Configuration|vSAN Enabled
+      color_method: 1
+      label: vSAN Enabled
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: DNS|FORWARD_LOOKUP_STATUS
+      metric_name: DNS Summary|Forward Lookup Status
+      color_method: 1
+      label: DNS Forward Lookup Status
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: DNS|REVERSE_LOOKUP_STATUS
+      metric_name: DNS Summary|Reverse Lookup Status
+      color_method: 1
+      label: DNS Reverse Lookup Status
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: hardware|powerManagementPolicy
+      metric_name: Hardware|ESXi Power Management Setting
+      color_method: 1
+      label: Power Management Setting
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+      metric_key: runtime|quarantineState
+      metric_name: Runtime|Quarantine State
+      color_method: 1
+      label: Quarantine State
+      is_string_metric: true
+    visual_theme: 0
+    depth: 1
+    show_metric_full_name: true
+- id: 4388c0fb-0974-4b57-b44f-9ef570e01d06
+  type: View
+  title: ESXi Host Power State
+  coords:
+    x: 7
+    y: 1
+    w: 3
+    h: 5
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: ESXi Host Power State vCommunity
+- id: a29622c7-7a36-4ec5-bcd9-ef0c31cf03e4
+  type: View
+  title: ESXi Host Maintenance State
+  coords:
+    x: 10
+    y: 1
+    w: 3
+    h: 5
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: ESXi Host Maintenance Mode vCommunity
+- id: ee20e05e-370d-4e82-be5b-925b76631596
+  type: View
+  title: License Information (for selected ESXi Host)
+  coords:
+    x: 8
+    y: 6
+    w: 5
+    h: 4
+  view: ESXi Host License Information vCommunity
+- id: f77fe36c-d03c-4bd0-b7ce-dbc0df448daa
+  type: View
+  title: NIC Information (for selected ESXi Host)
+  coords:
+    x: 8
+    y: 10
+    w: 5
+    h: 5
+  view: ESXi Host NIC Details
+interactions:
+- from: 02d3f6ad-5ee3-4fe0-a0cf-81a2f2659e02
+  to: 42ed956e-bf95-487d-9817-db40536e6d60
+  type: resourceId
+- from: 02d3f6ad-5ee3-4fe0-a0cf-81a2f2659e02
+  to: c32b88f5-243c-42e2-9068-1b6cee2b8b46
+  type: resourceId
+- from: 02d3f6ad-5ee3-4fe0-a0cf-81a2f2659e02
+  to: 9d0139c1-279e-4572-9196-c19b5201ed62
+  type: resourceId
+- from: 02d3f6ad-5ee3-4fe0-a0cf-81a2f2659e02
+  to: ee20e05e-370d-4e82-be5b-925b76631596
+  type: resourceId
+- from: 02d3f6ad-5ee3-4fe0-a0cf-81a2f2659e02
+  to: f77fe36c-d03c-4bd0-b7ce-dbc0df448daa
+  type: resourceId

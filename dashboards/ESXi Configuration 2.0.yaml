@@ -1,0 +1,256 @@
+id: b1b3ede5-32f2-4c49-a1a8-443dc23bd993
+name: ESXi Configuration 2.0
+description: Highlight ESXi Host configurations that need your attention. Use this
+  dashboard to fix incorrect settings, update outdated components and reduce overall
+  cost by optimizing your environment. The dashboard is organized top down, where
+  configuration that needs your attention is shown first. No data on a chart means
+  the configuration is optimized.
+name_path: vCommunity
+shared: true
+widgets:
+- id: 23342fed-1006-449f-abd8-56bea2e96664
+  type: View
+  title: BIOS Version
+  coords:
+    x: 4
+    y: 6
+    w: 3
+    h: 5
+  view: ESXi BIOS version distribution
+- id: eeb1153e-adea-4557-a096-37f4babecc3e
+  type: View
+  title: CPU Model
+  coords:
+    x: 7
+    y: 1
+    w: 3
+    h: 5
+  view: ESXi CPU Models
+- id: 98af9247-40c9-4e34-a3a6-9c1a51dd60da
+  type: View
+  title: All ESXi Configuration
+  coords:
+    x: 1
+    y: 21
+    w: 12
+    h: 13
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: ESXi Configuration List
+- id: 05e4c11f-8d57-40e0-ada6-3eb17940933f
+  type: View
+  title: NIC Speeds (Mbps)
+  coords:
+    x: 7
+    y: 17
+    w: 3
+    h: 4
+  view: ESXi Distribution by NIC Speed
+- id: dd829104-0cf3-40fb-89b6-136ce3d07826
+  type: View
+  title: Hyper Threading enabled?
+  coords:
+    x: 4
+    y: 17
+    w: 3
+    h: 4
+  view: ESXi HyperThread Capability
+- id: daaa0500-67f1-474c-9513-feb7ed25a11c
+  type: View
+  title: Active Storage Paths
+  coords:
+    x: 1
+    y: 17
+    w: 3
+    h: 4
+  view: ESXi Distribution by Storage Path Counts
+- id: d8f080be-d3a9-43da-a879-f701bb83b945
+  type: View
+  title: CPU Throughput (GHz)
+  coords:
+    x: 5
+    y: 11
+    w: 4
+    h: 6
+  view: ESXi Distribution by CPU GHz
+- id: b531a63a-459a-44cb-9aa4-069eaee5d077
+  type: View
+  title: Memory Capacity (TB)
+  coords:
+    x: 9
+    y: 11
+    w: 4
+    h: 6
+  view: ESXi Distribution by Memory Size
+- id: 1ba7723a-4322-455a-8ff8-8196f2acd474
+  type: View
+  title: CPU Capacity (cores)
+  coords:
+    x: 1
+    y: 11
+    w: 4
+    h: 6
+  view: ESXi Distribution by Core Counts
+- id: c6787972-92d5-431f-941a-8b7a548a8ea5
+  type: View
+  title: ESXi Versions
+  coords:
+    x: 1
+    y: 6
+    w: 3
+    h: 5
+  view: ESXi Distribution by Versions
+- id: bcfd7e12-4762-4eda-8385-535345074883
+  type: View
+  title: CPU Sockets
+  coords:
+    x: 4
+    y: 1
+    w: 3
+    h: 5
+  view: ESXi Distribution by CPU Socket
+- id: 0a8fe6c4-7f7c-4ef1-b198-d9a601fa18f6
+  type: View
+  title: Power Management (BIOS)
+  coords:
+    x: 10
+    y: 6
+    w: 3
+    h: 5
+  view: ESXi Power Management (BIOS)
+- id: 1aee9e23-99ad-487c-b55a-74da539e5ebb
+  type: View
+  title: Power Management (ESXi)
+  coords:
+    x: 7
+    y: 6
+    w: 3
+    h: 5
+  view: ESXi Power Management
+- id: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  type: View
+  title: Select a DC or World
+  coords:
+    x: 1
+    y: 1
+    w: 3
+    h: 5
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: f86f252f-dc43-4eae-bfb9-3af966e4cc09
+  type: View
+  title: Network Interfaces
+  coords:
+    x: 1
+    y: 34
+    w: 3
+    h: 6
+  view: ESXi Network Interfaces
+- id: 6b3989d1-8399-48e5-9341-328e75905691
+  type: View
+  title: Storage Adapters
+  coords:
+    x: 7
+    y: 34
+    w: 3
+    h: 6
+  view: ESXi Storage Adapters
+- id: a8bd19a2-bdc9-4c58-9327-f9e6157236d5
+  type: View
+  title: NIC Counts
+  coords:
+    x: 10
+    y: 17
+    w: 3
+    h: 4
+  view: ESXi Distribution by NIC Count
+- id: 1bb06708-123b-4f1a-b520-40967f184f51
+  type: View
+  title: Security Policies
+  coords:
+    x: 10
+    y: 34
+    w: 3
+    h: 6
+  view: ESXi Security Policy List
+- id: 562c1935-a0cb-4f1f-8019-8cda375faae2
+  type: View
+  title: CPU Speed (GHz)
+  coords:
+    x: 10
+    y: 1
+    w: 3
+    h: 5
+  view: ESXi CPU Speed
+- id: 9962928b-9afa-42e1-b751-ef5f94ae34ed
+  type: View
+  title: Network Cards
+  coords:
+    x: 4
+    y: 34
+    w: 3
+    h: 6
+  view: ESXi Network Cards List
+interactions:
+- from: 98af9247-40c9-4e34-a3a6-9c1a51dd60da
+  to: f86f252f-dc43-4eae-bfb9-3af966e4cc09
+  type: resourceId
+- from: 98af9247-40c9-4e34-a3a6-9c1a51dd60da
+  to: 6b3989d1-8399-48e5-9341-328e75905691
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: bcfd7e12-4762-4eda-8385-535345074883
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 23342fed-1006-449f-abd8-56bea2e96664
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: c6787972-92d5-431f-941a-8b7a548a8ea5
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: eeb1153e-adea-4557-a096-37f4babecc3e
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: dd829104-0cf3-40fb-89b6-136ce3d07826
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 0a8fe6c4-7f7c-4ef1-b198-d9a601fa18f6
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 1aee9e23-99ad-487c-b55a-74da539e5ebb
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 1ba7723a-4322-455a-8ff8-8196f2acd474
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: d8f080be-d3a9-43da-a879-f701bb83b945
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: b531a63a-459a-44cb-9aa4-069eaee5d077
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 05e4c11f-8d57-40e0-ada6-3eb17940933f
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: daaa0500-67f1-474c-9513-feb7ed25a11c
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 98af9247-40c9-4e34-a3a6-9c1a51dd60da
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: a8bd19a2-bdc9-4c58-9327-f9e6157236d5
+  type: resourceId
+- from: 98af9247-40c9-4e34-a3a6-9c1a51dd60da
+  to: 1bb06708-123b-4f1a-b520-40967f184f51
+  type: resourceId
+- from: 7afa72b0-f8c3-4f06-8086-707277df2fff
+  to: 562c1935-a0cb-4f1f-8019-8cda375faae2
+  type: resourceId
+- from: 98af9247-40c9-4e34-a3a6-9c1a51dd60da
+  to: 9962928b-9afa-42e1-b751-ef5f94ae34ed
+  type: resourceId

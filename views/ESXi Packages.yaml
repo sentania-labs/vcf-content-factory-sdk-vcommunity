@@ -1,0 +1,15 @@
+id: 5de4b799-4532-4b31-84c8-aa41840858bf
+name: ESXi Packages
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: Instance
+- attribute: vCommunity|Configuration|Packages:atlantic|Package Name
+  display_name: Package Name
+- attribute: vCommunity|Configuration|Packages:atlantic|Package Version
+  display_name: Package Version
+time_window:
+  unit: DAYS
+  count: 7

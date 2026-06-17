@@ -12,43 +12,43 @@ CC-licensed). Adapter kind `vcfcf_vcommunity`.
 | Monitoring Interval | 5 minutes |
 | License Required | No |
 
-### Credentials (TWO credential kinds)
+### Credentials (ONE combined credential kind)
 
-**vCenter Credential** (`vcenter_credentials`, required)
+**vCenter Credential** (`vsphere_user`, required) — mirrors the prod original's
+single `vsphere_user` credential type. An Ops adapter instance binds exactly ONE
+credential, so the vCenter and Windows guest credentials live in the SAME kind.
 
-| Field | Key | Type |
-|---|---|---|
-| vCenter User Name | `user` | string |
-| vCenter Password | `password` | string (masked) |
+| Field | Key | Type | Required |
+|---|---|---|---|
+| vCenter User Name | `user` | string | Yes |
+| vCenter Password | `password` | string (masked) | Yes |
+| Windows User Name | `winUser` | string | No |
+| Windows Password | `winPass` | string (masked) | No |
 
-**Windows Guest Credential** (`windows_guest_credentials`, optional — guest-ops)
-
-| Field | Key | Type |
-|---|---|---|
-| Windows User Name | `winUser` | string |
-| Windows Password | `winPass` | string (masked) |
-
-The type=7 adapter instance binds both via the comma-delimited
-`credentialKind="vcenter_credentials,windows_guest_credentials"` attribute
-(`describeSchema.xsd` allows `CredentialKind maxOccurs="unbounded"`).
+The type=7 adapter instance binds this single kind via
+`credentialKind="vsphere_user"`. Guest-ops runs only when the optional Windows
+fields are populated (`VCommunityConfig.hasWindowsCredential()`).
 
 ### Connection Settings
 
 | Field | Key | Default | Required |
 |---|---|---|---|
-| vCenter Server | `vcenter_host` | — | Yes |
-| Windows Monitoring | `windows_monitoring` | Disabled | No |
+| vCenter Server | `host` | — | Yes |
 | ESXi Advanced System Settings Config File | `esxi_adv_settings_config_file` | esxi_advanced_system_settings | No |
 | ESXi Software Packages Config File | `esxi_vib_driver_config_file` | esxi_packages | No |
 | VM Advanced Parameters Config File | `vm_adv_settings_config_file` | vm_advanced_parameters | No |
 | VM Options Config File | `vm_configuration_config_file` | vm_options | No |
+| Port | `port` | 443 | No |
 | Windows Service Configuration File | `win_service_config_file` | windows_service_list | No |
 | Windows Event Log Configuration File | `win_event_config_file` | windows_event_list | No |
-| Port | `port` | 443 | No |
+| Guest OS Service Monitoring Status | `serviceMonitoring` | Disabled | No |
+| Windows Event Log Monitoring Status | `winEventMonitoring` | Disabled | No |
 | Allow Insecure SSL | `allowInsecure` | false | No |
 
-`Windows Monitoring` enum: `Disabled` | `Services` | `Event Logs` |
-`Services + Event Logs`. The six `*_config_file` fields hold the NAME (no path,
+`serviceMonitoring` and `winEventMonitoring` are independent `Enabled`/`Disabled`
+toggles (matching the original's two Advanced-Settings enums); the services and
+event-log collection gates derive from the two booleans. The six `*_config_file`
+fields hold the NAME (no path,
 no `.xml`) of a check-list file in the VCF Ops central configuration-file store
 under `SolutionConfig/`. The bundled defaults ship in
 `content/files/solutionconfig/` and import into the central store at install;

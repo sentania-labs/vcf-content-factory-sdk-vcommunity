@@ -1,0 +1,16 @@
+id: 0c648c9c-cede-4403-b8fe-500067629bf0
+name: "Total Network Configuration Issues"
+resource_kinds:
+  - resource_kind_key: "VMwareAdapter Instance"
+    adapter_kind_key: VMWARE
+  - resource_kind_key: vSphere World
+    adapter_kind_key: VMWARE
+  - resource_kind_key: VmwareDistributedVirtualSwitch
+    adapter_kind_key: VMWARE
+  - resource_kind_key: Datacenter
+    adapter_kind_key: VMWARE
+description: >
+  Sum of the following network issues in all distributed switches: out of sync configuration, mismatched teaming, mismatched MTU size, unsupported MTU, and unsupported VLAN
+unit_id: ""
+formula: |
+  sum(${adaptertype=VMWARE, objecttype=VmwareDistributedVirtualSwitch, attribute=host|config_outofsync, depth=3}) + sum(${adaptertype=VMWARE, objecttype=VmwareDistributedVirtualSwitch, attribute=host|mtu_mismatch, depth=3}) + sum(${adaptertype=VMWARE, objecttype=VmwareDistributedVirtualSwitch, attribute=host|vlans_unsupported, depth=3}) + sum(${adaptertype=VMWARE, objecttype=VmwareDistributedVirtualSwitch, attribute=host|mtu_unsupported, depth=3}) + sum(${adaptertype=VMWARE, objecttype=VmwareDistributedVirtualSwitch, attribute=host|teaming_mismatch, depth=3})

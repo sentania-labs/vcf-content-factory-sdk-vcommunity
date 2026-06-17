@@ -1,0 +1,15 @@
+id: de04afbf-832d-4bb9-a13c-c7680356c00f
+name: vSphere Clusters distribution by ESXi count
+description: "Absolute distribution of clusters by the number of ESXi hosts. \nKeep\
+  \ the total number of variants minimal for ease of operations. Take note of small\
+  \ clusters, as they have relatively higher overhead, hence less optimized."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+columns:
+- attribute: summary|total_number_hosts
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

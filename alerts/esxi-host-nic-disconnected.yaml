@@ -1,0 +1,17 @@
+name: "ESXi Host NIC Disconnected"
+adapter_kind: VMWARE
+resource_kind: HostSystem
+type: 15
+sub_type: 19
+wait_cycles: 2
+cancel_cycles: 2
+criticality: CRITICAL
+impact:
+  badge: HEALTH
+symptom_sets:
+  operator: ALL
+  sets:
+    - defined_on: SELF
+      operator: ALL
+      symptoms:
+        - name: "ESXi Host NIC Disconnected"

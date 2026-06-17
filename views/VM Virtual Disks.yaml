@@ -1,0 +1,34 @@
+id: 56abf797-0534-4b73-bc27-693317a206ac
+name: VM Virtual Disks
+description: List of virtual machine disks and their inventory information
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: Instance Name
+  display_name: Virtual Disk
+- attribute: virtualDisk:scsi0:0|label
+  display_name: Label
+- attribute: virtualDisk:scsi0:0|configuredGB
+  display_name: Disk Size
+  unit: gb
+  yellow_bound: 250.0
+  orange_bound: 500.0
+  red_bound: 1000.0
+  ascending_range: false
+- attribute: virtualDisk:scsi0:0|datastore
+  display_name: Datastore
+- attribute: virtualDisk:scsi0:0|isRDM
+  display_name: RDM?
+  red_bound: 'true'
+- attribute: virtualDisk:scsi0:0|iopsLimit
+  display_name: IOPS Limit
+- attribute: virtualDisk:scsi0:0|provisioning_type
+  display_name: Format
+- attribute: virtualDisk:scsi0:0|scsiControllerType
+  display_name: SCSI Controller
+- attribute: virtualDisk:scsi0:0|scsiBusSharing
+  display_name: Bus Sharing
+time_window:
+  unit: DAYS
+  count: 7

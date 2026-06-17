@@ -1,0 +1,14 @@
+id: c8d1e671-d0ea-489f-acc4-46e34cc246b6
+name: "ESXi Host NIC Disconnected"
+adapter_kind: VMWARE
+resource_kind: HostSystem
+wait_cycles: 2
+cancel_cycles: 2
+severity: CRITICAL
+
+condition:
+  type: property
+  key: vCommunity|Network|Device:vmnic0|Status
+  operator: NOT_EQ
+  value: "Connected"
+  instanced: true

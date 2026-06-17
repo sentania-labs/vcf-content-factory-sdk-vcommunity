@@ -1,0 +1,15 @@
+id: a23eedec-b64d-4d89-8a12-f6c92d8cc561
+name: "vSphere Cluster Memory Zip Swap"
+resource_kinds:
+  - resource_kind_key: ClusterComputeResource
+    adapter_kind_key: VMWARE
+description: >
+  Percentage of VM memory swapped and compressed in the cluster. We exclude the memory consumed by
+  VMkernel for greater accuracy. Balloon is not included as that's unlikely to cause performance as
+  it's idle pages.
+
+  For details, see VCF Operations Transformation book and vSphere Metrics book, which are parts of
+  Operationalize Your World.
+unit_id: percent
+formula: |
+  (   ${this, metric=mem|compressed_average}+${this, metric=mem|swapout_average} ) / (    ${this, metric=mem|compressed_average}+${this, metric=mem|swapout_average} + ${this, metric=mem|consumed_average} - ${this, metric=mem|sysUsage_average}) * 100

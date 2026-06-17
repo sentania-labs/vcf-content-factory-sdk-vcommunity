@@ -1,0 +1,16 @@
+id: 41127d01-e62b-4d46-89d4-7293ed86103c
+name: ESXi Distribution by CPU Socket
+description: Count of clusters with 4 or more CPU sockets. Avoid 4 sockets due to
+  NUMA. Use 1 - 2 sockets with high core counts instead. For low cost, use single
+  socket with high core counts.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: hardware|cpuInfo|numCpuPackages
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

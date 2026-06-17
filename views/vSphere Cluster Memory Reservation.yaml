@@ -1,0 +1,19 @@
+id: f83a4c60-9931-4305-95f9-93f724be86fe
+name: vSphere Cluster Memory Reservation
+description: 'Relative distribution of clusters memory reservation.  Expect to have
+  0 or minimal reservation, as they impact capacity.
+
+
+  Memory should use a lower threshold than what CPU has as memory is sticky. The reservation
+  takes effect despite Guest OS no longer touches the page.'
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+columns:
+- attribute: mem|reservedCapacity_average
+  display_name: .
+  unit: tb
+time_window:
+  unit: DAYS
+  count: 7

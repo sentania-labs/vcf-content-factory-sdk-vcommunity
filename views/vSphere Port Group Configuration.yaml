@@ -1,0 +1,70 @@
+id: 49b13b68-dee2-483d-8df8-1b6d7957d01c
+name: vSphere Port Group Configuration
+description: List of distributed port groups and their key properties.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: DistributedVirtualPortgroup
+columns:
+- attribute: summary|used_num_ports
+  display_name: Used Ports
+- attribute: supermetric:"Number of VM"
+  display_name: Total VM
+- attribute: config|backing_type
+  display_name: Backing Type
+- attribute: config|policies|security|vlan_id
+  display_name: VLAN ID
+  orange_bound: 0.0
+  red_bound: none
+  ascending_range: true
+- attribute: config|policies|security|vlan_trunk_id
+  display_name: VLAN Trunk
+- attribute: config|policies|override|block_override_allowed
+  display_name: Block Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|live_port_moving_allowed
+  display_name: Live Port Moving Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|ipfix_override_allowed
+  display_name: Netflow Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|network_resourcepool_moving_override_allowed
+  display_name: Resource Pool Moving Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|port_config_reset_at_disconnect
+  display_name: Config Reset
+  red_bound: 'true'
+- attribute: config|policies|override|security_policy_override_allowed
+  display_name: Security Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|shaping_override_allowed
+  display_name: Shaping Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|uplink_teaming_override_allowed
+  display_name: Teaming Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|vendor_config_override_allowed
+  display_name: Config Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|override|vlan_override_allowed
+  display_name: VLAN Override Allowed
+  red_bound: 'true'
+- attribute: config|policies|security|allow_promiscuous
+  display_name: Allow Promiscuous
+  red_bound: 'true'
+- attribute: config|policies|security|forged_transmits
+  display_name: Forged Transmits
+  red_bound: 'true'
+- attribute: config|policies|security|mac_changes
+  display_name: MAC Address Changes
+  red_bound: 'true'
+- attribute: summary|max_num_ports
+  display_name: Max Number of Ports
+- attribute: config|segmentID
+  display_name: Segment ID
+- attribute: config|logicalSwitchUuid
+  display_name: Logical Switch ID
+- attribute: config|uplink
+  display_name: Uplink
+time_window:
+  unit: DAYS
+  count: 7

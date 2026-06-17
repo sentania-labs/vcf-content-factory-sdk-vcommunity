@@ -1,0 +1,21 @@
+id: de1ff68b-1a78-4939-996d-600b0abef33e
+name: VM Memory Contention Distribution
+description: "Distribution of VMs by their memory contention. It's using the 20-second\
+  \ Peak metric, not the average metric. \n\nIt's showing the 99th percentile, and\
+  \ not the peak. This balances between false positive (showing outlier) and too late.\n\
+  99th is chosen and not 95th as it's designed for early warning. \n\nThe bar chart\
+  \ is segregated into different buckets. Each bucket is color coded, showing different\
+  \ threshold."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: mem|20_sec_peak_host_contentionPct
+  display_name: .
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 99
+time_window:
+  unit: DAYS
+  count: 1

@@ -1,0 +1,19 @@
+id: 44fe1b68-813f-4381-a74f-74432b97c1e7
+name: ESXi CPU Speed
+description: "Relative distribution of ESXi hosts, by their CPU size in GHz. Keep\
+  \ them minimal. Also, pay attention to small hosts as they have relatively higher\
+  \ overhead, hence less optimized. To change the threshold, go to filter tab. \n\n\
+  Known issue: due to rounding limitation, CPU with very similar speed is shown as\
+  \ separate slices."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: hardware|cpuInfo|hz
+  display_name: Speed
+  unit: ghz
+time_window:
+  unit: DAYS
+  count: 7

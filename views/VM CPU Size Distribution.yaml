@@ -1,0 +1,20 @@
+id: ccfc42fb-aaf3-439e-8111-3a0f1bf7713a
+name: VM CPU Size Distribution
+description: 'Absolute distribution of VMs vCPU. Minimize the large VMs, especially
+  those exceeding the size of the underlying ESXi CPU socket core, as they likely
+  create performance and capacity problem.
+
+
+  Be careful of system on a chip packaging, where multiple core complex are packaged
+  together in a single socket. This results in NUMA effect as the complex do not share
+  L3 cache.'
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: config|hardware|numCpu
+  display_name: .
+time_window:
+  unit: MINUTES
+  count: 1

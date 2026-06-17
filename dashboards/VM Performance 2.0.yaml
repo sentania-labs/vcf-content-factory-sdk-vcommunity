@@ -1,0 +1,645 @@
+id: 4439d7b2-c758-4eca-ad49-42f3e0280d35
+name: VM Performance 2.0
+description: "This is the main dashboards to monitor and troubleshoot vSphere VM Performance.\
+  \ This focuses on the contention metrics as they are the primary counter for performance,\
+  \ while utilization is the secondary counter. \n\nOperationalize Your World enhancement:\
+  \ \nadded link to Guest OS dashboard."
+name_path: vCommunity
+shared: true
+widgets:
+- id: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  type: View
+  title: VMs Performance in selected Datacenter
+  coords:
+    x: 1
+    y: 7
+    w: 4
+    h: 21
+  view: VM Performance List
+- id: 4f878842-0e35-4e7a-8763-70cf9e11d7a0
+  type: View
+  title: Datacenters
+  coords:
+    x: 1
+    y: 1
+    w: 3
+    h: 6
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: bb5f1457-c0ea-479a-9b28-a8dc4778fd0d
+  type: View
+  title: Are VMs facing Memory Contention?
+  coords:
+    x: 7
+    y: 1
+    w: 3
+    h: 6
+  view: VM Memory Contention Distribution
+- id: eda7eca0-8a63-403d-8c39-4cf20dee4584
+  type: View
+  title: Are VMs facing CPU Ready?
+  coords:
+    x: 4
+    y: 1
+    w: 3
+    h: 6
+  view: VM CPU Ready Distribution
+- id: d90d4914-c64a-443d-80b4-939a7677bcc7
+  type: View
+  title: Are VMs facing Disk Latency?
+  coords:
+    x: 10
+    y: 1
+    w: 3
+    h: 6
+  view: VM Disk Latency Distribution
+- id: 1119e157-da66-40ce-a837-2cfddb5d9175
+  type: Scoreboard
+  title: Configuration
+  coords:
+    x: 5
+    y: 27
+    w: 8
+    h: 1
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|hardware|numCpu
+    metric_name: Configuration|Hardware|Number of virtual CPUs
+    color_method: 0
+    yellow_bound: 16.0
+    orange_bound: 32.0
+    red_bound: 64.0
+    label: vCPU
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|hardware|numCoresPerSocket
+    metric_name: Configuration|Hardware|Number of CPU cores per socket
+    label: CPU cores per socket
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|cpuAllocation|limit
+    metric_name: Configuration|CPU Resource Allocation|Limit
+    unit_id: ghz
+    unit: GHz
+    color_method: 0
+    yellow_bound: 0.3
+    orange_bound: 0.2
+    red_bound: 0.1
+    label: CPU Limit
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|cpuAllocation|shares|shares
+    metric_name: Configuration|CPU Resource Allocation|Shares|Shares
+    label: CPU Share
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|hardware|memoryKB
+    metric_name: Configuration|Hardware|Memory
+    unit_id: gb
+    unit: GB
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|memoryAllocation|limit
+    metric_name: Configuration|Memory Resource Allocation|Limit
+    unit_id: gb
+    unit: GB
+    color_method: 0
+    yellow_bound: 0.3
+    orange_bound: 0.2
+    red_bound: 0.1
+    label: Memory Limit
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|memoryAllocation|shares|shares
+    metric_name: Configuration|Memory Resource Allocation|Shares|Shares
+    label: Memory Share
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|extraConfig|mem_hotadd
+    metric_name: Configuration|Extra Configuration|Memory Hot Add
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: diskspace|snapshot|snapshotAge
+    metric_name: Disk Space|Snapshot|Age (Days)
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 5.0
+    red_bound: 15.0
+    label: Snapshot Age
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|guest|fullName
+    metric_name: Summary|Guest Operating System|Guest OS from Tools
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|guest|toolsVersion
+    metric_name: Summary|Guest Operating System|Tools Version
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|guest|toolsVersionStatus2
+    metric_name: Summary|Guest Operating System|Tools Version Status
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|version
+    metric_name: Configuration|Version
+    label: Hardware Version
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|numVMDKs
+    metric_name: Configuration|Number of Virtual Disks
+    color_method: 0
+    yellow_bound: 4.0
+    orange_bound: 8.0
+    red_bound: 16.0
+    label: No of Disks
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|parentFolder
+    metric_name: Summary|Parent Folder
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|tag
+    metric_name: Summary|vSphere Tag
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|parentCluster
+    metric_name: Summary|Parent Cluster
+    color_method: 1
+    is_string_metric: true
+  visual_theme: 4
+  show_sparkline: false
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 4
+  box_height: 64.0
+  value_size: 14
+  label_size: 12
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: be75c6df-e5ba-494c-be20-c78da16138d8
+  type: Scoreboard
+  title: CPU Performance
+  coords:
+    x: 5
+    y: 11
+    w: 8
+    h: 3
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|20_sec_peak_cpu_queue
+    metric_name: Guest|Peak vCPU Queue within collection cycle
+    color_method: 0
+    yellow_bound: 4.0
+    orange_bound: 12.0
+    red_bound: 36.0
+    label: Queue
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|20_sec_peak_readyPct
+    metric_name: CPU|Peak vCPU Ready within collection cycle
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 3.0
+    orange_bound: 6.0
+    red_bound: 12.0
+    label: Ready
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|20_sec_peak_costopPct
+    metric_name: CPU|Peak vCPU Co-Stop within collection cycle
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 2.0
+    red_bound: 4.0
+    label: Co-Stop
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|20_sec_peak_overlap
+    metric_name: CPU|Peak vCPU Overlap within collection cycle
+    unit_id: percent
+    unit: '%'
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 2.0
+    red_bound: 4.0
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|20_sec_peak_iowaitPct
+    metric_name: CPU|Peak Other Wait within collection cycle
+    unit_id: percent
+    unit: '%'
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 3.0
+    red_bound: 9.0
+    label: Other Wait
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|20_sec_peak_contextSwapRate_latest
+    metric_name: Guest|Peak CPU Context Switch Rate within collection cycle
+    label: Context Switch
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|peak_vcpu_usage
+    metric_name: CPU|Highest vCPU Usage of all instances
+    unit_id: '-1'
+    unit: Auto
+    label: Usage
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|vcpu_usage_disparity
+    metric_name: CPU|vCPU Usage Disparity
+    unit_id: '-1'
+    unit: Auto
+    label: Usage Disparity
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 8
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: 98cbe6fb-aca4-4df6-898b-025f15314425
+  type: Scoreboard
+  title: Network Performance
+  coords:
+    x: 5
+    y: 20
+    w: 8
+    h: 3
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net:Aggregate of all instances|droppedPct
+    metric_name: Network:Aggregate of all instances|Packets Dropped
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 2.0
+    red_bound: 4.0
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net|droppedTx_summation_sum
+    metric_name: Network|Total Transmitted Packets Dropped
+    unit_id: packets
+    unit: packets
+    color_method: 0
+    yellow_bound: 25.0
+    orange_bound: 100.0
+    red_bound: 400.0
+    label: TX Packets Dropped
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net|20_sec_peak_usage_average
+    metric_name: Network|Peak Usage Rate within collection cycle
+    unit_id: mbitsps
+    unit: Mbps
+    label: Peak Throughput
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net|received_average
+    metric_name: Network|Data Receive Rate
+    unit_id: mbitsps
+    unit: Mbps
+    label: Receive Rate
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net|transmitted_average
+    metric_name: Network|Data Transmit Rate
+    unit_id: mbitsps
+    unit: Mbps
+    label: Transmit Rate
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net|broadcastTx_summation_sum
+    metric_name: Network|Total Broadcast Packets Transmitted
+    unit_id: packets
+    unit: packets
+    label: TX Broadcast Packets
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: net|multicastTx_summation_sum
+    metric_name: Network|Total Multicast Packets Transmitted
+    unit_id: packets
+    unit: packets
+    label: TX Multicast Packets
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 7
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: e32d5268-fbfd-4b8c-9a90-99893947c605
+  type: Scoreboard
+  title: Disk Performance
+  coords:
+    x: 5
+    y: 17
+    w: 8
+    h: 3
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|20_sec_peak_disk_queue
+    metric_name: Guest|Peak Disk Queue within collection cycle
+    color_method: 0
+    yellow_bound: 20.0
+    orange_bound: 40.0
+    red_bound: 80.0
+    label: Queue
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk|20_sec_peak_totalLatency_average
+    metric_name: Virtual Disk|Peak Latency within collection cycle
+    unit_id: msec
+    unit: ms
+    color_method: 0
+    yellow_bound: 10.0
+    orange_bound: 20.0
+    red_bound: 40.0
+    label: Peak Latency
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk|peak_vDisk_readLatency
+    metric_name: Virtual Disk|Highest Read Latency of all instances
+    unit_id: msec
+    unit: ms
+    color_method: 0
+    yellow_bound: 10.0
+    orange_bound: 20.0
+    red_bound: 40.0
+    label: Read Latency
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk|peak_vDisk_writeLatency
+    metric_name: Virtual Disk|Highest Write Latency of all instances
+    unit_id: msec
+    unit: ms
+    color_method: 0
+    yellow_bound: 10.0
+    orange_bound: 20.0
+    red_bound: 40.0
+    label: Write Latency
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk:Aggregate of all instances|numberWriteAveraged_average
+    metric_name: Virtual Disk:Aggregate of all instances|Write IOPS
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk:Aggregate of all instances|numberReadAveraged_average
+    metric_name: Virtual Disk:Aggregate of all instances|Read IOPS
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk|write_average
+    metric_name: Virtual Disk|Write Throughput
+    unit_id: mbps
+    unit: MBps
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: virtualDisk|read_average
+    metric_name: Virtual Disk|Read Throughput
+    unit_id: mbps
+    unit: MBps
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 8
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: e13dc293-6a67-48a2-bbe8-fe09b0e2e513
+  type: Scoreboard
+  title: Memory Performance
+  coords:
+    x: 5
+    y: 14
+    w: 8
+    h: 3
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: mem|20_sec_peak_host_contentionPct
+    metric_name: Memory|Peak Contention within collection cycle
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 0.5
+    orange_bound: 1.0
+    red_bound: 2.0
+    label: Contention
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|mem.free_latest
+    metric_name: Guest|Free Memory
+    unit_id: mb
+    unit: MB
+    color_method: 0
+    yellow_bound: 512.0
+    orange_bound: 256.0
+    red_bound: 128.0
+    label: Free Memory
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|page.inRate_latest
+    metric_name: Guest|Page In Rate per second
+    unit_id: Page/s
+    unit: Page/s
+    color_method: 0
+    yellow_bound: 10000.0
+    orange_bound: 50000.0
+    red_bound: 200000.0
+    label: Page In Rate
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|page.outRate_latest
+    metric_name: Guest|Page Out Rate per second
+    unit_id: Page/s
+    unit: Page/s
+    color_method: 0
+    yellow_bound: 1000.0
+    orange_bound: 2000.0
+    red_bound: 4000.0
+    label: Page Out Rate
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: mem|balloonPct
+    metric_name: Memory|Balloon
+    unit_id: percent
+    unit: '%'
+    color_method: 0
+    yellow_bound: 2.0
+    orange_bound: 4.0
+    red_bound: 8.0
+    label: Balloon
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guest|swap.spaceRemaining_latest
+    metric_name: Guest|Remaining Swap Space
+    unit_id: gb
+    unit: GB
+    label: Remaining Swap
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: mem|compressed_average
+    metric_name: Memory|Compressed
+    unit_id: gb
+    unit: GB
+    label: Compressed
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: mem|swapped_average
+    metric_name: Memory|Swapped
+    unit_id: gb
+    unit: GB
+    label: Swapped
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 8
+  value_size: 24
+  label_size: 16
+  round_decimals: 1.0
+  max_cell_count: 100
+- id: b10e6971-abc6-4dea-a0dd-2dd9b4434aec
+  type: AlertList
+  title: Performance Alerts
+  coords:
+    x: 5
+    y: 23
+    w: 8
+    h: 4
+  criticality:
+  - 2
+  - 3
+  - 4
+  alert_types:
+  - '15_19'
+  - '16_19'
+  - '17_19'
+  - '18_19'
+  - '19_19'
+  - '20_19'
+  mode: all
+  depth: 1
+- id: 54c44fd4-ffef-4bab-8dd8-7b164d70d804
+  type: ResourceRelationshipAdvanced
+  title: Relationship
+  coords:
+    x: 1
+    y: 28
+    w: 8
+    h: 5
+  resource_relationship_advanced:
+    resource_kinds:
+    - adapter_kind: VMWARE
+      resource_kind: ClusterComputeResource
+    - adapter_kind: VMWARE
+      resource_kind: Datastore
+    - adapter_kind: VMWARE
+      resource_kind: HostSystem
+    - adapter_kind: VMWARE
+      resource_kind: ResourcePool
+    depth: 2,1
+    pagination_number: 5
+    self_provider: false
+- id: 01d79c20-9b30-4612-805b-a3715a401361
+  type: View
+  title: Virtual Disks
+  coords:
+    x: 9
+    y: 28
+    w: 4
+    h: 5
+  view: a245c324-5359-4255-9762-3edd16ab9f30
+- id: 1a473266-8376-4492-8c30-b53fc291a536
+  type: HealthChart
+  title: VM Performance (%)
+  coords:
+    x: 5
+    y: 7
+    w: 8
+    h: 4
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+  metric_key: Super Metric|sm_9ee466de-616a-41a9-b573-e8513e646ea3
+  metric_name: Super Metrics|VM Performance (%)
+  metric_full_name: Super Metrics|VM KPI (%)
+  mode: all
+  depth: 1
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  show_resource_name: true
+interactions:
+- from: 4f878842-0e35-4e7a-8763-70cf9e11d7a0
+  to: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  type: resourceId
+- from: 4f878842-0e35-4e7a-8763-70cf9e11d7a0
+  to: eda7eca0-8a63-403d-8c39-4cf20dee4584
+  type: resourceId
+- from: 4f878842-0e35-4e7a-8763-70cf9e11d7a0
+  to: bb5f1457-c0ea-479a-9b28-a8dc4778fd0d
+  type: resourceId
+- from: 4f878842-0e35-4e7a-8763-70cf9e11d7a0
+  to: d90d4914-c64a-443d-80b4-939a7677bcc7
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: be75c6df-e5ba-494c-be20-c78da16138d8
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: e13dc293-6a67-48a2-bbe8-fe09b0e2e513
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: e32d5268-fbfd-4b8c-9a90-99893947c605
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: 98cbe6fb-aca4-4df6-898b-025f15314425
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: 1119e157-da66-40ce-a837-2cfddb5d9175
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: b10e6971-abc6-4dea-a0dd-2dd9b4434aec
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: 54c44fd4-ffef-4bab-8dd8-7b164d70d804
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: 01d79c20-9b30-4612-805b-a3715a401361
+  type: resourceId
+- from: 1f885c55-ea9c-4acd-aa77-b6c3f2633af3
+  to: 1a473266-8376-4492-8c30-b53fc291a536
+  type: resourceId

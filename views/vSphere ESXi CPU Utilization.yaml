@@ -1,0 +1,18 @@
+id: 7bcdb50d-c015-4237-9014-832a74f07f91
+name: vSphere ESXi CPU Utilization
+description: Trend line of ESXi CPU utilization. Both the Thread Utilization and Core
+  Utilization. As the context is capacity, focus on thread.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: trend
+columns:
+- attribute: cpu|coreUtilization_average
+  display_name: Core Utilization
+  unit: percent
+- attribute: cpu|utilization_average
+  display_name: Thread Utilization
+  unit: percent
+time_window:
+  unit: WEEKS
+  count: 1

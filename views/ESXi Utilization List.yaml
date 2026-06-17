@@ -1,0 +1,97 @@
+id: 493527e2-d992-4e56-98ae-d9245c255174
+name: ESXi Utilization List
+description: List of ESXi hosts and their utilization. The context is capacity management,
+  not performance. The threshold is adjusted by 10%, as it assumes a cluster has 1
+  HA host.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: cpu|coreUtilization_average
+  display_name: Core Utilization
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 85.0
+  orange_bound: 90.0
+  red_bound: 95.0
+  ascending_range: false
+- attribute: cpu|utilization_average
+  display_name: Thread Utilization
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 55.0
+  orange_bound: 70.0
+  red_bound: 85.0
+  ascending_range: false
+- attribute: mem|consumed_average
+  display_name: Memory Consumed
+  unit: gb
+  transformation: PERCENTILE
+  percentile: 95
+- attribute: mem|total_need
+  display_name: Utilization
+  unit: gb
+  transformation: PERCENTILE
+  percentile: 95
+- attribute: mem|vmmemctl_average
+  display_name: Ballooned
+  unit: gb
+  yellow_bound: 1.0
+  orange_bound: 5.0
+  red_bound: 25.0
+  ascending_range: false
+- attribute: mem|compressed_average
+  display_name: Zipped
+  unit: gb
+  yellow_bound: 0.5
+  orange_bound: 2.0
+  red_bound: 8.0
+  ascending_range: false
+- attribute: mem|swapout_average
+  display_name: Swapped
+  unit: gb
+  yellow_bound: 0.5
+  orange_bound: 2.0
+  red_bound: 8.0
+  ascending_range: false
+- attribute: cpu|percentage_of_vms_facing_cpu_costop
+  display_name: '% VM with Co-Stop'
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 10.0
+  ascending_range: false
+- attribute: cpu|percentage_of_vms_facing_cpu_ready
+  display_name: '% VM with Ready'
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 2.5
+  orange_bound: 5.0
+  red_bound: 10.0
+  ascending_range: false
+- attribute: cpu|max_cpu_costop
+  display_name: Max CPU Co-Stop
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 2.0
+  orange_bound: 4.0
+  red_bound: 8.0
+  ascending_range: false
+- attribute: cpu|max_cpu_ready
+  display_name: Max CPU Ready
+  unit: percent
+  transformation: PERCENTILE
+  percentile: 95
+  yellow_bound: 4.0
+  orange_bound: 8.0
+  red_bound: 16.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 1

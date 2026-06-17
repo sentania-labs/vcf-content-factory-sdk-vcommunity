@@ -1,0 +1,76 @@
+id: 3c32ba9d-e71c-4f2c-bf46-844d1b07857f
+name: VM Performance List
+description: List of VMs and their key performance indicators. Because it focuses
+  on proactive monitoring, the worst counter is shown. The default shows data from
+  the worst 5 minute in the last 24 hours. As this focuses on performance, powered
+  off VMs are excluded.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: summary|guest|hostName
+  display_name: Hostname
+- attribute: supermetric:"vSphere VM Performance"
+  display_name: Performance (%)
+  unit: percent
+  transformation: MIN
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  ascending_range: true
+- attribute: guest|20_sec_peak_cpu_queue
+  display_name: Peak CPU Queue
+  transformation: MAX
+  yellow_bound: 2.0
+  orange_bound: 4.0
+  red_bound: 8.0
+  ascending_range: false
+- attribute: cpu|20_sec_peak_readyPct
+  display_name: Peak CPU Ready
+  unit: percent
+  transformation: MAX
+  yellow_bound: 4.0
+  orange_bound: 8.0
+  red_bound: 16.0
+  ascending_range: false
+- attribute: mem|20_sec_peak_host_contentionPct
+  display_name: Peak Memory Contention
+  unit: percent
+  transformation: MAX
+  yellow_bound: 2.0
+  orange_bound: 4.0
+  red_bound: 8.0
+  ascending_range: false
+- attribute: guest|20_sec_peak_disk_queue
+  display_name: Peak Disk Queue
+  transformation: MAX
+  yellow_bound: 20.0
+  orange_bound: 40.0
+  red_bound: 80.0
+  ascending_range: false
+- attribute: virtualDisk|20_sec_peak_totalLatency_average
+  display_name: Peak Disk Latency
+  unit: msec
+  transformation: MAX
+  yellow_bound: 20.0
+  orange_bound: 40.0
+  red_bound: 80.0
+  ascending_range: false
+- attribute: net|droppedTxPct_max
+  display_name: Peak TX Packet Drop
+  unit: percent
+  transformation: MAX
+  yellow_bound: 0.5
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: false
+- attribute: config|hardware|numCpu
+  display_name: vCPU
+- attribute: config|hardware|memoryKB
+  display_name: Memory
+  unit: gb
+- attribute: config|numVMDKs
+  display_name: Virtual Disks
+time_window:
+  unit: HOURS
+  count: 12

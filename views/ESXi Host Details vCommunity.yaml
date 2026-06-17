@@ -1,0 +1,28 @@
+id: d0002f17-5acb-46dd-b69f-4a89f31f0c3b
+name: ESXi Host Details vCommunity
+description: ESXi Host Details vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: vCommunity|Configuration|Install Date|UTC
+  display_name: Install Date
+- attribute: summary|version
+  display_name: ESXi Version
+- attribute: hardware|vendorModel
+  display_name: Hardware Model
+- attribute: hardware|serialNumberTag
+  display_name: Serial Number
+- attribute: hardware|cpuInfo|numCpuPackages
+  display_name: CPU
+- attribute: hardware|cpuInfo|numCpuCores
+  display_name: CPU Cores
+- attribute: hardware|memorySize
+  display_name: Memory
+  unit: auto
+- attribute: config|diskSpace
+  display_name: Disk
+  unit: tb
+time_window:
+  unit: DAYS
+  count: 30

@@ -1,0 +1,55 @@
+id: b963d4b9-12ba-41a2-86df-9e294a1c5f66
+name: Datastore Performance List
+description: List of datastores, their key performance and configuration that are
+  meant to be consistent. Local datastores are not excluded. Because it focuses on
+  proactive monitoring, the worst counter is shown.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: Datastore
+columns:
+- attribute: devices:Aggregate of all instances|totalLatency_average
+  display_name: Worst Latency
+  unit: msec
+  transformation: MAX
+  yellow_bound: 5.0
+  orange_bound: 10.0
+  red_bound: 15.0
+  ascending_range: false
+- attribute: devices:Aggregate of all instances|totalReadLatency_average
+  display_name: Worst Read Latency
+  unit: msec
+  transformation: MAX
+  yellow_bound: 5.0
+  orange_bound: 10.0
+  red_bound: 15.0
+  ascending_range: false
+- attribute: devices:Aggregate of all instances|totalWriteLatency_average
+  display_name: Worst Write Latency
+  unit: msec
+  transformation: MAX
+  yellow_bound: 5.0
+  orange_bound: 10.0
+  red_bound: 15.0
+  ascending_range: false
+- attribute: devices:Aggregate of all instances|usage_average
+  display_name: Max Throughput
+  unit: mbps
+  transformation: MAX
+  yellow_bound: 100.0
+  orange_bound: 250.0
+  red_bound: 500.0
+  ascending_range: false
+- attribute: devices:Aggregate of all instances|commandsAveraged_average
+  display_name: Max IOPS
+  transformation: MAX
+  yellow_bound: 1000.0
+  orange_bound: 2500.0
+  red_bound: 5000.0
+  ascending_range: false
+- attribute: datastore|hostcount
+  display_name: ESXi
+- attribute: summary|total_number_vms
+  display_name: VM
+time_window:
+  unit: DAYS
+  count: 1

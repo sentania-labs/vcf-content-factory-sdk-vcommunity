@@ -1,0 +1,15 @@
+id: bbd24970-a49d-405b-9d28-0f4165c4f258
+name: "vSphere Cluster vMotions"
+resource_kinds:
+  - resource_kind_key: ClusterComputeResource
+    adapter_kind_key: VMWARE
+description: >
+  Number of vMotion as a percentage of total running VMs in the cluster. It's
+  a leading indicator of performance. High number of vMotion indicates clusters
+  struggle to juggle the VMs.
+
+  For details, see VCF Operations Transformation book and vSphere Metrics book,
+  which are parts of Operationalize Your World.
+unit_id: percent
+formula: |
+  (${this, metric=summary|number_vmotion} / ${this, metric=summary|number_running_vms}) * 100

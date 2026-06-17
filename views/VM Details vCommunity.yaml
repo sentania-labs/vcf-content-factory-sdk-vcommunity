@@ -1,0 +1,26 @@
+id: f12d5911-bcd2-48c9-b7b9-5ae57eef8a41
+name: VM Details vCommunity
+description: VM Details vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: summary|runtime|powerState
+  display_name: Power State
+  red_bound: Powered Off
+- attribute: summary|guest|ipAddress
+  display_name: IP
+- attribute: summary|guest|fullName
+  display_name: OS
+- attribute: config|hardware|num_Cpu
+  display_name: vCPU
+  unit: '7004'
+- attribute: config|hardware|memoryKB
+  display_name: Memory
+  unit: auto
+- attribute: config|hardware|diskSpace
+  display_name: Disk
+  unit: auto
+time_window:
+  unit: DAYS
+  count: 30

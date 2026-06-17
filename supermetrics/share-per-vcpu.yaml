@@ -1,0 +1,10 @@
+id: 77c9b561-8a30-496c-80bc-4b049bd63b96
+name: "Share per vCPU"
+resource_kinds:
+  - resource_kind_key: VirtualMachine
+    adapter_kind_key: VMWARE
+description: >
+  Normalized share value, to enable comparison among VMs of different size.
+unit_id: ""
+formula: |
+  ${this, metric=config|cpuAllocation|shares|shares} / ${this, metric=config|hardware|numCpu}

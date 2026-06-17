@@ -1,0 +1,15 @@
+id: 39b1dc9d-2218-4ade-8fd7-a75f07dda262
+name: ESXi Network Interfaces
+description: List the summary of the network properties associated with the Distributed
+  Virtual Switch for the selected Host System in your environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: Instance Name
+- attribute: net:vmk0|ip_address
+  display_name: IP Address
+time_window:
+  unit: DAYS
+  count: 7

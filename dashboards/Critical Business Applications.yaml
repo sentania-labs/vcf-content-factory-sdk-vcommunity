@@ -1,0 +1,134 @@
+id: d1dd41f6-3bf3-492c-af43-2858ec923a14
+name: Critical Business Applications
+description: It shows Multi-tier Business Applications, focusing on their performance
+  and availability.
+name_path: vCommunity
+shared: true
+widgets:
+- id: 8954a8ec-6b02-4280-80c8-3712d5b5d354
+  type: HealthChart
+  title: Tiers in the selected Applications
+  coords:
+    x: 5
+    y: 6
+    w: 4
+    h: 13
+  adapter_kind: Container
+  resource_kind: Manual Application
+  metric_key: Super Metric|sm_ad345475-262c-4f2e-8fa5-dbef75e09810
+  metric_name: Super Metrics|OYW Business Application Tier KPI (%)
+  mode: all
+  depth: 1
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  show_resource_name: true
+- id: b31406b8-e596-4c9c-8aed-508d19e33952
+  type: HealthChart
+  title: Virtual Machines in selected Tier
+  coords:
+    x: 9
+    y: 6
+    w: 4
+    h: 13
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+  metric_key: Super Metric|sm_9ee466de-616a-41a9-b573-e8513e646ea3
+  metric_name: Super Metrics|VM Performance (%)
+  metric_full_name: Super Metrics|OYW VM KPI (%)
+  mode: all
+  depth: 1
+  sort_by_dir: desc
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  show_resource_name: true
+- id: 1d4f97a6-a13c-472b-bad2-6d04b35b52eb
+  type: View
+  title: All VMs in the selected Applications
+  coords:
+    x: 1
+    y: 19
+    w: 8
+    h: 11
+  view: vSphere VMs Context
+- id: 0cbd8e2e-609a-437a-b2aa-7e92fa7962be
+  type: HealthChart
+  title: Average of all Business Applications Performance
+  coords:
+    x: 1
+    y: 1
+    w: 12
+    h: 5
+  self_provider: true
+  adapter_kind: Container
+  resource_kind: Enterprise
+  metric_key: Super Metric|sm_84915f16-b31d-4bd7-bf8e-50306db9323a
+  metric_name: Super Metrics|OYW Business Applications Performance (%)
+  mode: resource
+  depth: 1
+  chart_height: 190
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  show_resource_name: false
+- id: 16ec6c7e-bfea-4093-b6ab-10252f0704c6
+  type: HealthChart
+  title: Business Applications
+  coords:
+    x: 1
+    y: 6
+    w: 4
+    h: 13
+  self_provider: true
+  adapter_kind: Container
+  resource_kind: BusinessService
+  metric_key: Super Metric|sm_ca2bb2f8-9536-40bf-863e-c9b4e36b6952
+  metric_name: Super Metrics|Business Application Performance (%)
+  metric_full_name: Super Metrics|OYW Business Application Performance (%)
+  mode: resource
+  depth: 1
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  show_resource_name: true
+- id: 1e8bcfa0-3191-4a07-b2aa-49c1d8b378f6
+  type: View
+  title: OS Services
+  coords:
+    x: 9
+    y: 19
+    w: 4
+    h: 11
+  view: Guest OS List of Services
+interactions:
+- from: 8954a8ec-6b02-4280-80c8-3712d5b5d354
+  to: b31406b8-e596-4c9c-8aed-508d19e33952
+  type: resourceId
+- from: 8954a8ec-6b02-4280-80c8-3712d5b5d354
+  to: 1d4f97a6-a13c-472b-bad2-6d04b35b52eb
+  type: resourceId
+- from: 16ec6c7e-bfea-4093-b6ab-10252f0704c6
+  to: 8954a8ec-6b02-4280-80c8-3712d5b5d354
+  type: resourceId
+- from: 16ec6c7e-bfea-4093-b6ab-10252f0704c6
+  to: b31406b8-e596-4c9c-8aed-508d19e33952
+  type: resourceId
+- from: 16ec6c7e-bfea-4093-b6ab-10252f0704c6
+  to: 1d4f97a6-a13c-472b-bad2-6d04b35b52eb
+  type: resourceId
+- from: 16ec6c7e-bfea-4093-b6ab-10252f0704c6
+  to: 1e8bcfa0-3191-4a07-b2aa-49c1d8b378f6
+  type: resourceId
+- from: 8954a8ec-6b02-4280-80c8-3712d5b5d354
+  to: 1e8bcfa0-3191-4a07-b2aa-49c1d8b378f6
+  type: resourceId
+- from: b31406b8-e596-4c9c-8aed-508d19e33952
+  to: 1e8bcfa0-3191-4a07-b2aa-49c1d8b378f6
+  type: resourceId
+- from: 1d4f97a6-a13c-472b-bad2-6d04b35b52eb
+  to: 1e8bcfa0-3191-4a07-b2aa-49c1d8b378f6
+  type: resourceId
+- from: 0cbd8e2e-609a-437a-b2aa-7e92fa7962be
+  to: 1d4f97a6-a13c-472b-bad2-6d04b35b52eb
+  type: resourceId

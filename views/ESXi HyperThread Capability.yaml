@@ -1,0 +1,15 @@
+id: 74639bd8-2ece-4032-b22f-ffc23e65598f
+name: ESXi HyperThread Capability
+description: Count of ESXi hosts where the CPU Hyper-Threading (HT) is disabled. For
+  better overall througput, enable HT.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: config|hyperThread|available
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

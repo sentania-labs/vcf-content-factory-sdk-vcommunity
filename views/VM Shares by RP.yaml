@@ -1,0 +1,38 @@
+id: c92c7819-bd0c-4ba7-94ab-f6c0980da959
+name: VM Shares by RP
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: supermetric:"Share per vCPU"
+  display_name: Share per vCPU
+- attribute: config|hardware|numCpu
+  display_name: vCPU
+  yellow_bound: 8.0
+  orange_bound: 16.0
+  red_bound: 32.0
+  ascending_range: false
+- attribute: config|cpuAllocation|shares|shares
+  display_name: CPU Share
+  yellow_bound: 8000.0
+  orange_bound: 16000.0
+  red_bound: 32000.0
+  ascending_range: false
+- attribute: supermetric:"Share per GB of Memory"
+  display_name: Share per GB RAM
+- attribute: config|hardware|memoryKB
+  display_name: Memory
+  unit: gb
+  yellow_bound: 32.0
+  orange_bound: 64.0
+  red_bound: 128.0
+  ascending_range: false
+- attribute: config|memoryAllocation|shares|shares
+  display_name: Memory Share
+  yellow_bound: 320000.0
+  orange_bound: 640000.0
+  red_bound: 1280000.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 7

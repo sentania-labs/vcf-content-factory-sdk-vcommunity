@@ -1,0 +1,12 @@
+id: 48f81e75-bbc4-45f2-860f-4f0683d2a56d
+name: "vSphere Cluster Worst ESXi Bad Network Packets"
+resource_kinds:
+  - resource_kind_key: ClusterComputeResource
+    adapter_kind_key: VMWARE
+description: >
+  The worst value of bad packets among ESXi hosts in the cluster. This should be near 0%. We use max() instead of average for early warning (leading indicator) as this number tends to be 0% most of the time.
+
+  For details, see VCF Operations Transformation book and vSphere Metrics book, which are parts of Operationalize Your World.
+unit_id: percent
+formula: |
+  max(${adaptertype=VMWARE, objecttype=HostSystem, metric=@supermetric:"ESXi Bad Network Packets", depth=1})

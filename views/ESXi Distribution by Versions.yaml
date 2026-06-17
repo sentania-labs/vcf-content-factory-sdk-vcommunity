@@ -1,0 +1,16 @@
+id: 524d0468-8f9d-460b-a2a5-95c2d8846661
+name: ESXi Distribution by Versions
+description: Relative distribution of ESXi versions. Keep the total number of versions
+  minimal as a high number complicate operations. ESXi hosts in the same cluster should
+  have identical configuration.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: summary|version
+  display_name: Build Numbers
+time_window:
+  unit: DAYS
+  count: 7

@@ -1,0 +1,15 @@
+id: 224daf12-865a-44da-9763-55a2841c8bab
+name: ESXi Power Management
+description: The power management setting at ESXi level. Compare with the value at
+  BIOS level
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: hardware|powerManagementPolicy
+  display_name: hardware|powerManagementPolicy
+time_window:
+  unit: DAYS
+  count: 7

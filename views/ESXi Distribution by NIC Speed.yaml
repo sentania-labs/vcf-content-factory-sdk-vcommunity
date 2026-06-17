@@ -1,0 +1,17 @@
+id: d4ba9e73-bc26-4f5f-8cef-504a37cfc988
+name: ESXi Distribution by NIC Speed
+description: Relative distribution of ESXi physical network card speed. Use 25 Gb
+  NIC or higher for faster performance, especially if ESXi runs distributed storage.
+  Keep the total number of combination minimal as a high number complicate operations.
+  Also, check ESXi with < 10 Gb NIC.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: config|network|linkspeed
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

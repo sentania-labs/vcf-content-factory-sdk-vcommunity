@@ -1,0 +1,19 @@
+id: b6f20136-03bf-48d3-8b80-429f59d21374
+name: "ESXi Host Availability"
+resource_kinds:
+  - resource_kind_key: HostSystem
+    adapter_kind_key: VMWARE
+description: >
+  ESXi Host availability in percentage, where powered off is 0%, not connected
+  is 25%, in maintenance is 50%, in quarantine is 75%, and fully available is
+  100%. Computed as the sum of four binary indicators (powered on, connected,
+  not in maintenance, not in quarantine) multiplied by 25. Requires VCF 9 —
+  the quarantine state metric is new in that release.
+unit_id: percent
+formula: |
+  Sum([
+    ${this, metric=sys|poweredOn},
+    (count(${this, metric=runtime|connectionState, where="runtime|connectionState contains connected"}) > 0 ? 1 : 0),
+    (count(${this, metric=runtime|maintenanceState, where="runtime|maintenanceState contains notInMaintenance"}) > 0 ? 1 : 0),
+    (count(${this, metric=runtime|quarantineState, where="runtime|quarantineState contains notInQuarantine"}) > 0 ? 1 : 0)
+  ]) * 25

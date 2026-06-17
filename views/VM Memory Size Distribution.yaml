@@ -1,0 +1,16 @@
+id: a3849f91-76c6-4791-81d7-65245e321233
+name: VM Memory Size Distribution
+description: Absolute distribution of VM configured memory. Minimize the large VMs,
+  especially those exceeding the size of the underlying NUMA, as they can create performance
+  and capacity problem.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: config|hardware|memoryKB
+  display_name: .
+  unit: gb
+time_window:
+  unit: MINUTES
+  count: 1

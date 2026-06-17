@@ -1,0 +1,10 @@
+id: 51613351-5865-478e-9f26-b9d5598fed4d
+name: "Network Speed Degradation"
+resource_kinds:
+  - resource_kind_key: HostSystem
+    adapter_kind_key: VMWARE
+description: >
+  Actual speed vs configured speed. If the number is lower than 100%, that means there is bandwidth degradation.
+unit_id: percent
+formula: |
+  avg([${this, attribute=net|speed}]) / avg(${this, attribute=net|configuredSpeed}) * 100

@@ -1,0 +1,11 @@
+id: 6a8a4c78-d79e-4953-bc85-623b7bfb612e
+name: "CPU Reservation"
+resource_kinds:
+  - resource_kind_key: ClusterComputeResource
+    adapter_kind_key: VMWARE
+description: >
+  Total CPU Reservation over Usable Capacity. Usable excludes HA and Buffer.
+  Amount is normalized into % to enable comparison across clusters.
+unit_id: percent
+formula: |
+  ${this, metric=cpu|reservedCapacity_average} / ${this, metric=cpu|demand|usableCapacity} * 100

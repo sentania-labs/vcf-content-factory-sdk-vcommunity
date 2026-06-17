@@ -1,0 +1,13 @@
+id: 8342e94a-ffdd-4630-9384-0d876026b520
+name: ESXi Host Hardware vCommunity
+description: ESXi Host Hardware vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: hardware|vendorModel
+  display_name: Server Hardware
+time_window:
+  unit: DAYS
+  count: 7

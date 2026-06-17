@@ -1,0 +1,18 @@
+id: 45281acb-5643-4a0c-b4d2-300548289b89
+name: ESXi Distribution by Core Counts
+description: "Absolute distribution of ESXi hosts, by their physical CPU core. Keep\
+  \ the combination minimal for ease of operations. \nMinimize small hosts as they\
+  \ are relatively more expensive when all costs are considered (software, people,\
+  \ facilities). To apply a threshold, go to filter tab. \n\nTypical ESXi sports 1\
+  \ TB RAM. Using typical 4:1 Ratio for RAM:vCPU, this gives around 256 vCPU before\
+  \ the Memory being overcommitted."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: hardware|cpuInfo|numCpuCores
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

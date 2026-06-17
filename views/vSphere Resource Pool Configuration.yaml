@@ -1,0 +1,73 @@
+id: 2788178d-7df4-47d7-81de-016f7a1cd18d
+name: vSphere Resource Pool Configuration
+description: List of resource pools. Pay attention to resource pool with limit, shares
+  and reservation.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ResourcePool
+columns:
+- attribute: config|cpuAllocation|limit
+  display_name: CPU Limit
+  unit: ghz
+  yellow_bound: 0.0
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: false
+- attribute: config|cpuAllocation|reservation
+  display_name: CPU Reservation
+  unit: ghz
+  yellow_bound: 1.0
+  orange_bound: 100.0
+  red_bound: 200.0
+  ascending_range: false
+- attribute: config|cpuAllocation|expandableReservation
+  display_name: Expandable CPU Reservation
+  yellow_bound: 0.2
+  orange_bound: 0.1
+  red_bound: 0.0
+  ascending_range: true
+- attribute: config|cpuAllocation|shares|shares
+  display_name: CPU Shares
+  yellow_bound: 1999.0
+  orange_bound: 3999.0
+  red_bound: 7999.0
+  ascending_range: false
+- attribute: config|memoryAllocation|limit
+  display_name: Memory Limit
+  unit: gb
+  yellow_bound: 0.0
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: false
+- attribute: config|memoryAllocation|reservation
+  display_name: Memory Reservation
+  unit: gb
+  yellow_bound: 10.0
+  orange_bound: 100.0
+  red_bound: 1000.0
+  ascending_range: false
+- attribute: config|memoryAllocation|expandableReservation
+  display_name: Expandable Memory Reservation
+  yellow_bound: 0.2
+  orange_bound: 0.1
+  red_bound: 0.0
+  ascending_range: true
+- attribute: config|memoryAllocation|shares|shares
+  display_name: Memory Shares
+- attribute: summary|number_running_vms
+  display_name: Running VM
+  yellow_bound: 2.0
+  orange_bound: 1.0
+  red_bound: 0.0
+  ascending_range: true
+- attribute: summary|total_number_vms
+  display_name: Total VM
+  yellow_bound: 5.0
+  orange_bound: 3.0
+  red_bound: 1.0
+  ascending_range: true
+- attribute: summary|tag
+  display_name: vSphere Tag
+time_window:
+  unit: DAYS
+  count: 7

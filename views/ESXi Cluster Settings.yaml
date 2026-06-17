@@ -1,0 +1,69 @@
+id: 9a556ea6-db06-4ad5-b1a1-84bb1ae7032e
+name: ESXi Cluster Settings
+description: Lists the summary of the ESXi configuration for different host systems
+  in your environment, focusing on settings that should be identical within a cluster.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: config|product|apiVersion
+  display_name: ESXi
+- attribute: sys|build
+  display_name: Build Number
+- attribute: hardware|biosVersion
+  display_name: BIOS
+- attribute: hardware|cpuInfo|numCpuCores
+  display_name: Total Cores
+  yellow_bound: 60.0
+  orange_bound: 40.0
+  red_bound: 20.0
+  ascending_range: true
+- attribute: hardware|memorySize
+  display_name: Memory
+  unit: tb
+  yellow_bound: 0.9
+  orange_bound: 0.6
+  red_bound: 0.3
+  ascending_range: true
+- attribute: summary|total_number_datastores
+  display_name: Datastores
+- attribute: config|network|nnic
+  display_name: NICs
+- attribute: hardware|cpuInfo|numCpuPackages
+  display_name: CPU Sockets
+- attribute: cpu|cpuModel
+  display_name: CPU Model
+- attribute: cpu|speed
+  display_name: CPU Capacity
+  unit: ghz
+- attribute: config|hyperThread|active
+  display_name: HT Enabled
+  yellow_bound: 'false'
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: true
+- attribute: hardware|powerManagementPolicy
+  display_name: Power Management
+- attribute: sys|vmotionEnabled
+  display_name: vMotion Status
+  yellow_bound: 0.0
+  orange_bound: -10.0
+  red_bound: -20.0
+  ascending_range: true
+- attribute: config|security|service:ESXi Shell|isRunning
+  display_name: Shell Enabled?
+  yellow_bound: 'true'
+  orange_bound: 'true'
+  red_bound: 'true'
+  ascending_range: true
+- attribute: config|security|service:SSH|isRunning
+  display_name: SSH Enabled?
+  yellow_bound: 'true'
+  orange_bound: 'true'
+  red_bound: 'true'
+  ascending_range: true
+- attribute: config|storageDevice|multipathInfo|numberofActivePath
+  display_name: '# of Active Paths'
+time_window:
+  unit: DAYS
+  count: 7

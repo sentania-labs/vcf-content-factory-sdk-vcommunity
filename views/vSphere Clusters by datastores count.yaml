@@ -1,0 +1,14 @@
+id: 2d600ae5-36cc-489f-88aa-4825b93c964b
+name: vSphere Clusters by datastores count
+description: Absolute distribution of vSphere clusters by their count of connected
+  datastores. For ease of operations, minimize the number of sharing among clusters.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+columns:
+- attribute: summary|total_number_datastores
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

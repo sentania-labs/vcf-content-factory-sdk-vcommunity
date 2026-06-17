@@ -1,0 +1,14 @@
+id: 6dbbe2bc-2593-4288-9d4c-23995e28009d
+name: vSphere Port Group Forged Transmit Allowed
+description: Count of distributed port groups that allow forged transmit. Minimize
+  this for security reason, and only use for the use case it's designed for.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: DistributedVirtualPortgroup
+data_type: distribution
+columns:
+- attribute: config|policies|security|forged_transmits
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

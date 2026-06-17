@@ -1,0 +1,12 @@
+id: ad345475-262c-4f2e-8fa5-dbef75e09810
+name: "Business Application Tier Performance"
+resource_kinds:
+  - resource_kind_key: Tier
+    adapter_kind_key: Container
+description: >
+  Key Performance Indicator (%) of a Tier. A business application is made up of tiers, which in turn have VMs.
+
+  Limitation: a business app must have 2 and 2 levels only. Biz App --> Tier --> VM.
+unit_id: percent
+formula: |
+  avg(${adaptertype=VMWARE, objecttype=VirtualMachine, attribute=@supermetric:"vSphere VM Performance", depth=1})

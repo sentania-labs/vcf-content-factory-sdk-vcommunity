@@ -1,0 +1,23 @@
+id: 26d914f9-06d9-4126-9357-887261117d99
+name: ESXi High Memory Trend
+description: Trend line of ESXi high memory utilization. Because the very purpose
+  memory is cache, having 100% utilization is better than 99%. However, at 99.1% the
+  ballooning process kicks in. This increases the risk of swapping and compression,
+  which in turn increases the chance of memory contention.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: trend
+columns:
+- attribute: mem|vmmemctl_average
+  display_name: Ballooned
+  unit: gb
+- attribute: mem|compressed_average
+  display_name: Compressed
+  unit: gb
+- attribute: mem|swapout_average
+  display_name: Swapped
+  unit: gb
+time_window:
+  unit: DAYS
+  count: 1

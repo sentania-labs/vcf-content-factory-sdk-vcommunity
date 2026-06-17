@@ -1,0 +1,12 @@
+id: ca2bb2f8-9536-40bf-863e-c9b4e36b6952
+name: "Business Application Performance"
+resource_kinds:
+  - resource_kind_key: BusinessService
+    adapter_kind_key: Container
+description: >
+  Key Performance Indicator (%) of a business application. A business application is made up of tiers, which in turn have VMs. For modern application, a business application maps to a K8 Namespace.
+
+  Limitation for classic business app: it must have 2 and 2 levels only. Biz App --> Tier --> VM.
+unit_id: percent
+formula: |
+  max([   ${adaptertype=KubernetesAdapter, objecttype=K8S-Namespace, attribute=Performance|Performance, depth=2},    min(${adaptertype=Container, objecttype=Tier, attribute=@supermetric:"Business Application Tier Performance", depth=1})])

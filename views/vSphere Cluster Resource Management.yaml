@@ -1,0 +1,41 @@
+id: 25c8dd87-54b1-47b2-9de1-766253da9f01
+name: vSphere Cluster Resource Management
+description: List of vSphere Clusters with relevant information for CPU and memory
+  resources analysis.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+columns:
+- attribute: supermetric:"Cascading Resource Pools"
+  display_name: Level 2+ Resource Pools
+  yellow_bound: 1.0
+  orange_bound: 2.0
+  red_bound: 4.0
+  ascending_range: false
+- attribute: supermetric:"Number of Resource Pools"
+  display_name: Resource Pools
+  yellow_bound: 1.0
+  orange_bound: 4.0
+  red_bound: 16.0
+  ascending_range: false
+- attribute: summary|number_running_vms
+  display_name: Running VM
+- attribute: summary|number_running_hosts
+  display_name: Running ESXi
+- attribute: supermetric:"CPU Reservation"
+  display_name: CPU Reservation
+  unit: percent
+  yellow_bound: 10.0
+  orange_bound: 20.0
+  red_bound: 40.0
+  ascending_range: false
+- attribute: supermetric:"Memory Reservation"
+  display_name: Memory Reservation
+  unit: percent
+  yellow_bound: 5.0
+  orange_bound: 10.0
+  red_bound: 20.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 7

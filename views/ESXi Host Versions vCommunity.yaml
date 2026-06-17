@@ -1,0 +1,13 @@
+id: 8a6d966f-76f4-4cd0-8e33-97fa3c6c0e0d
+name: ESXi Host Versions vCommunity
+description: ESXi Host Versions vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: summary|version
+  display_name: ESXi Version
+time_window:
+  unit: DAYS
+  count: 7

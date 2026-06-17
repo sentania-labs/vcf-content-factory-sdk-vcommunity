@@ -1,0 +1,33 @@
+id: f982ee15-5502-49e2-8efc-0a405b5bfa83
+name: VM Network Configuration
+description: Lists the network configuration of a VM for the selected Network Switch
+  in your environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: summary|runtime|powerState
+  display_name: Power State
+  yellow_bound: Powered Off
+  orange_bound: Powered Off
+  red_bound: Powered Off
+  ascending_range: true
+- attribute: summary|config|numEthernetCards
+  display_name: '# NIC'
+  yellow_bound: 2.0
+  orange_bound: 3.0
+  red_bound: 4.0
+  ascending_range: false
+- attribute: net:4000|ip_address
+  display_name: IP Address
+- attribute: net:4000|mac_address
+  display_name: '# MAC address'
+- attribute: summary|parentDatacenter
+  display_name: Datacenter
+- attribute: summary|parentCluster
+  display_name: Cluster
+- attribute: summary|guest|fullName
+  display_name: Guest OS
+time_window:
+  unit: MINUTES
+  count: 7

@@ -1,0 +1,16 @@
+id: c655b25c-42be-4512-9c9b-8b4d6beefd71
+name: VM Distribution by Disk Size
+description: Absolute distribution VM configured disk space. Minimize the large VMs,
+  especially those nearing the size of the datastore, as they can create capacity
+  problem. It will also take longer to storage vMotion and back up.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: config|hardware|disk_Space
+  display_name: .
+  unit: tb
+time_window:
+  unit: MINUTES
+  count: 1

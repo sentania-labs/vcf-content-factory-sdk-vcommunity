@@ -1,0 +1,16 @@
+id: 8d44e30e-9bb1-4df1-bf1f-8d2f44276af4
+name: VM Distribution by CPU Reservation
+description: Relative distribution of VM CPU reservation. A VM reservation impacts
+  DRS behaviour and reduce Capacity, hence resulting in less optimal environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: config|cpuAllocation|reservation
+  display_name: .
+  unit: ghz
+time_window:
+  unit: DAYS
+  count: 7

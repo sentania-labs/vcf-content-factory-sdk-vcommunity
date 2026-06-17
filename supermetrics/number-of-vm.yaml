@@ -1,0 +1,12 @@
+id: 3ec095da-c812-4baf-b0fa-3c2413392518
+name: "Number of VM"
+resource_kinds:
+  - resource_kind_key: DistributedVirtualPortgroup
+    adapter_kind_key: VMWARE
+  - resource_kind_key: VmwareDistributedVirtualSwitch
+    adapter_kind_key: VMWARE
+description: >
+  Total count of virtual machines (running or not) connected to the switch
+unit_id: ""
+formula: |
+  count(${adaptertype=VMWARE, objecttype=VirtualMachine, attribute=badge|health, depth=2})

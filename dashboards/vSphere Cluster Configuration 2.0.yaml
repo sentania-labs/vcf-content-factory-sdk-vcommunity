@@ -1,0 +1,245 @@
+id: d1941adc-5664-421e-af12-84736f76aa76
+name: vSphere Cluster Configuration 2.0
+description: Highlight cluster configurations that need your attention. Use this dashboard
+  to fix incorrect settings, update outdated components, and reduce overall cost by
+  optimizing your environment. The dashboard is organized top down, where configuration
+  that needs your attention is shown first. No data on a chart means the configuration
+  is optimized.
+name_path: vCommunity
+shared: true
+widgets:
+- id: 6017e6f8-ed5d-49e7-a210-2734d15da03b
+  type: View
+  title: Clusters Configuration
+  coords:
+    x: 1
+    y: 25
+    w: 12
+    h: 6
+  view: vSphere Cluster Configuration List
+- id: b41233ab-aba4-4c1c-8d9b-66a3d9374fa8
+  type: View
+  title: ESXi Hosts in the selected cluster
+  coords:
+    x: 1
+    y: 31
+    w: 12
+    h: 8
+  view: ESXi Cluster Settings
+- id: aefdad43-41b6-4e2a-817e-548c4b12e761
+  type: View
+  title: HA Enabled?
+  coords:
+    x: 4
+    y: 1
+    w: 3
+    h: 4
+  view: vSphere Cluster HA Status
+- id: 0a6d22cb-7812-4d35-9c77-ec845c89c48b
+  type: View
+  title: DPM Enabled?
+  coords:
+    x: 10
+    y: 1
+    w: 3
+    h: 4
+  view: vSphere Cluster DPM Status
+- id: dabb6720-e8b3-49b2-bc4d-15a3431c45d2
+  type: View
+  title: HA Memory Failover Shares
+  coords:
+    x: 10
+    y: 5
+    w: 3
+    h: 4
+  view: 80fd0aba-ee23-4247-b020-c35c4ac3d73b
+- id: 05d7f765-b078-4709-99de-7e209778d92d
+  type: View
+  title: Clusters by number of ESXi hosts
+  coords:
+    x: 9
+    y: 13
+    w: 4
+    h: 6
+  view: vSphere Clusters distribution by ESXi count
+- id: 5249fc19-f3af-4d2a-95cc-7b0371fba5cc
+  type: View
+  title: HA CPU Failover Shares
+  coords:
+    x: 10
+    y: 9
+    w: 3
+    h: 4
+  view: f2a01570-7335-4e0f-b203-4999052658c3
+- id: 3cebe7cc-4339-4d5f-97e0-19587f137561
+  type: View
+  title: DRS Migration Threshold
+  coords:
+    x: 7
+    y: 9
+    w: 3
+    h: 4
+  view: vSphere Cluster DRS Automation Level
+- id: e054e098-a257-4aa5-9519-178cb7245996
+  type: View
+  title: DRS Enabled?
+  coords:
+    x: 7
+    y: 1
+    w: 3
+    h: 4
+  view: vSphere Cluster DRS Status
+- id: 3f58d957-7c4b-4d00-9bc6-8bd2212cebcc
+  type: View
+  title: HA Admission Control enabled
+  coords:
+    x: 4
+    y: 9
+    w: 3
+    h: 4
+  view: vSphere Cluster HA Admission Control status
+- id: da568a71-42b4-47e7-b81a-66759e855a72
+  type: View
+  title: DRS Automated?
+  coords:
+    x: 7
+    y: 5
+    w: 3
+    h: 4
+  view: vSphere Cluster DRS Automation Status
+- id: b1aa867a-3328-4989-b926-0c624c960538
+  type: View
+  title: vSphere Cluster HA Admission Control Policies
+  coords:
+    x: 4
+    y: 5
+    w: 3
+    h: 4
+  view: vSphere Cluster Admission Control Policy
+- id: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  type: View
+  title: Datacenters
+  coords:
+    x: 1
+    y: 1
+    w: 3
+    h: 12
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: 9ab6ab22-20b1-4ce1-8aa5-9bfec8fb2daf
+  type: View
+  title: Clusters by number of datastores
+  coords:
+    x: 9
+    y: 19
+    w: 4
+    h: 6
+  view: vSphere Clusters by datastores count
+- id: c0cc5783-59c1-4543-a1ff-a3783e3df1a8
+  type: Heatmap
+  title: Clusters Variants
+  coords:
+    x: 1
+    y: 13
+    w: 8
+    h: 12
+  mode: all
+  depth: 10
+  configs:
+  - name: Cluster by Size
+    adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    color_by:
+      metric_key: mem|host_provisioned
+      label: Memory|Total Capacity (KB)
+    size_by:
+      metric_key: cpu|corecount_provisioned
+      label: CPU|Number of physical CPUs (Cores)
+    group_by:
+      adapter_kind: VMWARE
+      resource_kind: Datacenter
+      text: Datacenter
+    color:
+      min_value: 2000000000.0
+      thresholds:
+        values:
+        - 0
+        - 50
+        - 100
+        colors:
+        - '#CE4C3C'
+        - '#ECC33E'
+        - '#83AF50'
+      max_value: 6000000000.0
+    focus_on_groups: false
+  - name: ESXi by Size
+    adapter_kind: VMWARE
+    resource_kind: HostSystem
+    color_by:
+      metric_key: mem|host_provisioned
+      label: Memory|Total Capacity (KB)
+    size_by:
+      metric_key: cpu|corecount_provisioned
+      label: CPU|Number of physical CPUs (Cores)
+    group_by:
+      adapter_kind: VMWARE
+      resource_kind: ClusterComputeResource
+      text: Cluster Compute Resource
+    color:
+      min_value: 200000000.0
+      thresholds:
+        values:
+        - 0
+        - 50
+        - 100
+        colors:
+        - '#CE4C3C'
+        - '#ECC33E'
+        - '#83AF50'
+      max_value: 800000000.0
+interactions:
+- from: 6017e6f8-ed5d-49e7-a210-2734d15da03b
+  to: b41233ab-aba4-4c1c-8d9b-66a3d9374fa8
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: aefdad43-41b6-4e2a-817e-548c4b12e761
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: b1aa867a-3328-4989-b926-0c624c960538
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 3f58d957-7c4b-4d00-9bc6-8bd2212cebcc
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 05d7f765-b078-4709-99de-7e209778d92d
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: e054e098-a257-4aa5-9519-178cb7245996
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: da568a71-42b4-47e7-b81a-66759e855a72
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 3cebe7cc-4339-4d5f-97e0-19587f137561
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 0a6d22cb-7812-4d35-9c77-ec845c89c48b
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: dabb6720-e8b3-49b2-bc4d-15a3431c45d2
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 5249fc19-f3af-4d2a-95cc-7b0371fba5cc
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 6017e6f8-ed5d-49e7-a210-2734d15da03b
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: 9ab6ab22-20b1-4ce1-8aa5-9bfec8fb2daf
+  type: resourceId
+- from: d0b70f36-8bbb-4369-820b-8349ba11b02e
+  to: c0cc5783-59c1-4543-a1ff-a3783e3df1a8
+  type: resourceId

@@ -1,0 +1,14 @@
+id: fcab0100-1881-48b6-bd07-aaeaa3ee669e
+name: vSphere Cluster DRS Status
+description: vSphere Cluster DRS configuration status, where true = enabled.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|drsConfig|enabled
+  display_name: DRS Enabled?
+time_window:
+  unit: DAYS
+  count: 7

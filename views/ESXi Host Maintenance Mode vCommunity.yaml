@@ -1,0 +1,13 @@
+id: 2a1ce101-dea2-4866-adb0-16516dae9217
+name: ESXi Host Maintenance Mode vCommunity
+description: ESXi Host Maintenance Mode vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: runtime|maintenanceState
+  display_name: Maintenance State
+time_window:
+  unit: DAYS
+  count: 7

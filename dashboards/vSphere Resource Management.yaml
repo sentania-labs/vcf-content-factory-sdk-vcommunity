@@ -1,0 +1,342 @@
+id: 3dff5e2d-5db1-4eec-97c7-b2b7c545ff3c
+name: vSphere Resource Management
+description: CPU and memory resource management spans across VMs, resource pools and
+  cluster. Ensure the settings of Share and Reservation match best practices.
+name_path: vCommunity
+shared: true
+widgets:
+- id: c470e4fa-7574-4b7b-a127-f2248129a18b
+  type: View
+  title: vSphere Clusters
+  coords:
+    x: 1
+    y: 7
+    w: 3
+    h: 14
+  view: vSphere Cluster Resource Management
+- id: feb880f5-628a-4c66-8a89-6a3a1bdcd2db
+  type: View
+  title: VM Shares by Resource Pools
+  coords:
+    x: 1
+    y: 31
+    w: 12
+    h: 9
+  view: VM Shares by RP
+- id: d9f4a815-b8c7-49b2-87f9-5324b8b1c329
+  type: View
+  title: VM CPU Share
+  coords:
+    x: 9
+    y: 21
+    w: 2
+    h: 5
+  view: VM Distribution by CPU Share
+- id: 619bca27-eb8d-4894-ae9d-9ce84861e5e5
+  type: View
+  title: VM Memory Share
+  coords:
+    x: 7
+    y: 26
+    w: 2
+    h: 5
+  view: VM Distribution by Memory Share
+- id: 7060ac45-8833-4f26-9937-3d02688eede2
+  type: View
+  title: Resource Pools
+  coords:
+    x: 4
+    y: 11
+    w: 6
+    h: 10
+  view: vSphere Resource Pool Configuration
+- id: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  type: ResourceRelationshipAdvanced
+  title: Cascading Resource Pools?
+  coords:
+    x: 10
+    y: 11
+    w: 3
+    h: 10
+  resource_relationship_advanced:
+    resource_kinds:
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+    - adapter_kind: VMWARE
+      resource_kind: ResourcePool
+    depth: 0,2
+    pagination_number: 5
+    self_provider: false
+- id: 3e1f07be-274d-4604-9c50-f9d10493f294
+  type: View
+  title: VM CPU Reservation
+  coords:
+    x: 7
+    y: 21
+    w: 2
+    h: 5
+  view: VM Distribution by CPU Reservation
+- id: 7fed559c-73bd-4ad8-8329-8d9908db1875
+  type: View
+  title: VM Memory Reservation
+  coords:
+    x: 9
+    y: 26
+    w: 2
+    h: 5
+  view: VM Distribution by Memory Reservation
+- id: b6714e6f-1b17-441a-af45-acedc45e2e1d
+  type: View
+  title: Cluster CPU Reservation
+  coords:
+    x: 5
+    y: 1
+    w: 4
+    h: 6
+  view: vSphere Cluster Distribution by CPU Reservation
+- id: eba30f5b-28c0-42c5-8c28-d0ab83ca2553
+  type: View
+  title: Cluster Memory Reservation
+  coords:
+    x: 9
+    y: 1
+    w: 4
+    h: 6
+  view: vSphere Cluster Memory Reservation
+- id: ab7a426e-2999-47b6-9ea7-3b0aa9c26761
+  type: View
+  title: Data Centers
+  coords:
+    x: 1
+    y: 1
+    w: 4
+    h: 6
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: 407d3a82-20d3-47c3-8b35-cc143f567731
+  type: View
+  title: VM Memory Size
+  coords:
+    x: 1
+    y: 26
+    w: 6
+    h: 5
+  view: VM Memory Size Distribution
+- id: 6655c6ae-dfa6-4bca-a2a1-ea2d6dfc0179
+  type: View
+  title: VM CPU Size
+  coords:
+    x: 1
+    y: 21
+    w: 6
+    h: 5
+  view: VM CPU Size Distribution
+- id: abd452c2-48c5-4956-916b-17c79953616a
+  type: View
+  title: VM CPU Limit
+  coords:
+    x: 11
+    y: 21
+    w: 2
+    h: 5
+  view: VM CPU Limit
+- id: a067f753-0214-43c9-9d77-5cf2c634604d
+  type: View
+  title: VM Memory Limit
+  coords:
+    x: 11
+    y: 26
+    w: 2
+    h: 5
+  view: VM Memory Limit
+- id: 7a2dd4d0-2de8-4318-8085-cc4e6d05c857
+  type: Scoreboard
+  title: Reservation
+  coords:
+    x: 7
+    y: 7
+    w: 6
+    h: 4
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: cpu|haTotalCapacity_average
+    metric_name: CPU|Usable Capacity
+    unit_id: ghz
+    unit: GHz
+    label: Usable Capacity
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: cpu|reservedCapacity_average
+    metric_name: CPU|Reserved Capacity
+    unit_id: ghz
+    unit: GHz
+    color_method: 0
+    yellow_bound: 50.0
+    orange_bound: 100.0
+    red_bound: 200.0
+    label: CPU
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|haTotalCapacity_average
+    metric_name: Memory|Usable Capacity
+    unit_id: tb
+    unit: TB
+    label: Usable Capacity
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|reservedCapacity_average
+    metric_name: Memory|Reserved Capacity
+    unit_id: gb
+    unit: GB
+    color_method: 0
+    yellow_bound: 50.0
+    orange_bound: 100.0
+    red_bound: 200.0
+    label: Memory
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 4
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: 15063cae-28b1-4e9f-a92b-336d4a3c12fd
+  type: Scoreboard
+  title: Resource Pools
+  coords:
+    x: 4
+    y: 7
+    w: 3
+    h: 4
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: Super Metric|sm_2c3a09ab-96c7-46f1-9ebe-a9b275cf1ead
+    metric_name: Super Metrics|Cascading Resource Pools
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 2.0
+    red_bound: 4.0
+    label: Level 2+ Resource Pools
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: Super Metric|sm_44e2c78f-8332-4f16-ba3a-eed89a6d24d5
+    metric_name: Super Metrics|Number of Resource Pools
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 4.0
+    red_bound: 16.0
+    label: All Resource Pools
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 2
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+interactions:
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: feb880f5-628a-4c66-8a89-6a3a1bdcd2db
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: d9f4a815-b8c7-49b2-87f9-5324b8b1c329
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 619bca27-eb8d-4894-ae9d-9ce84861e5e5
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 7060ac45-8833-4f26-9937-3d02688eede2
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 3e1f07be-274d-4604-9c50-f9d10493f294
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 7fed559c-73bd-4ad8-8329-8d9908db1875
+  type: resourceId
+- from: ab7a426e-2999-47b6-9ea7-3b0aa9c26761
+  to: b6714e6f-1b17-441a-af45-acedc45e2e1d
+  type: resourceId
+- from: ab7a426e-2999-47b6-9ea7-3b0aa9c26761
+  to: eba30f5b-28c0-42c5-8c28-d0ab83ca2553
+  type: resourceId
+- from: ab7a426e-2999-47b6-9ea7-3b0aa9c26761
+  to: c470e4fa-7574-4b7b-a127-f2248129a18b
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 6655c6ae-dfa6-4bca-a2a1-ea2d6dfc0179
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 407d3a82-20d3-47c3-8b35-cc143f567731
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: a067f753-0214-43c9-9d77-5cf2c634604d
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: abd452c2-48c5-4956-916b-17c79953616a
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 7a2dd4d0-2de8-4318-8085-cc4e6d05c857
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: 7060ac45-8833-4f26-9937-3d02688eede2
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: feb880f5-628a-4c66-8a89-6a3a1bdcd2db
+  type: resourceId
+- from: c470e4fa-7574-4b7b-a127-f2248129a18b
+  to: 15063cae-28b1-4e9f-a92b-336d4a3c12fd
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: feb880f5-628a-4c66-8a89-6a3a1bdcd2db
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: 619bca27-eb8d-4894-ae9d-9ce84861e5e5
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: d9f4a815-b8c7-49b2-87f9-5324b8b1c329
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: 7fed559c-73bd-4ad8-8329-8d9908db1875
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: 3e1f07be-274d-4604-9c50-f9d10493f294
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: 619bca27-eb8d-4894-ae9d-9ce84861e5e5
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: d9f4a815-b8c7-49b2-87f9-5324b8b1c329
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: 7fed559c-73bd-4ad8-8329-8d9908db1875
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: 3e1f07be-274d-4604-9c50-f9d10493f294
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: 6655c6ae-dfa6-4bca-a2a1-ea2d6dfc0179
+  type: resourceId
+- from: 7060ac45-8833-4f26-9937-3d02688eede2
+  to: 407d3a82-20d3-47c3-8b35-cc143f567731
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: 6655c6ae-dfa6-4bca-a2a1-ea2d6dfc0179
+  type: resourceId
+- from: a9026247-c06b-4bd1-aed7-cdedd4e7522b
+  to: 407d3a82-20d3-47c3-8b35-cc143f567731
+  type: resourceId

@@ -1,0 +1,219 @@
+id: 4e036192-7592-4a78-a5ad-276f2bfa5980
+name: VM Capacity (new)
+description: Monitor the capacity of VMs. This dashboard lists all the hosts with
+  their capacity remaining and time remaining. Select a VM and its detailed capacity
+  over time will be automatically shown.
+name_path: Capacity
+shared: false
+widgets:
+- id: ba708955-8e7f-4fab-9f13-b5332afe9214
+  type: View
+  title: VMs Capacity in the Selected Datacenter
+  coords:
+    x: 1
+    y: 11
+    w: 6
+    h: 21
+  view: Guest OS Utilization List
+- id: 5e457c3c-c349-43ba-bc2e-4d68fb54f7da
+  type: View
+  title: CPU Utilization (%)
+  coords:
+    x: 7
+    y: 11
+    w: 6
+    h: 7
+  view: VM CPU Utilization
+- id: a02ab80b-704c-449b-9c6f-f6eb1e1692ad
+  type: View
+  title: Memory Utilization (GB)
+  coords:
+    x: 7
+    y: 18
+    w: 6
+    h: 7
+  view: Guest OS Memory Utilization
+- id: 98b0b159-9742-4461-8294-abe611691d12
+  type: Scoreboard
+  title: Relevant Configuration
+  coords:
+    x: 1
+    y: 32
+    w: 6
+    h: 6
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|version
+    metric_name: Configuration|Version
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|folder
+    metric_name: Summary|vSphere Folder
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|tag
+    metric_name: Summary|vSphere Tag
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|parentCluster
+    metric_name: Summary|Parent Cluster
+    label: Cluster
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|guest|fullName
+    metric_name: Summary|Guest Operating System|Guest OS from Tools
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|guest|ipAddress
+    metric_name: Summary|Guest Operating System|Guest OS IP Address
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: summary|guest|hostName
+    metric_name: Summary|Guest Operating System|Hostname
+    is_string_metric: true
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: config|numVMDKs
+    metric_name: Configuration|Number of Virtual Disks
+  visual_theme: 4
+  show_sparkline: false
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: false
+  box_columns: 2
+  value_size: 14
+  label_size: 12
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: b66196c6-54c0-48ca-b4f6-ed4364026d54
+  type: View
+  title: CPU Run Queue
+  coords:
+    x: 7
+    y: 25
+    w: 3
+    h: 7
+  view: Guest OS CPU Queue Trend
+- id: ab14b904-2203-4ca5-8adc-c283b63543f0
+  type: View
+  title: Memory Paging
+  coords:
+    x: 10
+    y: 25
+    w: 3
+    h: 7
+  view: Guest OS Memory Paging Trend
+- id: 8f4571a1-a94a-4d32-a099-f0b0e8e19809
+  type: View
+  title: Datacenters
+  coords:
+    x: 1
+    y: 1
+    w: 4
+    h: 6
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: b7c688df-9e34-497a-be1a-df4e35a95f13
+  type: View
+  title: VMs by Capacity Remaining
+  coords:
+    x: 9
+    y: 1
+    w: 4
+    h: 6
+  view: VM Distribution by Capacity Remaining
+- id: f0468633-2a4e-4ae8-925f-62f85d7cd127
+  type: Heatmap
+  title: VMs by Capacity Remaining
+  coords:
+    x: 1
+    y: 7
+    w: 12
+    h: 4
+  mode: all
+  depth: 10
+  configs:
+  - name: Capacity Remaining
+    adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    color_by:
+      metric_key: OnlineCapacityAnalytics|capacityRemainingPercentage
+      label: Capacity Analytics Generated|Capacity Remaining Percentage (%)
+    color:
+      min_value: 0.0
+      thresholds:
+        values:
+        - 0
+        - 5
+        - 10
+        - 80
+        colors:
+        - '#DE3F30'
+        - '#ED891F'
+        - '#ECC33E'
+        - '#74B43B'
+        - '#8D8B8D'
+      max_value: 100.0
+    solid_coloring: true
+- id: 206a5170-43d2-47c6-a813-29f31039e447
+  type: View
+  title: VMs by Time Remaining
+  coords:
+    x: 5
+    y: 1
+    w: 4
+    h: 6
+  view: VM Distribution by Time Remaining
+- id: 5b1aa4aa-d4c8-4b04-b623-fd4eb997f209
+  type: View
+  title: Disk Consumption
+  coords:
+    x: 7
+    y: 32
+    w: 6
+    h: 6
+  view: Guest OS Partition List
+interactions:
+- from: ba708955-8e7f-4fab-9f13-b5332afe9214
+  to: 5e457c3c-c349-43ba-bc2e-4d68fb54f7da
+  type: resourceId
+- from: ba708955-8e7f-4fab-9f13-b5332afe9214
+  to: a02ab80b-704c-449b-9c6f-f6eb1e1692ad
+  type: resourceId
+- from: ba708955-8e7f-4fab-9f13-b5332afe9214
+  to: 98b0b159-9742-4461-8294-abe611691d12
+  type: resourceId
+- from: ba708955-8e7f-4fab-9f13-b5332afe9214
+  to: b66196c6-54c0-48ca-b4f6-ed4364026d54
+  type: resourceId
+- from: ba708955-8e7f-4fab-9f13-b5332afe9214
+  to: ab14b904-2203-4ca5-8adc-c283b63543f0
+  type: resourceId
+- from: 8f4571a1-a94a-4d32-a099-f0b0e8e19809
+  to: 206a5170-43d2-47c6-a813-29f31039e447
+  type: resourceId
+- from: 8f4571a1-a94a-4d32-a099-f0b0e8e19809
+  to: b7c688df-9e34-497a-be1a-df4e35a95f13
+  type: resourceId
+- from: 8f4571a1-a94a-4d32-a099-f0b0e8e19809
+  to: ba708955-8e7f-4fab-9f13-b5332afe9214
+  type: resourceId
+- from: 8f4571a1-a94a-4d32-a099-f0b0e8e19809
+  to: f0468633-2a4e-4ae8-925f-62f85d7cd127
+  type: resourceId
+- from: f0468633-2a4e-4ae8-925f-62f85d7cd127
+  to: ba708955-8e7f-4fab-9f13-b5332afe9214
+  type: resourceId
+- from: ba708955-8e7f-4fab-9f13-b5332afe9214
+  to: 5b1aa4aa-d4c8-4b04-b623-fd4eb997f209
+  type: resourceId

@@ -1,0 +1,16 @@
+id: 38896046-e276-47f0-9c78-fd0e1c74b364
+name: ESXi CPU Models
+description: Absolute distribution of ESXi hosts, by their CPU model. Keep them minimal.
+  Also, pay attention to small hosts as they have relatively higher overhead, hence
+  less optimized. To change the threshold, go to filter tab.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: cpu|cpuModel
+  display_name: cpu|cpuModel
+time_window:
+  unit: DAYS
+  count: 7

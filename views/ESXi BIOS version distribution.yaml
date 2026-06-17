@@ -1,0 +1,15 @@
+id: c94b11bf-18c5-41c4-80fe-26ae5882dd45
+name: ESXi BIOS version distribution
+description: Relative shares of ESXi BIOS version. Ensure they match your expectation,
+  ESXi compatibility and vendor best practices
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: hardware|biosVersion
+  display_name: BIOS Versions
+time_window:
+  unit: DAYS
+  count: 7

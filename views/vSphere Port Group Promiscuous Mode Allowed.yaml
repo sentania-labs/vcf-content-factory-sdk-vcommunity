@@ -1,0 +1,14 @@
+id: 24bd3eec-5fe8-4a90-9ad9-fa570b791973
+name: vSphere Port Group Promiscuous Mode Allowed
+description: Count of distributed port groups that allow promiscuous mode. Minimize
+  this for security reason, and only use for the use case it's designed for.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: DistributedVirtualPortgroup
+data_type: distribution
+columns:
+- attribute: config|policies|security|allow_promiscuous
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

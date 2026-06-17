@@ -1,0 +1,19 @@
+id: fc64c67a-d5b0-4a03-a10b-767b9b247120
+name: vSphere Cluster HA Admission Control status
+description: 'Relative distribution of clusters HA admission control status. You should
+  enable admission control as part of vSphere best practices.
+
+
+  true = enabled'
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|dasConfig|admissionControlEnabled
+  display_name: HA Admission Control Enabled
+time_window:
+  unit: DAYS
+  count: 7
+  advanced_time_mode: true

@@ -1,0 +1,10 @@
+id: f4184f6d-e711-4dc2-93ca-941754a135e7
+name: "Share per GB of Memory"
+resource_kinds:
+  - resource_kind_key: VirtualMachine
+    adapter_kind_key: VMWARE
+description: >
+  Normalized share value, to enable comparison among VMs of different size.
+unit_id: ""
+formula: |
+  ${this, metric=config|memoryAllocation|shares|shares} / ${this, metric=config|hardware|memoryKB} * 1024

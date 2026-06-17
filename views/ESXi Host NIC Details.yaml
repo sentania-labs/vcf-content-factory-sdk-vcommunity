@@ -1,0 +1,18 @@
+id: 59c6f945-e83b-4668-a6a3-d789b9d05166
+name: ESXi Host NIC Details
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: Instance Name
+  display_name: NIC
+- attribute: vCommunity|Network|Device:vmnic0|Status
+  display_name: Status
+  red_bound: Disconnected
+- attribute: vCommunity|Network|Device:vmnic0|Firmware Version
+  display_name: Firmware Version
+- attribute: vCommunity|Network|Device:vmnic0|Driver Version
+  display_name: Driver Version
+time_window:
+  unit: DAYS
+  count: 7

@@ -1,0 +1,18 @@
+id: fa10900c-2d88-41d6-86c9-046349ccc5bf
+name: Guest OS CPU Queue Trend
+description: It's showing 20-second peak and not 5 minute as the context is performance,
+  not capacity.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: trend
+columns:
+- attribute: guest|20_sec_peak_cpu_queue
+  display_name: 20-sec CPU Queue
+  yellow_bound: 3.0
+  orange_bound: 12.0
+  red_bound: 48.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 90

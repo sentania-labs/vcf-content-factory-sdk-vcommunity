@@ -1,0 +1,23 @@
+id: b8af9e79-a062-4e3b-8501-7bbc64a6a3f9
+name: VM CPU Utilization
+description: Trend line of CPU utilization of a VM. As the context is Guest OS capacity,
+  the primary metric is CPU Net Run. CPU Usage is shown as it's what almost all customers
+  are accustomed to.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: trend
+columns:
+- attribute: cpu|net_run
+  display_name: Net Run
+  unit: percent
+  yellow_bound: 80.0
+  orange_bound: 90.0
+  red_bound: 95.0
+  ascending_range: false
+- attribute: cpu|usage_average
+  display_name: Usage
+  unit: percent
+time_window:
+  unit: WEEKS
+  count: 1

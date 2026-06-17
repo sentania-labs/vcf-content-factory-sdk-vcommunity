@@ -1,0 +1,14 @@
+id: 1fa18cd9-f908-4120-9c81-797282a3db37
+name: vSphere Switch Version
+description: Absolute distribution of outdated vSphere distributed Switch. Keep the
+  version consistent with your vSphere.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VmwareDistributedVirtualSwitch
+data_type: distribution
+columns:
+- attribute: summary|version
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

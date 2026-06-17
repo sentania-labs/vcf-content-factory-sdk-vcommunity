@@ -1,0 +1,15 @@
+id: c0c98494-1147-4ec1-affd-fcaf54334563
+name: "ESXi Bad Network Packets"
+resource_kinds:
+  - resource_kind_key: HostSystem
+    adapter_kind_key: VMWARE
+description: >
+  Percentage of dropped packets and error packets on an ESXi host. Sums
+  Rx/Tx error and dropped packet counters and divides by total Rx/Tx packet
+  counts, multiplying by 100 to express as a percentage. This should be
+  near 0% as network errors and drops should not occur within physical
+  infrastructure. For details, see VCF Operations Transformation book and
+  vSphere Metrics book, which are parts of Operationalize Your World.
+unit_id: percent
+formula: |
+  (${this, metric=net|errorsRx_summation_sum} + ${this, metric=net|errorsTx_summation_sum} + ${this, metric=net|droppedRx_summation_sum} + ${this, metric=net|droppedTx_summation_sum}) / (${this, metric=net|packetsRx_summation_sum} + ${this, metric=net|packetsTx_summation_sum}) * 100

@@ -1,0 +1,16 @@
+id: 4d71034d-6368-4284-be94-94887f87eddc
+name: VM Snapshot Size
+description: Absolute distribution of VM by their snapshot size. Snapshots are temporary
+  protection, so a large indicates unexpected result. Investigates the age too, as
+  even small snapshot should not be left for days or weeks.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: diskspace|snapshot
+  display_name: .
+  unit: gb
+time_window:
+  unit: MINUTES
+  count: 1

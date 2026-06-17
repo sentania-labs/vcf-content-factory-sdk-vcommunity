@@ -1,0 +1,16 @@
+id: 0a898851-197b-4e82-baf6-a2a89acd600a
+name: vSphere Port Group MAC Address Change
+description: Count of distributed port group that allows network MAC address to be
+  changed. Minimize this as it allows MAC address impersonation. If allowed, ESXi
+  host does not drop the packet when the Guest OS MAC address does not match the VM
+  MAC address.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: DistributedVirtualPortgroup
+data_type: distribution
+columns:
+- attribute: config|policies|security|mac_changes
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

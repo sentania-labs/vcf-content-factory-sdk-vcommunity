@@ -1,0 +1,20 @@
+id: 5c20ba39-9d8b-4272-b01d-8dbafeded995
+name: ESXi Distribution by Memory Size
+description: "Absolute distribution of ESXi hosts, by their memory size in GB. Keep\
+  \ the combination minimal for ease of operations. \nMinimize small hosts as they\
+  \ are relatively more expensive when all costs are considered (software, people,\
+  \ facilities). To apply a threshold, go to filter tab. \n\nTypical ESXi sports 512\
+  \ GB RAM. Using typical 4:1 Ratio, this gives around 128 vCPU before the Memory\
+  \ being overcommitted.\n\nThis view is used in dashboard:\nConfiguration \\ ESXi\n\
+  \nSource: vSphere Adapter"
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: hardware|memorySize
+  display_name: .
+  unit: tb
+time_window:
+  unit: DAYS
+  count: 7

@@ -1,0 +1,15 @@
+id: 0f5cd0c6-a06c-4be0-9af1-16adc6eac7ac
+name: VM CPU Limit
+description: Count of VMs with CPU Limit. CPU Limit results in unpredictable performance
+  problem, especially those with low threshold.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+presentation: pie-chart
+columns:
+- attribute: config|cpuAllocation|limit
+  display_name: No of VM
+time_window:
+  unit: DAYS
+  count: 7

@@ -1,0 +1,25 @@
+id: 3a88e1a7-511c-440d-868b-65df4a2c7898
+name: vSphere Data Centers Inventory
+description: 'List of vSphere data centers. Only basic information is provided as
+  this view is designed to be used in as a selector (filter).
+
+
+  The vCenter column is required as the cluster name in VMware-based cloud is not
+  unique.'
+subject:
+  adapter_kind: VMWARE
+  resource_kind: Datacenter
+columns:
+- attribute: summary|total_number_clusters
+  display_name: Clusters
+- attribute: summary|total_number_hosts
+  display_name: ESXi Hosts
+- attribute: summary|total_number_datastores
+  display_name: Datastores
+- attribute: summary|total_number_vms
+  display_name: VMs
+- attribute: summary|parentVcenter
+  display_name: vCenter
+time_window:
+  unit: DAYS
+  count: 7

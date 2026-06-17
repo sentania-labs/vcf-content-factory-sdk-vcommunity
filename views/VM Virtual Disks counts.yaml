@@ -1,0 +1,14 @@
+id: e0e0972a-2da0-4544-a53f-9e55b09c74a3
+name: VM Virtual Disks counts
+description: Absolute distribution of VMs by their number of virtual disks. Minimize
+  those with many virtual disks as it creates islands of disk space.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: config|numVMDKs
+  display_name: .
+time_window:
+  unit: MINUTES
+  count: 1

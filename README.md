@@ -48,18 +48,27 @@ key-namespace continuity, **not** a supported upgrade guarantee.
 
 ## Configuration
 
-### Credentials (two kinds)
+### Credentials (one combined kind)
 
-- **vCenter Credential** (required) — `user` / `password`.
-- **Windows Guest Credential** (optional) — `winUser` / `winPass`, used only for
-  Windows guest-ops. Leave it unset to disable guest-ops cleanly.
+A single credential kind (`vsphere_user`, "vCenter Credential") with four fields,
+matching the prod original — an Ops adapter instance binds exactly one credential:
+
+- **vCenter** (required) — `user` / `password`.
+- **Windows guest** (optional) — `winUser` / `winPass`, used only for Windows
+  guest-ops. Leave them unset to disable guest-ops cleanly.
 
 ### Windows Monitoring
 
-An adapter-instance enum: `Disabled` (default) | `Services` | `Event Logs` |
-`Services + Event Logs`. Guest-ops runs only when this is non-Disabled AND a
-Windows Guest Credential is set; otherwise it is skipped (non-fatal). One
-unreachable or mis-credentialed guest never aborts the collection cycle.
+Two independent adapter-instance toggles, each `Enabled` / `Disabled` (default
+`Disabled`), matching the original's two Advanced-Settings enums:
+
+- **Guest OS Service Monitoring Status** (`serviceMonitoring`).
+- **Windows Event Log Monitoring Status** (`winEventMonitoring`).
+
+Guest-ops runs only when at least one toggle is `Enabled` AND the Windows guest
+credential fields are set; otherwise it is skipped (non-fatal). Only the literal
+`Enabled` turns a gate on. One unreachable or mis-credentialed guest never aborts
+the collection cycle.
 
 ### Central check-list files
 

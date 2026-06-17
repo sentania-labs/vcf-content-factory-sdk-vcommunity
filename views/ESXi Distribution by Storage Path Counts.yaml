@@ -1,0 +1,16 @@
+id: 51ea3aa0-2671-44da-ac00-8c265767ad83
+name: ESXi Distribution by Storage Path Counts
+description: Relative distribution of ESXi storage paths. Ideally, it's consistent
+  across all ESXi hosts, with >1 active paths. ESXi hosts in the same cluster should
+  have identical configuration.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: config|storageDevice|multipathInfo|numberofActivePath
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

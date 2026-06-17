@@ -1,0 +1,731 @@
+id: 7f41013d-ce0d-4626-beeb-1c728c9111a4
+name: VM Details
+name_path: vCommunity
+shared: false
+widgets:
+- id: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  type: View
+  title: VMs
+  coords:
+    x: 1
+    y: 1
+    w: 6
+    h: 14
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: VM Details vCommunity
+- id: 522fa5e5-f111-4773-8d79-11b2a1580463
+  type: PropertyList
+  title: Advanced Parameters (for selected VM)
+  coords:
+    x: 7
+    y: 6
+    w: 3
+    h: 9
+  property_list:
+    properties:
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestInfo.detailed.data
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestInfo.detailed.data
+      color_method: 1
+      label: guestInfo.detailed.data
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|vmxstats.filename
+      metric_name: vCommunity|Configuration|Advanced Parameters|vmxstats.filename
+      color_method: 1
+      label: vmxstats.filename
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|vmware.tools.requiredversion
+      metric_name: vCommunity|Configuration|Advanced Parameters|vmware.tools.requiredversion
+      color_method: 1
+      label: vmware.tools.requiredversion
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|vmware.tools.internalversion
+      metric_name: vCommunity|Configuration|Advanced Parameters|vmware.tools.internalversion
+      color_method: 1
+      label: vmware.tools.internalversion
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|vmotion.checkpointSVGAPrimarySize
+      metric_name: vCommunity|Configuration|Advanced Parameters|vmotion.checkpointSVGAPrimarySize
+      color_method: 1
+      label: vmotion.checkpointSVGAPrimarySize
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|vmotion.checkpointFBSize
+      metric_name: vCommunity|Configuration|Advanced Parameters|vmotion.checkpointFBSize
+      color_method: 1
+      label: vmotion.checkpointFBSize
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|viv.moid
+      metric_name: vCommunity|Configuration|Advanced Parameters|viv.moid
+      color_method: 1
+      label: viv.moid
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|tools.capability.verifiedSamlToken
+      metric_name: vCommunity|Configuration|Advanced Parameters|tools.capability.verifiedSamlToken
+      color_method: 1
+      label: tools.capability.verifiedSamlToken
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|svga.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|svga.present
+      color_method: 1
+      label: svga.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|softPowerOff
+      metric_name: vCommunity|Configuration|Advanced Parameters|softPowerOff
+      color_method: 1
+      label: softPowerOff
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|scsi0:2.redo
+      metric_name: vCommunity|Configuration|Advanced Parameters|scsi0:2.redo
+      color_method: 1
+      label: scsi0:2.redo
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|scsi0:1.redo
+      metric_name: vCommunity|Configuration|Advanced Parameters|scsi0:1.redo
+      color_method: 1
+      label: scsi0:1.redo
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|scsi0:0.redo
+      metric_name: vCommunity|Configuration|Advanced Parameters|scsi0:0.redo
+      color_method: 1
+      label: scsi0:0.redo
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|scsi0.sasWWID
+      metric_name: vCommunity|Configuration|Advanced Parameters|scsi0.sasWWID
+      color_method: 1
+      label: scsi0.sasWWID
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|scsi0.pciSlotNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|scsi0.pciSlotNumber
+      color_method: 1
+      label: scsi0.pciSlotNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|sched.swap.derivedName
+      metric_name: vCommunity|Configuration|Advanced Parameters|sched.swap.derivedName
+      color_method: 1
+      label: sched.swap.derivedName
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|RemoteDisplay.maxConnections
+      metric_name: vCommunity|Configuration|Advanced Parameters|RemoteDisplay.maxConnections
+      color_method: 1
+      label: RemoteDisplay.maxConnections
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge7.virtualDev
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge7.virtualDev
+      color_method: 1
+      label: pciBridge7.virtualDev
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge7.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge7.present
+      color_method: 1
+      label: pciBridge7.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge7.pciSlotNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge7.pciSlotNumber
+      color_method: 1
+      label: pciBridge7.pciSlotNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge7.functions
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge7.functions
+      color_method: 1
+      label: pciBridge7.functions
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge6.virtualDev
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge6.virtualDev
+      color_method: 1
+      label: pciBridge6.virtualDev
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge6.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge6.present
+      color_method: 1
+      label: pciBridge6.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge6.pciSlotNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge6.pciSlotNumber
+      color_method: 1
+      label: pciBridge6.pciSlotNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge6.functions
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge6.functions
+      color_method: 1
+      label: pciBridge6.functions
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge5.virtualDev
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge5.virtualDev
+      color_method: 1
+      label: pciBridge5.virtualDev
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge5.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge5.present
+      color_method: 1
+      label: pciBridge5.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge5.pciSlotNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge5.pciSlotNumber
+      color_method: 1
+      label: pciBridge5.pciSlotNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge5.functions
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge5.functions
+      color_method: 1
+      label: pciBridge5.functions
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge4.virtualDev
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge4.virtualDev
+      color_method: 1
+      label: pciBridge4.virtualDev
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge4.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge4.present
+      color_method: 1
+      label: pciBridge4.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge4.pciSlotNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge4.pciSlotNumber
+      color_method: 1
+      label: pciBridge4.pciSlotNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge4.functions
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge4.functions
+      color_method: 1
+      label: pciBridge4.functions
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge0.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge0.present
+      color_method: 1
+      label: pciBridge0.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|pciBridge0.pciSlotNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|pciBridge0.pciSlotNumber
+      color_method: 1
+      label: pciBridge0.pciSlotNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|nvram
+      metric_name: vCommunity|Configuration|Advanced Parameters|nvram
+      color_method: 1
+      label: nvram
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|numa.autosize.vcpu.maxPerVirtualNode
+      metric_name: vCommunity|Configuration|Advanced Parameters|numa.autosize.vcpu.maxPerVirtualNode
+      color_method: 1
+      label: numa.autosize.vcpu.maxPerVirtualNode
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|numa.autosize.cookie
+      metric_name: vCommunity|Configuration|Advanced Parameters|numa.autosize.cookie
+      color_method: 1
+      label: numa.autosize.cookie
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|monitor.phys_bits_used
+      metric_name: vCommunity|Configuration|Advanced Parameters|monitor.phys_bits_used
+      color_method: 1
+      label: monitor.phys_bits_used
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|namespaceMgr.dbFile
+      metric_name: vCommunity|Configuration|Advanced Parameters|namespaceMgr.dbFile
+      color_method: 1
+      label: namespaceMgr.dbFile
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|migrate.migrationId
+      metric_name: vCommunity|Configuration|Advanced Parameters|migrate.migrationId
+      color_method: 1
+      label: migrate.migrationId
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|migrate.hostLogState
+      metric_name: vCommunity|Configuration|Advanced Parameters|migrate.hostLogState
+      color_method: 1
+      label: migrate.hostLogState
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|migrate.hostLog
+      metric_name: vCommunity|Configuration|Advanced Parameters|migrate.hostLog
+      color_method: 1
+      label: migrate.hostLog
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|ide0:0.autodetect
+      metric_name: vCommunity|Configuration|Advanced Parameters|ide0:0.autodetect
+      color_method: 1
+      label: ide0:0.autodetect
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|hpet0.present
+      metric_name: vCommunity|Configuration|Advanced Parameters|hpet0.present
+      color_method: 1
+      label: hpet0.present
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestinfo.vmware.components.available
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestinfo.vmware.components.available
+      color_method: 1
+      label: guestinfo.vmware.components.available
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.versionString
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.versionString
+      color_method: 1
+      label: guestinfo.vmtools.versionString
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.versionNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.versionNumber
+      color_method: 1
+      label: guestinfo.vmtools.versionNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.description
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.description
+      color_method: 1
+      label: guestinfo.vmtools.description
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.buildNumber
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestinfo.vmtools.buildNumber
+      color_method: 1
+      label: guestinfo.vmtools.buildNumber
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Configuration|Advanced Parameters|guestinfo.ovfEnv
+      metric_name: vCommunity|Configuration|Advanced Parameters|guestinfo.ovfEnv
+      color_method: 1
+      label: guestinfo.ovfEnv
+      is_string_metric: true
+    visual_theme: 0
+    depth: 1
+    show_metric_full_name: true
+- id: 62e66c69-3663-42b4-8956-341bde62ffab
+  type: PropertyList
+  title: Options (for selected VM)
+  coords:
+    x: 10
+    y: 6
+    w: 3
+    h: 9
+  property_list:
+    properties:
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.bootOptions.bootOrder
+      metric_name: vCommunity|Options|config.bootOptions.bootOrder
+      color_method: 1
+      label: bootOptions.bootOrder
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.bootOptions.bootRetryDelay
+      metric_name: vCommunity|Options|config.bootOptions.bootRetryDelay
+      color_method: 1
+      label: bootOptions.bootRetryDelay
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.bootOptions.efiSecureBootEnabled
+      metric_name: vCommunity|Options|config.bootOptions.efiSecureBootEnabled
+      color_method: 1
+      label: bootOptions.efiSecureBootEnabled
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.bootOptions.networkBootProtocol
+      metric_name: vCommunity|Options|config.bootOptions.networkBootProtocol
+      color_method: 1
+      label: bootOptions.networkBootProtocol
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.flags.diskUuidEnabled
+      metric_name: vCommunity|Options|config.flags.diskUuidEnabled
+      color_method: 1
+      label: flags.diskUuidEnabled
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.flags.enableLogging
+      metric_name: vCommunity|Options|config.flags.enableLogging
+      color_method: 1
+      label: flags.enableLogging
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.flags.faultToleranceType
+      metric_name: vCommunity|Options|config.flags.faultToleranceType
+      color_method: 1
+      label: flags.faultToleranceType
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.flags.htSharing
+      metric_name: vCommunity|Options|config.flags.htSharing
+      color_method: 1
+      label: flags.htSharing
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.flags.monitorType
+      metric_name: vCommunity|Options|config.flags.monitorType
+      color_method: 1
+      label: flags.monitorType
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.flags.snapshotPowerOffBehavior
+      metric_name: vCommunity|Options|config.flags.snapshotPowerOffBehavior
+      color_method: 1
+      label: flags.snapshotPowerOffBehavior
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.ftEncryptionMode
+      metric_name: vCommunity|Options|config.ftEncryptionMode
+      color_method: 1
+      label: ftEncryptionMode
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.guestAutoLockEnabled
+      metric_name: vCommunity|Options|config.guestAutoLockEnabled
+      color_method: 1
+      label: guestAutoLockEnabled
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.latencySensitivity.level
+      metric_name: vCommunity|Options|config.latencySensitivity.level
+      color_method: 1
+      label: latencySensitivity.level
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.maxMksConnections
+      metric_name: vCommunity|Options|config.maxMksConnections
+      color_method: 1
+      label: maxMksConnections
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.migrateEncryption
+      metric_name: vCommunity|Options|config.migrateEncryption
+      color_method: 1
+      label: migrateEncryption
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.scheduledHardwareUpgradeInfo.scheduledHardwareUpgradeStatus
+      metric_name: vCommunity|Options|config.scheduledHardwareUpgradeInfo.scheduledHardwareUpgradeStatus
+      color_method: 1
+      label: scheduledHardwareUpgradeInfo.scheduledHardwareUpgradeStatus
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.scheduledHardwareUpgradeInfo.upgradePolicy
+      metric_name: vCommunity|Options|config.scheduledHardwareUpgradeInfo.upgradePolicy
+      color_method: 1
+      label: scheduledHardwareUpgradeInfo.upgradePolicy
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.sgxInfo.flcMode
+      metric_name: vCommunity|Options|config.sgxInfo.flcMode
+      color_method: 1
+      label: sgxInfo.flcMode
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.afterPowerOn
+      metric_name: vCommunity|Options|config.tools.afterPowerOn
+      color_method: 1
+      label: tools.afterPowerOn
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.afterResume
+      metric_name: vCommunity|Options|config.tools.afterResume
+      color_method: 1
+      label: tools.afterResume
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.beforeGuestStandby
+      metric_name: vCommunity|Options|config.tools.beforeGuestStandby
+      color_method: 1
+      label: tools.beforeGuestStandby
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.beforeGuestShutdown
+      metric_name: vCommunity|Options|config.tools.beforeGuestShutdown
+      color_method: 1
+      label: tools.beforeGuestShutdown
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.lastInstallInfo
+      metric_name: vCommunity|Options|config.tools.lastInstallInfo
+      color_method: 1
+      label: tools.lastInstallInfo
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.toolsInstallType
+      metric_name: vCommunity|Options|config.tools.toolsInstallType
+      color_method: 1
+      label: tools.toolsInstallType
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.vmOpNotificationTimeout
+      metric_name: vCommunity|Options|config.vmOpNotificationTimeout
+      color_method: 1
+      label: vmOpNotificationTimeout
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.toolsVersion
+      metric_name: vCommunity|Options|config.tools.toolsVersion
+      color_method: 1
+      label: tools.toolsVersion
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.toolsUpgradePolicy
+      metric_name: vCommunity|Options|config.tools.toolsUpgradePolicy
+      color_method: 1
+      label: tools.toolsUpgradePolicy
+      is_string_metric: true
+    - adapter_kind: VMWARE
+      resource_kind: VirtualMachine
+      metric_key: vCommunity|Options|config.tools.syncTimeWithHostAllowed
+      metric_name: vCommunity|Options|config.tools.syncTimeWithHostAllowed
+      color_method: 1
+      label: tools.syncTimeWithHostAllowed
+      is_string_metric: true
+    visual_theme: 0
+    depth: 1
+    show_metric_full_name: true
+- id: f5b4a644-cb44-4426-84d1-60ec65f4432b
+  type: View
+  title: Services (on selected Windows VM)
+  coords:
+    x: 1
+    y: 15
+    w: 4
+    h: 8
+  view: Windows Services vCommunity
+- id: da3e49a4-400c-4d90-9790-e2a50fe97f69
+  type: AlertList
+  title: Active Alerts (for selected VM)
+  coords:
+    x: 5
+    y: 15
+    w: 8
+    h: 8
+  criticality:
+  - 2
+  - 3
+  - 4
+  status:
+  - 0
+  mode: all
+  depth: 1
+- id: f2340052-4993-40fd-95d7-78d481a95d54
+  type: Scoreboard
+  title: CPU Usage (for selected VM)
+  coords:
+    x: 7
+    y: 1
+    w: 2
+    h: 5
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: cpu|usage_average
+    metric_name: CPU|Usage
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 90.0
+    orange_bound: 95.0
+    red_bound: 99.0
+  visual_theme: 9
+  show_sparkline: false
+  show_resource_name: true
+  show_metric_name: false
+  show_metric_unit: true
+  box_columns: 1
+  value_size: 24
+  label_size: 16
+  round_decimals: 1.0
+  max_cell_count: 100
+- id: fb79b446-250a-407c-9746-ef6a221ae511
+  type: Scoreboard
+  title: Memory Usage (for selected VM)
+  coords:
+    x: 9
+    y: 1
+    w: 2
+    h: 5
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: mem|usage_average
+    metric_name: Memory|Usage
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 85.0
+    orange_bound: 90.0
+    red_bound: 95.0
+  visual_theme: 9
+  show_sparkline: false
+  show_resource_name: true
+  show_metric_name: false
+  show_metric_unit: true
+  box_columns: 1
+  value_size: 24
+  label_size: 16
+  round_decimals: 1.0
+  max_cell_count: 100
+- id: a6fa556b-1c0e-4cb3-bd40-9102f78b78d6
+  type: Scoreboard
+  title: Disk Usage (for selected VM)
+  coords:
+    x: 11
+    y: 1
+    w: 2
+    h: 5
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: VirtualMachine
+    metric_key: guestfilesystem|percentage_total
+    metric_name: Guest File System|Utilization
+    unit_id: '-1'
+    unit: Auto
+    color_method: 0
+    yellow_bound: 70.0
+    orange_bound: 80.0
+    red_bound: 90.0
+  visual_theme: 9
+  show_sparkline: false
+  show_resource_name: true
+  show_metric_name: false
+  show_metric_unit: true
+  box_columns: 1
+  value_size: 24
+  label_size: 16
+  round_decimals: 1.0
+  max_cell_count: 100
+interactions:
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: 522fa5e5-f111-4773-8d79-11b2a1580463
+  type: resourceId
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: 62e66c69-3663-42b4-8956-341bde62ffab
+  type: resourceId
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: f5b4a644-cb44-4426-84d1-60ec65f4432b
+  type: resourceId
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: da3e49a4-400c-4d90-9790-e2a50fe97f69
+  type: resourceId
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: f2340052-4993-40fd-95d7-78d481a95d54
+  type: resourceId
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: fb79b446-250a-407c-9746-ef6a221ae511
+  type: resourceId
+- from: 953a326e-a938-48ce-8c92-e922ac2b0b05
+  to: a6fa556b-1c0e-4cb3-bd40-9102f78b78d6
+  type: resourceId

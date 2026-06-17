@@ -1,0 +1,49 @@
+id: c59b828f-5840-4aa7-8bda-2b3639323a89
+name: VM Capacity Consumption
+description: List of VM and their footprint on the cluster. Used in cluster capacity
+  analysis to figure out which VMs have largest reservation and utilization. Both
+  the VM CPU and memory are shown.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: config|hardware|numCpu
+  display_name: CPU
+  yellow_bound: 8.0
+  orange_bound: 16.0
+  red_bound: 24.0
+  ascending_range: false
+- attribute: config|cpuAllocation|reservation
+  display_name: Reservation
+  unit: ghz
+  yellow_bound: 10.0
+  orange_bound: 20.0
+  red_bound: 40.0
+  ascending_range: false
+- attribute: config|hardware|memoryKB
+  display_name: Memory
+  unit: gb
+  yellow_bound: 64.0
+  orange_bound: 128.0
+  red_bound: 256.0
+  ascending_range: false
+- attribute: config|memoryAllocation|reservation
+  display_name: Reservation
+  unit: gb
+  yellow_bound: 24.0
+  orange_bound: 48.0
+  red_bound: 96.0
+  ascending_range: false
+- attribute: mem|vmMemoryDemand
+  display_name: Utilization
+  unit: gb
+- attribute: mem|consumed_average
+  display_name: Consumed
+  unit: gb
+  yellow_bound: 32.0
+  orange_bound: 64.0
+  red_bound: 128.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 7

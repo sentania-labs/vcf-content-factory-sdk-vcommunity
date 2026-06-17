@@ -1,0 +1,14 @@
+id: d204cfc6-c31e-480f-9d12-008fb57a3dfa
+name: ESXi Power Management (BIOS)
+description: Compare with the value at ESXi level
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: hardware|powerManagementTechnoloy
+  display_name: BIOS Setting
+time_window:
+  unit: DAYS
+  count: 7

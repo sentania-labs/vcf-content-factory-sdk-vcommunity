@@ -1,0 +1,13 @@
+id: 56f47a85-150b-4bfe-b693-a42337bf1985
+name: ESXi Host Power State vCommunity
+description: ESXi Host Power State vCommunity
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: runtime|powerState
+  display_name: Power State
+time_window:
+  unit: DAYS
+  count: 7

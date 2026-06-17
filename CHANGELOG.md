@@ -18,6 +18,78 @@ detail in `README.md` ("Known gaps & roadmap").
   `fetchSoftwarePackages`/`installDate`, `EvcManager`); Suite API config fetch
   from a remote collector / cloud proxy.
 
+## 1.0.0.7 (2026-06-17)
+
+- fix(content-emit): correct three content-emit format gaps the live devel
+  install of 1.0.0.6 surfaced (builder/render fixes — no adapter Java change):
+  - **Symptom operator** — symptomdef XML now emits the C-style symbol form
+    (`!=` etc.) the platform importer accepts, not the REST enum name
+    (`NOT_EQ`, which failed with `Invalid operator:not_eq`). Matches the
+    original's symptomdef XML verbatim.
+  - **Super-metric JSON** — each SM now carries `modificationTime` + `modifiedBy`
+    (the importer's CREATE path calls `readLong(modificationTime)`; absent →
+    `NumberFormatException`, so NEW SMs silently failed to create). Matches the
+    original's SM JSON shape.
+  - The 96th view (`Guest OS List of Services`, `APPLICATIONDISCOVERY` kind) is
+    correctly skipped by the importer when Service Discovery is absent — not a
+    defect; all 96 ship.
+
+## 1.0.0.6 (2026-06-17)
+
+- fix(adapter): rework the credential model, instance-config labels, and
+  monitoring toggles to be **like-for-like with the prod original**
+  (`VCFOperationsvCommunity` `app/adapter.py`). Three correctness/parity fixes:
+  - **Single combined credential.** Collapsed the two credential kinds
+    (`vcenter_credentials` + `windows_guest_credentials`) into ONE kind
+    (`vsphere_user`, "vCenter Credential") with FOUR fields — `user`/`password`
+    (required) + `winUser`/`winPass` (optional, password) — matching the
+    original. An Ops adapter instance binds exactly one credential; the old
+    two-kind shape left the Windows guest credential with no binding slot, so
+    guest-ops could never receive a credential. The Java reads all four fields
+    from the one bound credential (`getResourceCredential()`), unchanged.
+  - **Two monitoring toggles instead of one enum.** Replaced the single
+    `windows_monitoring` four-way enum with the original's TWO separate
+    Enabled/Disabled enums — `serviceMonitoring` ("Guest OS Service Monitoring
+    Status") and `winEventMonitoring` ("Windows Event Log Monitoring Status").
+    `VCommunityConfig.WindowsMonitoring.from(svc, evt)` derives the services /
+    event-log gates from the two booleans; only literal "Enabled" turns a gate
+    on (Disabled/null/blank/garbage → off — never folds unreadable into on).
+    Collection behaviour (the `services()` / `eventLogs()` gates) is preserved.
+  - **Clean labels + (i) descriptions + clean adapter-kind display name.**
+    Populated `resources.properties` with the original's verbatim field labels
+    and `<nameKey>.description` help text ("vCenter Server", "ESXi Advanced
+    System Settings Config File", etc.); renamed the host identifier
+    `vcenter_host` → `host` to match the original's key. Fields no longer render
+    as raw identifiers.
+  - **Config contract change.** Existing devel instances must be reconfigured
+    after the next install — their old two-credential / single-enum config does
+    not map to the new single-credential / two-toggle surface. Expected.
+
+## 1.0.0.5 (2026-06-16)
+
+- feat(content): bundle the ported vCommunity content set into the pak — **37
+  super metrics**, **96 views**, **12 dashboards**, **2 symptom definitions** —
+  reverse-ported from the original `VCFOperationsvCommunity` MP (render-vs-source
+  verified). SM cross-references resolve to `Super Metric|sm_<uuid>`; external
+  /platform view references pass through by UUID. Listed in `bundled_content`.
+  Reports, alerts, and the report-input dashboards land in a later build; the
+  Windows/OS surface is Phase-3 (gated on a Windows guest credential).
+
+## 1.0.0.4 (2026-06-16)
+
+- fix(adapter): align the VMware-Tools **Guest OS** property key names to the
+  prod original's six canonical `OS `-prefixed names so the pushed
+  `vCommunity|Guest OS|Operating System|` keys are byte-identical to the
+  original's Windows-CSV path: `Name`→`OS Name`, `Version`→`OS Version`,
+  `BuildNumber`→`OS BuildNumber`, `Release ID`→`OS Release ID`, `Last Boot Up
+  Time`→`OS Last Boot Up Time` (`OS Architecture` was already correct). Makes
+  this tools-info path a benign non-Windows superset that reuses the original's
+  exact key names, so ported content referencing `OS Last Boot Up Time` etc.
+  finds data on every VM whose tools report it. Skip-if-absent behavior
+  unchanged — each key pushed only when the guest reported it; never a sentinel
+  (Phase 1 §1c, parity plan). The Windows guest-ops OS path is untouched
+  (Phase 3).
+
 ## 1.0.0.3 (2026-06-16)
 
 - feat(adapter): close HostSystem **Licensing** parity gap (10 keys). Resolve

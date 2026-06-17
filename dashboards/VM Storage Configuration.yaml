@@ -1,0 +1,131 @@
+id: c80749d8-25a1-4867-a3fc-f64f92db9e95
+name: VM Storage Configuration
+description: "Highlight VM configuration that needs your attention. Use this dashboard\
+  \ to fix incorrect settings, update outdated components, and reduce overall cost\
+  \ by optimizing your environment. \n\nNo data on a chart means the configuration\
+  \ is optimized."
+name_path: vCommunity
+shared: true
+widgets:
+- id: 563102f1-9cb6-4737-9b10-8f82b7c6af07
+  type: View
+  title: 'VM Disks: Size'
+  coords:
+    x: 9
+    y: 7
+    w: 4
+    h: 6
+  view: VM Distribution by Disk Size
+- id: 33641db4-8053-4ef3-8274-b1ba602483aa
+  type: View
+  title: 'VM Disks: Count'
+  coords:
+    x: 5
+    y: 7
+    w: 4
+    h: 6
+  view: VM Virtual Disks counts
+- id: c28c4348-5467-4a87-8762-8dea4750ac96
+  type: View
+  title: VMs Configuration
+  coords:
+    x: 1
+    y: 13
+    w: 12
+    h: 5
+  view: VM Storage Configuration
+- id: 42d2fd49-71fa-429e-8e83-2cad173275b8
+  type: View
+  title: VM Snapshots
+  coords:
+    x: 7
+    y: 1
+    w: 6
+    h: 6
+  view: VM Snapshot Size
+- id: 8b4f8b58-26b3-43ac-868c-9477932826b6
+  type: View
+  title: Datacenters
+  coords:
+    x: 1
+    y: 1
+    w: 4
+    h: 12
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: 5c298af8-34f2-42fa-9fe9-a721535e378a
+  type: View
+  title: VMs with RDM Disks
+  coords:
+    x: 5
+    y: 1
+    w: 2
+    h: 6
+  view: VM with RDM disks
+- id: 40fc281a-0dbe-4290-a6c9-e26279f50d00
+  type: View
+  title: Virtual Disks of selected VM
+  coords:
+    x: 5
+    y: 18
+    w: 4
+    h: 6
+  view: VM Virtual Disks
+- id: fe7c64f4-0aa4-4782-84f6-11591c74492b
+  type: View
+  title: Snapshots of selected VM
+  coords:
+    x: 9
+    y: 18
+    w: 4
+    h: 6
+  view: VM Snapshots List
+- id: ec371f77-cb78-4d0f-8100-f9a1aca8dc13
+  type: View
+  title: Guest OS Partitions of selected VM
+  coords:
+    x: 1
+    y: 18
+    w: 4
+    h: 6
+  view: Guest OS Partition List
+interactions:
+- from: 8b4f8b58-26b3-43ac-868c-9477932826b6
+  to: 563102f1-9cb6-4737-9b10-8f82b7c6af07
+  type: resourceId
+- from: 8b4f8b58-26b3-43ac-868c-9477932826b6
+  to: 33641db4-8053-4ef3-8274-b1ba602483aa
+  type: resourceId
+- from: 8b4f8b58-26b3-43ac-868c-9477932826b6
+  to: 42d2fd49-71fa-429e-8e83-2cad173275b8
+  type: resourceId
+- from: 8b4f8b58-26b3-43ac-868c-9477932826b6
+  to: 5c298af8-34f2-42fa-9fe9-a721535e378a
+  type: resourceId
+- from: c28c4348-5467-4a87-8762-8dea4750ac96
+  to: 40fc281a-0dbe-4290-a6c9-e26279f50d00
+  type: resourceId
+- from: c28c4348-5467-4a87-8762-8dea4750ac96
+  to: fe7c64f4-0aa4-4782-84f6-11591c74492b
+  type: resourceId
+- from: c28c4348-5467-4a87-8762-8dea4750ac96
+  to: ec371f77-cb78-4d0f-8100-f9a1aca8dc13
+  type: resourceId
+- from: 42d2fd49-71fa-429e-8e83-2cad173275b8
+  to: c28c4348-5467-4a87-8762-8dea4750ac96
+  type: resourceId
+- from: 33641db4-8053-4ef3-8274-b1ba602483aa
+  to: c28c4348-5467-4a87-8762-8dea4750ac96
+  type: resourceId
+- from: 563102f1-9cb6-4737-9b10-8f82b7c6af07
+  to: c28c4348-5467-4a87-8762-8dea4750ac96
+  type: resourceId
+- from: 8b4f8b58-26b3-43ac-868c-9477932826b6
+  to: c28c4348-5467-4a87-8762-8dea4750ac96
+  type: resourceId
+- from: 5c298af8-34f2-42fa-9fe9-a721535e378a
+  to: c28c4348-5467-4a87-8762-8dea4750ac96
+  type: resourceId

@@ -1,0 +1,18 @@
+id: 23b3812d-fac8-449a-acb7-488a388a0716
+name: VM Distribution by Memory Share
+description: Relative distribution of VM memory shares in a specific container (e.g.
+  Cluster, Resource Pool, ESXi). A VM Share impacts the amount of memory given to
+  it when there is not enough for all virtual machines in the cluster. This number
+  needs to match the class of service, so ideally 1 number per cluster as a cluster
+  should only deliver 1 class of service (e.g. Gold cluster).
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: supermetric:"Share per GB of Memory"
+  display_name: .
+time_window:
+  unit: MINUTES
+  count: 1

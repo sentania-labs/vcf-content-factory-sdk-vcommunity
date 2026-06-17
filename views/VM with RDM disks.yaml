@@ -1,0 +1,14 @@
+id: 3ab2df38-8a5e-40df-912c-a354b5526d3f
+name: VM with RDM disks
+description: VM having Raw Device Mapping devices instead of virtual disk (VMDK file).
+  They increase operational complexity.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: config|numRDMs
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

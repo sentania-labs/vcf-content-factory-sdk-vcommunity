@@ -1,0 +1,30 @@
+id: caa77302-9958-4ac0-bcf0-aefcc386b634
+name: Guest OS List of Services
+description: 'List of Operating System processes or services, along with basic information.
+
+
+
+  Note: this requires Service Discovery adapter.'
+subject:
+  adapter_kind: APPLICATIONDISCOVERY
+  resource_kind: Services
+columns:
+- attribute: summary|incomingConnectionCount
+  display_name: Incoming Connections
+- attribute: summary|outgoingConnectionCount
+  display_name: Outgoing Connections
+- attribute: DynamicPort
+  display_name: Dynamic Port?
+- attribute: Port
+  display_name: Port
+- attribute: Status
+  display_name: Status
+- attribute: Version
+  display_name: Version
+- attribute: summary|Pid
+  display_name: Process ID
+- attribute: InstallPath
+  display_name: Installation Path
+time_window:
+  unit: DAYS
+  count: 7

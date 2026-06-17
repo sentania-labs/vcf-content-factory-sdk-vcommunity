@@ -1,0 +1,16 @@
+id: f752ddef-406d-4868-bd78-8b00aaa425cc
+name: VM Distribution by Memory Reservation
+description: Relative distribution of VM memory reservation. A VM reservation impacts
+  DRS behaviour and reduce Capacity, hence resulting in less optimal environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: config|memoryAllocation|reservation
+  display_name: .
+  unit: gb
+time_window:
+  unit: DAYS
+  count: 7

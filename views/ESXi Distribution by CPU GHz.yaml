@@ -1,0 +1,16 @@
+id: e2d1f3c7-336f-4eeb-80a1-144d1252bc5e
+name: ESXi Distribution by CPU GHz
+description: Absolute distribution of ESXi hosts, by their CPU size in GHz. Keep them
+  minimal. Also, pay attention to small hosts as they have relatively higher overhead,
+  hence less optimized. To change the threshold, go to filter tab.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+data_type: distribution
+columns:
+- attribute: cpu|speed
+  display_name: .
+  unit: ghz
+time_window:
+  unit: DAYS
+  count: 7

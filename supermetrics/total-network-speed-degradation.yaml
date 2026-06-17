@@ -1,0 +1,12 @@
+id: 3d21df83-083e-46b6-a6c0-5f7f2ae776c5
+name: "Total Network Speed Degradation"
+resource_kinds:
+  - resource_kind_key: vSphere World
+    adapter_kind_key: VMWARE
+  - resource_kind_key: Datacenter
+    adapter_kind_key: VMWARE
+description: >
+  Count of number of ESXi whose actual NIC speed is lower than its configured speed. Expect this number to be 0.
+unit_id: ""
+formula: |
+  count(${adaptertype=VMWARE, objecttype=HostSystem, attribute=@supermetric:"Network Speed Degradation", depth=4, where=($value < 100)})

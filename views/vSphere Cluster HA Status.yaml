@@ -1,0 +1,16 @@
+id: e041c79b-910f-477b-9d7a-d84e495119cb
+name: vSphere Cluster HA Status
+description: "Relative distribution of clusters High Availability  status. Expect\
+  \ all clusters to have HA enabled. HA protects VMs in the event of \nESXi host failure.\n\
+  \nTrue = enabled."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|dasConfig|enabled
+  display_name: HA Enabled?
+time_window:
+  unit: DAYS
+  count: 7

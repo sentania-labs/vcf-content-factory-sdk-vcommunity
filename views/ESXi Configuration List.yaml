@@ -1,0 +1,115 @@
+id: 4d9b6ad6-3325-42ff-8593-77793e547a4d
+name: ESXi Configuration List
+description: Displays the aggregated data about the different ESXI configuration of
+  the host systems in your environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: HostSystem
+columns:
+- attribute: hardware|vendor
+  display_name: Vendor
+- attribute: hardware|vendorModel
+  display_name: Hardware Model
+- attribute: config|product|apiVersion
+  display_name: ESXi Version
+- attribute: summary|version
+  display_name: ESXi Version Details
+- attribute: hardware|biosVersion
+  display_name: BIOS Version
+- attribute: cpu|cpuModel
+  display_name: CPU Model
+- attribute: hardware|cpuInfo|numCpuPackages
+  display_name: CPU Sockets
+  orange_bound: 2.0
+  red_bound: 4.0
+  ascending_range: false
+- attribute: hardware|cpuInfo|hz
+  display_name: CPU Speed
+  unit: auto
+- attribute: hardware|cpuInfo|numCpuCores
+  display_name: Total Cores
+  yellow_bound: 60.0
+  orange_bound: 40.0
+  red_bound: 20.0
+  ascending_range: true
+- attribute: config|hyperThread|active
+  display_name: Hyperthreading Active?
+- attribute: config|hyperThread|available
+  display_name: Hyperthreading Available?
+- attribute: mem|totalCapacity_average
+  display_name: Memory
+  unit: tb
+  yellow_bound: 0.9
+  orange_bound: 0.6
+  red_bound: 0.3
+  ascending_range: true
+- attribute: hardware|powerManagementTechnoloy
+  display_name: BIOS Power Management
+- attribute: hardware|powerManagementPolicy
+  display_name: ESXi Power Management
+- attribute: sys|vmotionEnabled
+  display_name: vMotion (1=Enabled)
+  yellow_bound: 0.0
+  orange_bound: -10.0
+  red_bound: -20.0
+  ascending_range: true
+- attribute: config|security|service:NTP Daemon|isRunning
+  display_name: NTP Running?
+  yellow_bound: 'false'
+  orange_bound: 'false'
+  red_bound: 'false'
+  ascending_range: true
+- attribute: config|security|service:SNMP Server|isRunning
+  display_name: SNMP Running?
+  yellow_bound: 'false'
+  orange_bound: 'false'
+  red_bound: 'false'
+  ascending_range: true
+- attribute: config|security|service:SSH|isRunning
+  display_name: SSH Enabled?
+  yellow_bound: 'true'
+  orange_bound: 'true'
+  red_bound: 'true'
+  ascending_range: true
+- attribute: config|storageDevice|multipathInfo|numberofActivePath
+  display_name: '# of Active Paths'
+- attribute: config|storageDevice|multipathInfo|multipathPolicy
+  display_name: Multipath Policy
+- attribute: config|storageDevice|multipathInfo|numberofActivePath
+  display_name: Active Storage Paths
+- attribute: config|storageDevice|plugStoreTopology|numberofPath
+  display_name: Total Storage Paths
+- attribute: runtime|cryptoState
+  display_name: Crypto States
+  red_bound: incapable
+- attribute: config|network|nnic
+  display_name: NICs
+- attribute: config|network|linkspeed
+  display_name: Average NIC Speed
+  yellow_bound: 20000.0
+  orange_bound: 10000.0
+  red_bound: 1000.0
+  ascending_range: true
+- attribute: summary|parentCluster
+  display_name: Cluster
+- attribute: summary|parentDatacenter
+  display_name: Datacenter
+- attribute: summary|parentVcenter
+  display_name: vCenter
+- attribute: config|network|portgroup|allow_promiscuous_rollup
+  display_name: Port Group (allow promiscuous)
+- attribute: config|network|portgroup|forged_transmits_rollup
+  display_name: Port Group (forged transmit)
+- attribute: config|network|portgroup|mac_changes_rollup
+  display_name: Port Group (MAC Changes)
+- attribute: hardware|biosReleaseDate
+  display_name: hardware|biosReleaseDate
+- attribute: hardware|enclosureSerialNumberTag
+  display_name: Enclosure Serial Number
+- attribute: hardware|serialNumberTag
+  display_name: Serial Number
+- attribute: hardware|serviceTag
+  display_name: Service Tag
+time_window:
+  unit: DAYS
+  count: 7

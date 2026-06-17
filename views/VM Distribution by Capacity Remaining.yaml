@@ -1,0 +1,15 @@
+id: 11dd432d-6c6f-4872-8c0a-2d9975856f66
+name: VM Distribution by Capacity Remaining
+description: Count of VMs, grouped by the capacity remaining. The view is color coded
+  for quick analysis
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+data_type: distribution
+columns:
+- attribute: OnlineCapacityAnalytics|capacityRemainingPercentage
+  display_name: Capacity Remaining
+  unit: percent
+time_window:
+  unit: DAYS
+  count: 1

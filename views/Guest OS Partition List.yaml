@@ -1,0 +1,33 @@
+id: 72cefd21-9a01-45e6-a33c-ea2a6897ac5d
+name: Guest OS Partition List
+description: List of Guest OS filesystem partitions and their capacity. It's more
+  important to monitor disk space inside each partition than at VM virtual disk level,
+  because that matters more to the application. This visibility inside the Guest OS
+  is delivered by vSphere Tools.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VirtualMachine
+columns:
+- attribute: Instance Name
+  display_name: Partition
+- attribute: guestfilesystem:/|capacity
+  display_name: Capacity
+  unit: gb
+  yellow_bound: 250.0
+  orange_bound: 500.0
+  red_bound: 1000.0
+  ascending_range: false
+- attribute: guestfilesystem:/|usage
+  display_name: Used
+  unit: gb
+  ascending_range: true
+- attribute: guestfilesystem:/|percentage
+  display_name: Used
+  unit: percent
+  yellow_bound: 85.0
+  orange_bound: 90.0
+  red_bound: 95.0
+  ascending_range: false
+time_window:
+  unit: MINUTES
+  count: 7

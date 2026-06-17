@@ -26,16 +26,27 @@ public final class VCommunityConfig {
     public enum WindowsMonitoring {
         DISABLED, SERVICES, EVENT_LOGS, SERVICES_AND_EVENT_LOGS;
 
-        /** Parse the describe.xml enum value (verbatim display strings). */
-        static WindowsMonitoring parse(String raw) {
-            if (raw == null) return DISABLED;
-            switch (raw.trim()) {
-                case "Services":             return SERVICES;
-                case "Event Logs":           return EVENT_LOGS;
-                case "Services + Event Logs": return SERVICES_AND_EVENT_LOGS;
-                case "Disabled":
-                default:                     return DISABLED;
-            }
+        /**
+         * Derive the mode from the prod original's TWO separate describe.xml
+         * enums — "Guest OS Service Monitoring Status" ({@code serviceMonitoring})
+         * and "Windows Event Log Monitoring Status" ({@code winEventMonitoring}),
+         * each the verbatim "Enabled"/"Disabled" display string. Only the literal
+         * "Enabled" (case-insensitive) turns a gate on; anything else — Disabled,
+         * null, blank, or garbage — leaves it off. An unreadable value is never
+         * folded into "on".
+         */
+        static WindowsMonitoring from(String serviceMonitoringRaw,
+                                      String winEventMonitoringRaw) {
+            boolean services = isEnabled(serviceMonitoringRaw);
+            boolean eventLogs = isEnabled(winEventMonitoringRaw);
+            if (services && eventLogs) return SERVICES_AND_EVENT_LOGS;
+            if (services)             return SERVICES;
+            if (eventLogs)            return EVENT_LOGS;
+            return DISABLED;
+        }
+
+        private static boolean isEnabled(String raw) {
+            return raw != null && "Enabled".equalsIgnoreCase(raw.trim());
         }
 
         public boolean services() {
@@ -66,7 +77,8 @@ public final class VCommunityConfig {
 
     public VCommunityConfig(
             String vcenterHost, String port, String username, String password,
-            String winUser, String winPassword, String windowsMonitoring,
+            String winUser, String winPassword,
+            String serviceMonitoring, String winEventMonitoring,
             String allowInsecure,
             String esxiAdvSettingsConfigFile, String esxiVibDriverConfigFile,
             String vmAdvSettingsConfigFile, String vmConfigurationConfigFile,
@@ -77,7 +89,8 @@ public final class VCommunityConfig {
         this.password = password != null ? password : "";   // REDACT-SECRET
         this.winUser = winUser != null ? winUser.trim() : "";
         this.winPassword = winPassword != null ? winPassword : ""; // REDACT-SECRET
-        this.windowsMonitoring = WindowsMonitoring.parse(windowsMonitoring);
+        this.windowsMonitoring =
+                WindowsMonitoring.from(serviceMonitoring, winEventMonitoring);
         // Strict-by-default: only the literal "true" opts into trust-all.
         this.allowInsecure = "true".equalsIgnoreCase(allowInsecure);
 

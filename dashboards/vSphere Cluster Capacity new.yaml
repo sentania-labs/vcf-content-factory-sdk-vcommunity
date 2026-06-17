@@ -1,0 +1,418 @@
+id: f81793bd-5c5e-440f-9d76-46d7532dd06d
+name: vSphere Cluster Capacity (new)
+description: Monitor the capacity of vSphere clusters. It lists all the clusters with
+  their capacity remaining, time remaining and VM remaining. Select a cluster and
+  its detail capacity over time will be automatically shown. If you have an unbalanced
+  cluster, use the ESXi capacity dashboard to see the details.
+name_path: Capacity
+shared: false
+widgets:
+- id: e2971f56-5496-4bb2-a787-e34146377644
+  type: View
+  title: Clusters Capacity
+  coords:
+    x: 1
+    y: 12
+    w: 10
+    h: 13
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Cluster Utilization
+- id: 61847e48-f90d-47c8-84e1-85574be6b72f
+  type: View
+  title: Memory Utilization
+  coords:
+    x: 5
+    y: 25
+    w: 4
+    h: 7
+  view: vSphere Cluster Memory Utilization
+- id: 291c376d-0558-4aab-8855-38fbe1b3f2e0
+  type: View
+  title: CPU Utilization
+  coords:
+    x: 1
+    y: 25
+    w: 4
+    h: 7
+  view: vSphere Cluster CPU Utilization
+- id: e3334344-c98a-47ef-86ed-e5fc8d7a1578
+  type: View
+  title: Overcommit Ratio
+  coords:
+    x: 9
+    y: 25
+    w: 4
+    h: 7
+  view: vSphere Cluster Allocation
+- id: ae89a39f-82ce-4068-9581-a96993d120d4
+  type: Scoreboard
+  title: Reservation
+  coords:
+    x: 7
+    y: 36
+    w: 6
+    h: 1
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: cpu|haTotalCapacity_average
+    metric_name: CPU|Usable Capacity
+    unit_id: ghz
+    unit: GHz
+    label: Usable
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: cpu|reservedCapacity_average
+    metric_name: CPU|Reserved Capacity
+    unit_id: ghz
+    unit: GHz
+    label: Reserved
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|host_usable
+    metric_name: Memory|Usable Memory
+    unit_id: tb
+    unit: TB
+    label: Usable
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|reservedCapacity_average
+    metric_name: Memory|Reserved Capacity
+    unit_id: tb
+    unit: TB
+    label: Reserved
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 4
+  value_size: 24
+  label_size: 16
+  round_decimals: 1.0
+  max_cell_count: 100
+- id: a073ad7b-0307-46c4-b0c1-6b5ab6d26a0c
+  type: View
+  title: ESXi Hosts in the Cluster
+  coords:
+    x: 1
+    y: 37
+    w: 9
+    h: 8
+  view: ESXi Utilization List
+- id: cdc93f84-3500-4326-9a04-1cc3adc3e469
+  type: View
+  title: Memory Utilization (GB)
+  coords:
+    x: 5
+    y: 45
+    w: 4
+    h: 7
+  view: vSphere ESXi Memory Utilization
+- id: c91db9ea-4baa-49d7-bd8a-1845b8c70210
+  type: View
+  title: CPU Utilization (%)
+  coords:
+    x: 1
+    y: 45
+    w: 4
+    h: 7
+  view: vSphere ESXi CPU Utilization
+- id: d5f5aa61-c817-4456-b122-10d0cb59c5df
+  type: HealthChart
+  title: Overall Performance (%)
+  coords:
+    x: 1
+    y: 32
+    w: 6
+    h: 5
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+  metric_key: Super Metric|sm_a1b7d29a-c6b8-4137-a4dc-d983e882eb60
+  metric_name: Super Metrics|Cluster Performance (%)
+  metric_full_name: Super Metrics|vSphere Cluster Performance (%)
+  mode: all
+  depth: 1
+  chart_height: 190
+  yellow_bound: 75.0
+  orange_bound: 50.0
+  red_bound: 25.0
+  show_resource_name: false
+- id: 73e4ed24-f5ed-4c51-9d1e-e0b9f6e0b2a8
+  type: Scoreboard
+  title: High Memory Utilization
+  coords:
+    x: 7
+    y: 32
+    w: 6
+    h: 4
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|vmmemctl_average
+    metric_name: Memory|Balloon
+    unit_id: gb
+    unit: GB
+    color_method: 0
+    yellow_bound: 5.0
+    orange_bound: 25.0
+    red_bound: 100.0
+    label: Ballooned
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|compressed_average
+    metric_name: Memory|Compressed
+    unit_id: gb
+    unit: GB
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 2.5
+    red_bound: 10.0
+    label: Zipped
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|swapused_average
+    metric_name: Memory|Swap Used
+    unit_id: gb
+    unit: GB
+    color_method: 0
+    yellow_bound: 1.0
+    orange_bound: 2.5
+    red_bound: 10.0
+    label: Swapped
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 3
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: 1eab6f5c-dbcc-4f68-85f7-037237c71877
+  type: View
+  title: VMs in the ESXi or Cluster
+  coords:
+    x: 10
+    y: 37
+    w: 3
+    h: 8
+  view: VM Capacity Consumption
+- id: ef63acb1-bdda-42ec-b93c-462f6f49df0a
+  type: View
+  title: High Memory Utilization
+  coords:
+    x: 9
+    y: 45
+    w: 4
+    h: 7
+  view: ESXi High Memory Trend
+- id: ea8c21de-c80f-407e-bf56-dd53fe1e975e
+  type: Scoreboard
+  title: Context
+  coords:
+    x: 11
+    y: 12
+    w: 2
+    h: 13
+  metrics:
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: summary|number_running_vms
+    metric_name: Summary|Number of Running VMs
+    unit_id: VM
+    unit: VM
+    label: Running VMs
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: cpu|haCorecount_provisioned
+    metric_name: CPU|Number of usable CPUs
+    unit_id: '7001'
+    unit: Cores
+    label: Usable Core
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: summary|number_running_vcpus
+    metric_name: Summary|Number of vCPUs on Powered On VMs
+    unit_id: vCPU
+    unit: vCPU
+    label: Running VM vCPU
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|haTotalCapacity_average
+    metric_name: Memory|Usable Capacity
+    unit_id: tb
+    unit: TB
+    label: Usable Memory
+  - adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    metric_key: mem|total_need
+    metric_name: Memory|Utilization
+    unit_id: tb
+    unit: TB
+  visual_theme: 8
+  show_sparkline: true
+  period_length: dashboardTime
+  show_resource_name: false
+  show_metric_name: true
+  show_metric_unit: true
+  box_columns: 1
+  value_size: 24
+  label_size: 16
+  round_decimals: 0.0
+  max_cell_count: 100
+- id: c7426948-1d8e-4aea-b31c-e167bea65616
+  type: Heatmap
+  title: Analysis (3 heat maps)
+  coords:
+    x: 1
+    y: 7
+    w: 12
+    h: 5
+  self_provider: true
+  mode: all
+  depth: 10
+  configs:
+  - name: Time Remaining
+    adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    color_by:
+      metric_key: OnlineCapacityAnalytics|timeRemaining
+      label: Capacity Analytics Generated|Time Remaining (Day(s))
+    color:
+      min_value: 0.0
+      thresholds:
+        values:
+        - 0
+        - 50
+        - 100
+        colors:
+        - '#DE3F30'
+        - '#ECC33E'
+        - '#74B43B'
+      max_value: 366.0
+  - name: Capacity Remaining
+    adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    color_by:
+      metric_key: OnlineCapacityAnalytics|capacityRemainingPercentage
+      label: Capacity Analytics Generated|Capacity Remaining Percentage (%)
+    color:
+      min_value: 0.0
+      thresholds:
+        values:
+        - 0
+        - 5
+        - 10
+        - 80
+        colors:
+        - '#DE3F30'
+        - '#ED891F'
+        - '#ECC33E'
+        - '#74B43B'
+        - '#8D8B8D'
+      max_value: 100.0
+    solid_coloring: true
+  - name: VM Remaining
+    adapter_kind: VMWARE
+    resource_kind: ClusterComputeResource
+    color_by:
+      metric_key: OnlineCapacityAnalytics|capacityRemainingProfile
+      label: Capacity Analytics Generated|Capacity Remaining (Profile)
+    color:
+      min_value: 0.0
+      thresholds:
+        values:
+        - 0
+        - 5
+        - 10
+        colors:
+        - '#DE3F30'
+        - '#ECC33E'
+        - '#74B43B'
+      max_value: 50.0
+- id: bd92aaa1-f31a-4f74-8553-2f9716fddba6
+  type: View
+  title: Clusters by Capacity Remaining
+  coords:
+    x: 5
+    y: 1
+    w: 4
+    h: 6
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: 55bbf293-771b-470d-be60-0c678c96fcd8
+- id: 77565ce4-98bc-4b5a-8955-5f72470494f5
+  type: View
+  title: Clusters by Time Remaining (days)
+  coords:
+    x: 1
+    y: 1
+    w: 4
+    h: 6
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: da47d6b5-ea3f-44cc-aea4-fb7e51c77d93
+- id: 34bcf836-b9a0-499e-b2ab-a52fd235fe94
+  type: View
+  title: Clusters by VM Remaining
+  coords:
+    x: 9
+    y: 1
+    w: 4
+    h: 6
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: a6b7a301-f5d1-4f61-8578-f085d45aefd7
+interactions:
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: 61847e48-f90d-47c8-84e1-85574be6b72f
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: 291c376d-0558-4aab-8855-38fbe1b3f2e0
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: e3334344-c98a-47ef-86ed-e5fc8d7a1578
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: ae89a39f-82ce-4068-9581-a96993d120d4
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: a073ad7b-0307-46c4-b0c1-6b5ab6d26a0c
+  type: resourceId
+- from: a073ad7b-0307-46c4-b0c1-6b5ab6d26a0c
+  to: cdc93f84-3500-4326-9a04-1cc3adc3e469
+  type: resourceId
+- from: a073ad7b-0307-46c4-b0c1-6b5ab6d26a0c
+  to: c91db9ea-4baa-49d7-bd8a-1845b8c70210
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: d5f5aa61-c817-4456-b122-10d0cb59c5df
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: 73e4ed24-f5ed-4c51-9d1e-e0b9f6e0b2a8
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: 1eab6f5c-dbcc-4f68-85f7-037237c71877
+  type: resourceId
+- from: a073ad7b-0307-46c4-b0c1-6b5ab6d26a0c
+  to: 1eab6f5c-dbcc-4f68-85f7-037237c71877
+  type: resourceId
+- from: a073ad7b-0307-46c4-b0c1-6b5ab6d26a0c
+  to: ef63acb1-bdda-42ec-b93c-462f6f49df0a
+  type: resourceId
+- from: e2971f56-5496-4bb2-a787-e34146377644
+  to: ea8c21de-c80f-407e-bf56-dd53fe1e975e
+  type: resourceId

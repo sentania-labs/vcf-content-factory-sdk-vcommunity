@@ -1,0 +1,28 @@
+id: ba5d47b2-2a6d-4f19-8e11-105fb13c5bf9
+name: vSphere Distributed Switch Configuration
+description: List of distributed switches for configuration management purpose
+subject:
+  adapter_kind: VMWARE
+  resource_kind: VmwareDistributedVirtualSwitch
+columns:
+- attribute: summary|total_number_hosts
+  display_name: Number of Hosts
+- attribute: summary|version
+  display_name: Version
+- attribute: capability|nicTeamingPolicy
+  display_name: NIC Teaming Policy
+- attribute: config|health_check_config|health_check_config_teaming
+  display_name: Teaming
+- attribute: config|health_check_config|health_check_config_vlan_mtu
+  display_name: VLAN and MTU
+- attribute: supermetric:"Total Non-default Settings"
+  display_name: Non-default Setting
+- attribute: supermetric:"Total Network Configuration Issues"
+  display_name: Total Network Configuration Issues
+  yellow_bound: 1.0
+  orange_bound: 2.0
+  red_bound: 4.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 7

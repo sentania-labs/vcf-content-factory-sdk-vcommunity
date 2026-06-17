@@ -1,0 +1,14 @@
+id: 98997eae-62ba-4614-a622-11082c48ff00
+name: "ESXi Hosts Average Availability"
+resource_kinds:
+  - resource_kind_key: VMwareAdapter Instance
+    adapter_kind_key: VMWARE
+  - resource_kind_key: vSphere World
+    adapter_kind_key: VMWARE
+  - resource_kind_key: Datacenter
+    adapter_kind_key: VMWARE
+description: >
+  A simple average of all ESXi hosts. Each host returns a number (0, 25, 50, 75 or 100) percent.
+unit_id: percent
+formula: |
+  avg(${adaptertype=VMWARE, objecttype=HostSystem, attribute=@supermetric:"ESXi Host Availability", depth=5})

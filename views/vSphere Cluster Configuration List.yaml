@@ -1,0 +1,67 @@
+id: dadb69af-f77f-4644-8355-588f41c2f4f0
+name: vSphere Cluster Configuration List
+description: Lists the summary of the cluster configuration for different Clusters
+  in your environment.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+columns:
+- attribute: summary|type
+  display_name: Type
+- attribute: summary|total_number_hosts
+  display_name: Hosts
+  yellow_bound: 6.0
+  orange_bound: 4.0
+  red_bound: 2.0
+  ascending_range: true
+- attribute: summary|total_number_datastores
+  display_name: Datastores
+  yellow_bound: 2.0
+  orange_bound: 4.0
+  red_bound: 6.0
+  ascending_range: false
+- attribute: configuration|dasConfig|enabled
+  display_name: HA Enabled?
+  yellow_bound: 'false'
+  orange_bound: 'false'
+  red_bound: 'false'
+  ascending_range: true
+- attribute: configuration|dasConfig|admissionControlEnabled
+  display_name: Admission Control Enabled?
+  yellow_bound: 'false'
+  orange_bound: 1.0
+  red_bound: 2.0
+  ascending_range: true
+- attribute: configuration|dasConfig|admissionControlPolicyId
+  display_name: HA Admission Control Policy
+- attribute: configuration|dasConfig|activeAdmissionControlPolicy
+  display_name: Active Admission Control
+- attribute: configuration|drsconfig|enabled
+  display_name: DRS Enabled?
+  yellow_bound: 'false'
+  orange_bound: 'false'
+  red_bound: 'false'
+  ascending_range: true
+- attribute: configuration|drsconfig|defaultVmBehavior
+  display_name: DRS Automation Level
+- attribute: configuration|drsconfig|enabledAndFullyAutomated
+  display_name: DRS Fully Automated
+  red_bound: 0.0
+  ascending_range: true
+- attribute: configuration|drsconfig|affinityRules
+  display_name: DRS Affinity Rules
+- attribute: configuration|drsconfig|defaultVmBehavior
+  display_name: DRS Behaviour
+- attribute: configuration|drsconfig|vmotionRate
+  display_name: DRS Migration Threshold
+- attribute: configuration|drsconfig|targetBalance
+  display_name: Imbalance Threshold
+- attribute: summary|drsTunable
+  display_name: DRS Tunable
+- attribute: summary|vcp|enabled
+  display_name: Configuration Profiled
+- attribute: configuration|wpConfiguration|wpEnabled
+  display_name: Workload Management Enabled
+time_window:
+  unit: MINUTES
+  count: 7

@@ -1,0 +1,14 @@
+id: 27f6a2e8-ddac-4dc2-b3bf-5f222af701db
+name: vSphere Cluster Admission Control Policy
+description: Relative distribution of cluster admission control policies.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|dasConfig|admissionControlPolicyId
+  display_name: .
+time_window:
+  unit: DAYS
+  count: 7

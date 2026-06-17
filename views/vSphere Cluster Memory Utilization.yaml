@@ -1,0 +1,23 @@
+id: b33aa854-8314-450b-ac66-a86f2f891af4
+name: vSphere Cluster Memory Utilization
+description: "Trend line of cluster memory utilization. \n\nIt's used in Capacity\
+  \ Management context, hence it's showing 3 months time horizon and the value is\
+  \ hourly averaged. The counter consumed is used instead of active, because consumed\
+  \ is used to trigger balloon."
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: trend
+columns:
+- attribute: mem|host_provisioned
+  display_name: mem|host_provisioned
+  unit: tb
+- attribute: mem|host_usable
+  display_name: mem|host_usable
+  unit: tb
+- attribute: mem|consumed_average
+  display_name: mem|consumed_average
+  unit: tb
+time_window:
+  unit: MONTHS
+  count: 3

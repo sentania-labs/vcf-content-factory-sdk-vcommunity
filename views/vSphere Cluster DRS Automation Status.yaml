@@ -1,0 +1,18 @@
+id: 94b25c6a-bc08-4b7f-83e5-d55d4b6d89e1
+name: vSphere Cluster DRS Automation Status
+description: Relative distribution of clusters DRS automation level. You should set
+  DRS to be fully automated, so adjustment can be done without the need for operator
+  intervention. As DRS adjusts every 5 minutes, by the time human reacts the situation
+  may have changed. Too aggressive or too conservative can also result in suboptimal
+  performance or capacity.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+presentation: donut-chart
+columns:
+- attribute: configuration|drsconfig|defaultVmBehavior
+  display_name: DRS Automation Level
+time_window:
+  unit: DAYS
+  count: 7

@@ -1,0 +1,177 @@
+id: 769d7441-2926-413a-99cc-7641c0c78b63
+name: vSphere Network Configuration 2.0
+description: Highlight vSphere network configuration that needs your attention. Use
+  this dashboard to fix incorrect settings, update outdated components, and reduce
+  overall cost by optimizing your environment. The dashboard is organized top down,
+  where configuration that needs your attention is shown first. No data on a chart
+  means the configuration is optimized.
+name_path: vCommunity
+shared: true
+widgets:
+- id: a5564515-b723-4263-994b-99982b6037b0
+  type: View
+  title: Distributed Switches
+  coords:
+    x: 1
+    y: 10
+    w: 12
+    h: 5
+  view: vSphere Distributed Switch Configuration
+- id: 7d628521-8269-486b-b345-f348f1241591
+  type: View
+  title: 'Port Group: Allow Promiscuous Mode'
+  coords:
+    x: 7
+    y: 5
+    w: 2
+    h: 5
+  view: vSphere Port Group Promiscuous Mode Allowed
+- id: a7c91bba-721c-4757-945d-cead46faa813
+  type: View
+  title: Port Groups
+  coords:
+    x: 1
+    y: 15
+    w: 12
+    h: 8
+  view: vSphere Port Group Configuration
+- id: 41ffc0f5-3d6c-4993-a67d-ffb4e492704f
+  type: View
+  title: 'Port Group: Allow MAC Address Change'
+  coords:
+    x: 11
+    y: 5
+    w: 2
+    h: 5
+  view: vSphere Port Group MAC Address Change
+- id: d064f862-92fa-4c20-9307-617d55c5a4ab
+  type: View
+  title: 'Port Group: Allow Forged Transmit'
+  coords:
+    x: 9
+    y: 5
+    w: 2
+    h: 5
+  view: vSphere Port Group Forged Transmit Allowed
+- id: 40d0886e-2707-4e87-a2d5-a17082919cf4
+  type: View
+  title: Switch Version
+  coords:
+    x: 3
+    y: 5
+    w: 4
+    h: 5
+  view: vSphere Switch Version
+- id: 8951f5cd-f8cb-4a77-8f14-1a83afef8205
+  type: View
+  title: ESXi Hosts
+  coords:
+    x: 1
+    y: 23
+    w: 6
+    h: 8
+  view: ESXi Switch property
+- id: 54428e56-d55b-41fc-9161-1ef1d1add193
+  type: View
+  title: VMs
+  coords:
+    x: 7
+    y: 23
+    w: 6
+    h: 8
+  view: VM Network Configuration
+- id: 157f5e61-01c4-4f79-b30e-45aefc2b7630
+  type: HealthChart
+  title: Configuration Issues
+  coords:
+    x: 3
+    y: 1
+    w: 5
+    h: 4
+  adapter_kind: VMWARE
+  resource_kind: vSphere World
+  metric_key: Super Metric|sm_0c648c9c-cede-4403-b8fe-500067629bf0
+  metric_name: Super Metrics|Total Network Configuration Issues
+  mode: all
+  depth: 1
+  yellow_bound: 1.0
+  orange_bound: 5.0
+  red_bound: 10.0
+  show_resource_name: false
+- id: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  type: View
+  title: Select a DC or World
+  coords:
+    x: 1
+    y: 1
+    w: 2
+    h: 9
+  self_provider: true
+  pin:
+    adapter_kind: VMWARE
+    resource_kind: vSphere World
+  view: vSphere Data Centers Inventory
+- id: c86fcd8c-f253-4940-9940-e5b668b88353
+  type: HealthChart
+  title: Network Speed Degradation
+  coords:
+    x: 8
+    y: 1
+    w: 5
+    h: 4
+  adapter_kind: VMWARE
+  resource_kind: Datacenter
+  metric_key: Super Metric|sm_3d21df83-083e-46b6-a6c0-5f7f2ae776c5
+  metric_name: Super Metrics|Total Network Speed Degradation
+  mode: all
+  depth: 1
+  yellow_bound: 1.0
+  orange_bound: 2.0
+  red_bound: 4.0
+  show_resource_name: false
+interactions:
+- from: a5564515-b723-4263-994b-99982b6037b0
+  to: a7c91bba-721c-4757-945d-cead46faa813
+  type: resourceId
+- from: a5564515-b723-4263-994b-99982b6037b0
+  to: 8951f5cd-f8cb-4a77-8f14-1a83afef8205
+  type: resourceId
+- from: a5564515-b723-4263-994b-99982b6037b0
+  to: 54428e56-d55b-41fc-9161-1ef1d1add193
+  type: resourceId
+- from: 8951f5cd-f8cb-4a77-8f14-1a83afef8205
+  to: 54428e56-d55b-41fc-9161-1ef1d1add193
+  type: resourceId
+- from: a7c91bba-721c-4757-945d-cead46faa813
+  to: 54428e56-d55b-41fc-9161-1ef1d1add193
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: 157f5e61-01c4-4f79-b30e-45aefc2b7630
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: 7d628521-8269-486b-b345-f348f1241591
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: d064f862-92fa-4c20-9307-617d55c5a4ab
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: 41ffc0f5-3d6c-4993-a67d-ffb4e492704f
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: a5564515-b723-4263-994b-99982b6037b0
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: 40d0886e-2707-4e87-a2d5-a17082919cf4
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: a7c91bba-721c-4757-945d-cead46faa813
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: 54428e56-d55b-41fc-9161-1ef1d1add193
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: 8951f5cd-f8cb-4a77-8f14-1a83afef8205
+  type: resourceId
+- from: cdb643b9-cfc0-46e6-b3b4-778055645d1f
+  to: c86fcd8c-f253-4940-9940-e5b668b88353
+  type: resourceId

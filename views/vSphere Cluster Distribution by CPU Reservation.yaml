@@ -1,0 +1,15 @@
+id: b5f3660a-082c-4af9-b89e-bc670d932e99
+name: vSphere Cluster Distribution by CPU Reservation
+description: Absolute distribution of vSphere clusters CPU reservation.  Expect to
+  have 0 or minimal reservation, as they impact capacity.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: distribution
+columns:
+- attribute: cpu|reservedCapacity_average
+  display_name: .
+  unit: ghz
+time_window:
+  unit: DAYS
+  count: 7

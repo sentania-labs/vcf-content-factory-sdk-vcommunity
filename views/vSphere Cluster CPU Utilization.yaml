@@ -1,0 +1,21 @@
+id: cbc201a7-8e51-4e97-8736-6e6550352cad
+name: vSphere Cluster CPU Utilization
+description: Trend line of cluster CPU utilization. Value is in percentage, where
+  100% means the cluster has reached the Usable Capacity. Usable Capacity is Total
+  Capacity minus HA and Buffer. It's used in Capacity Management context, hence it's
+  showing 3 months time horizon and the value is hourly averaged.
+subject:
+  adapter_kind: VMWARE
+  resource_kind: ClusterComputeResource
+data_type: trend
+columns:
+- attribute: supermetric:"CPU Usable Capacity Utilization"
+  display_name: Thread Utilization / Usable Capacity
+  unit: percent
+  yellow_bound: 50.0
+  orange_bound: 70.0
+  red_bound: 90.0
+  ascending_range: false
+time_window:
+  unit: DAYS
+  count: 3
