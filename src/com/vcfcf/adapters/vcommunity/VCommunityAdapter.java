@@ -399,6 +399,23 @@ public final class VCommunityAdapter extends VcfCfAdapter<VCommunityConfig> {
         metric(out, "Summary|events_as_properties",
                 vmResult.eventsAsProperties, ts);
 
+        // Readable guest-ops decision diagnostics (build 9). Surface the decision
+        // path on the anchor so a single install + recon tells us which leg blocks
+        // devel guest-ops collection — the appliance adapter log is 404 via the
+        // Suite API. Behavior-neutral: these observe the existing path, they do
+        // not change what is collected.
+        prop(out, "Summary|guestops_ready", vmResult.guestopsReady);
+        prop(out, "Summary|guestops_vms",
+                "considered=" + vmResult.guestVmsConsidered
+                + " passed=" + vmResult.guestVmsPassed
+                + " skipped=" + vmResult.guestVmsSkipped);
+        prop(out, "Summary|guestops_skips", vmResult.guestSkipsSummary());
+        // Build 10 (observability-only): the previously-swallowed guest-ops SOAP
+        // fault, per failed VM — operation + vim25 fault class/message. This is
+        // what names WHY in-guest collection returns zero rows on devel; bounded
+        // like guestops_skips so the anchor never floods. No credential material.
+        prop(out, "Summary|guestops_last_error", vmResult.guestLastErrorSummary());
+
         prop(out, "Summary|last_scan_timestamp", Instant.now().toString());
         prop(out, "Summary|config_file_status", summarizeConfig());
         prop(out, "Summary|status", "OK");

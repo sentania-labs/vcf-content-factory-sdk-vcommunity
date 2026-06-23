@@ -18,6 +18,106 @@ detail in `README.md` ("Known gaps & roadmap").
   `fetchSoftwarePackages`/`installDate`, `EvcManager`); Suite API config fetch
   from a remote collector / cloud proxy.
 
+## 1.0.0.11 (2026-06-23)
+
+- fix(adapter): **remove the resurrected SCSI `Config|` (pipe) key dual-emit.**
+  Build 3 (`a5ef1c2`) added a second emit of the SCSI controller info under
+  `vCommunity|Config|SCSI Controllers|{bus}|Type` + `…|Count` alongside the
+  canonical `Configuration|SCSI Controllers:{bus}|Type` + `…|Count`, with a
+  comment claiming "like-for-like parity" with prod. The claim was false: the
+  current upstream emits the pipe form **nowhere**. Upstream commit `d4633a6`
+  (2025-11-20, Onur Yuzseven, "Virtual Machine SCSI Controller bug, fixes #39")
+  migrated the pipe key to the colon-instanced `Configuration|…:{bus}|Type`,
+  flipped Count from `with_property` to `with_metric`, and commented out the
+  no-controller sentinel. The pipe key survives on prod only as a frozen ghost
+  property from pre-Nov-2025 collection. Removed both pipe emits and replaced the
+  misleading comment with an accurate note citing `d4633a6`. A full parity audit
+  of every emitted key against current upstream found no other resurrected/retired
+  keys, no other `Config` vs `Configuration` mismatch, and correct
+  property-vs-metric and `:` vs `|` separators throughout.
+
+## 1.0.0.10 (2026-06-22)
+
+- feat(adapter): **surface the previously-swallowed guest-ops SOAP fault on the
+  anchor** to identify why in-guest collection fails on devel. Build 9's anchor
+  diagnostics confirmed the gate passes for the three Windows VMs, yet every
+  in-guest call returns zero rows with *no* fault logged anywhere — because
+  `GuestOpsClient.post()` discarded any non-2xx response silently
+  (`if (code < 200 || code >= 300) return null;`), dropping the HTTP-500 + SOAP
+  fault body without reading the `<faultstring>`. The collector returned empty,
+  and the per-VM `catch` never fired (nothing threw), so the fault reached no
+  log — including the appliance log. This mirrors
+  `VCommunityVSphereClient.post()`'s existing faultstring extraction into
+  `GuestOpsClient.post()`. **Observability-only** — `post()` still returns null
+  to the caller, so collection behavior (auth, spec serialization,
+  fileAttributes, the whole collection path) is byte-for-byte unchanged; we only
+  capture and surface the fault so the exact wire-level fault comes back
+  uncontaminated. No speculative credential/auth fix applied.
+  - `Summary|guestops_last_error` — bounded per-failed-VM fault summary
+    (`vm: <operation> -> <faultClass> (<message>); …`), where `<operation>` is
+    the faulting guest call (CreateTemporaryDirectoryInGuest /
+    InitiateFileTransferToGuest / StartProgramInGuest /
+    InitiateFileTransferFromGuest) and `<faultClass> (<message>)` is the vim25
+    `<faultstring>` plus, when present, the `<localizedMessage>` subtype. Capped
+    at 5 detailed entries (overflow summarized as a count), same bounding pattern
+    as `guestops_skips`, so the anchor never floods. **No credential material** —
+    operation / fault-class / message only (never winUser/winPass), with a
+    belt-and-braces token redactor mirroring the vSphere client. `"none"` when no
+    VM faulted this cycle.
+  - Each fault is also logged at WARN with the operation name and target VM.
+  - Diagnostics only; once the fault names the precise root cause, the fix lands
+    in a later build and this instrument can be pruned.
+
+## 1.0.0.9 (2026-06-22)
+
+- feat(adapter): **readable guest-ops decision diagnostics on the anchor**.
+  Build 8 fixed one suspect (the per-VM gate's narrow vim25 read), but the
+  evidence is split — the 2026-06-22 recon points at a *different* leg,
+  `GuestOpsClient.ready()`, and the build-8 WARN-on-skip only lands in the
+  appliance adapter log, which is 404 via the Suite API. This surfaces the
+  guest-ops decision path as `Summary|*` string/count properties on the
+  `vCommunityWorld` anchor so one install + one recon definitively tells us
+  which leg blocks devel collection. **Behavior-neutral** — observes the
+  existing decision path; collection (the strict `toolsOk`+`windowsGuest` gate,
+  the `ready()` predicate) is unchanged.
+  - `Summary|guestops_ready` — the `ready()` outcome this cycle and, if false,
+    the exact failing precondition (e.g. `false (guestProcessManager=null)`), or
+    why it was not evaluated (monitoring disabled / no Windows credential /
+    guest-ops client unavailable). New `GuestOpsClient.readyReason()` reads the
+    same predicate `ready()` evaluates, in the same order.
+  - `Summary|guestops_vms` — per-cycle gate tally
+    (`considered=N passed=N skipped=N`) over the Windows-candidate VMs that
+    reached the per-VM gate.
+  - `Summary|guestops_skips` — bounded per-VM skip summary with the actual gate
+    values read (`vm[tools=…,family=…,guestId=…]; …`), capped at 10 detailed
+    entries (overflow summarized as a count) so the anchor property never grows
+    unbounded with VM count. New `VCommunityVSphereClient.vmGuestId()` reads
+    `guest.guestId` off the same broad `guest` object, on the skip path only —
+    the happy path's two reads are untouched.
+  - Diagnostics only; pruned once the blocking leg is confirmed.
+
+## 1.0.0.8 (2026-06-22)
+
+- fix(adapter): repair the **silent Windows guest-ops gate-skip**. On devel,
+  Windows guest-ops collected nothing (0 `vCommunity|Guest OS|Services:*` keys,
+  0 event keys) while the adapter stayed GREEN with no error — same vCenter,
+  VMs, and credential as the prod original, which *does* collect. Root cause:
+  the per-VM gate (`toolsStatus == "toolsOk" AND guestFamily == "windowsGuest"`)
+  read its inputs via a **narrow vim25 `RetrieveProperties` pathSet** requesting
+  the sub-paths `guest.toolsStatus` / `guest.guestFamily` directly, which
+  returned blank/stale, so every Windows VM was silently rejected. The prod
+  original (pyVmomi `vmService.py:129-131`, `collect_windows_events.py:133-135`)
+  reads the **full `guest` (GuestInfo)** object and gets populated values.
+  - `VCommunityVSphereClient.vmGuestToolsStatus` / `vmGuestFamily` now retrieve
+    the broad `guest` property (single `RetrieveProperties` of `guest`) and read
+    `toolsStatus` / `guestFamily` off the returned object — matching the
+    original's broad read. The gate predicate is **unchanged** (strict
+    `toolsOk` + `windowsGuest`); we matched the read, not loosened the rule.
+  - `VmCollector.collectGuest` now emits a **WARN** when a VM is skipped at the
+    gate, logging the VM name and the actual `toolsStatus` / `guestFamily`
+    values read. Behavior-neutral diagnostics only — does not change what is
+    collected (adapter log is currently the only ground-truth window: API 404).
+
 ## 1.0.0.7 (2026-06-17)
 
 - fix(content-emit): correct three content-emit format gaps the live devel

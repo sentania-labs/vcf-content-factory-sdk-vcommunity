@@ -50,6 +50,90 @@ final class VmCollector {
         int guestVmsAttempted;
         int guestVmsDegraded;
         int eventsAsProperties;
+
+        // ---- build-9 readable guest-ops decision diagnostics (anchor only) ----
+        // These are behavior-neutral observations of the existing decision path,
+        // surfaced on the vCommunityWorld anchor so a single install + recon can
+        // tell which leg blocks devel guest-ops collection (the appliance adapter
+        // log is 404 via the Suite API).
+
+        /** {@code guestOps.ready()} outcome this cycle, or why guest-ops did not run. */
+        String guestopsReady = "not evaluated (guest-ops disabled or no credential)";
+        /** Windows-candidate VMs reaching the per-VM gate this cycle. */
+        int guestVmsConsidered;
+        /** Of those considered, how many passed the toolsOk+windowsGuest gate. */
+        int guestVmsPassed;
+        /** Of those considered, how many were skipped at the gate. */
+        int guestVmsSkipped;
+
+        /** Bounded per-VM skip-reason summary (actual gate values read). */
+        private final StringBuilder skips = new StringBuilder();
+        private int skipsRecorded;
+        private static final int MAX_SKIP_DETAIL = 10;
+
+        /**
+         * Record one skipped VM with the actual values read at the gate. Bounded
+         * to {@link #MAX_SKIP_DETAIL} per-VM entries so the anchor property never
+         * grows unbounded with VM count; the overflow is summarized as a count.
+         */
+        void recordSkip(String vmName, String toolsStatus, String guestFamily,
+                String guestId) {
+            if (skipsRecorded < MAX_SKIP_DETAIL) {
+                if (skips.length() > 0) skips.append("; ");
+                skips.append(nz(vmName)).append("[tools=").append(nz(toolsStatus))
+                        .append(",family=").append(nz(guestFamily))
+                        .append(",guestId=").append(nz(guestId)).append("]");
+            }
+            skipsRecorded++;
+        }
+
+        /** The bounded skip summary string for the anchor property. */
+        String guestSkipsSummary() {
+            if (skipsRecorded == 0) return "none";
+            String s = skips.toString();
+            if (skipsRecorded > MAX_SKIP_DETAIL) {
+                s = s + "; (+" + (skipsRecorded - MAX_SKIP_DETAIL)
+                        + " more skipped, detail capped)";
+            }
+            return s;
+        }
+
+        // ---- build-10 readable guest-ops fault diagnostics (anchor only) ----
+        // The previously-swallowed SOAP fault from GuestOpsClient.post() — the
+        // operation that faulted plus the vim25 fault class/message, per VM. This
+        // is what identifies WHY in-guest collection returns zero rows on devel.
+        // Bounded exactly like recordSkip so the anchor never floods; never
+        // carries credential material (operation/fault-class/message only).
+
+        private final StringBuilder faults = new StringBuilder();
+        private int faultsRecorded;
+        private static final int MAX_FAULT_DETAIL = 5;
+
+        /**
+         * Record one VM's last guest-ops SOAP fault for the anchor. {@code fault}
+         * is GuestOpsClient's captured string ({@code "<op> -> <class> (<msg>)"});
+         * a null fault (the VM faulted nowhere this cycle) is not recorded.
+         * Bounded to {@link #MAX_FAULT_DETAIL}; overflow summarized as a count.
+         */
+        void recordFault(String vmName, String fault) {
+            if (fault == null) return;
+            if (faultsRecorded < MAX_FAULT_DETAIL) {
+                if (faults.length() > 0) faults.append("; ");
+                faults.append(nz(vmName)).append(": ").append(fault);
+            }
+            faultsRecorded++;
+        }
+
+        /** The bounded guest-ops fault summary for {@code guestops_last_error}. */
+        String guestLastErrorSummary() {
+            if (faultsRecorded == 0) return "none";
+            String s = faults.toString();
+            if (faultsRecorded > MAX_FAULT_DETAIL) {
+                s = s + "; (+" + (faultsRecorded - MAX_FAULT_DETAIL)
+                        + " more faulted, detail capped)";
+            }
+            return s;
+        }
     }
 
     static Result collect(VCommunityVSphereClient vs, VCommunityStitcher stitcher,
@@ -60,6 +144,23 @@ final class VmCollector {
             throws Exception {
         Result result = new Result();
         List<MoInfo> vms = vs.getVms();
+
+        // Capture the guestOps.ready() outcome for the anchor diagnostics
+        // (build 9). This records WHICH leg blocked when guest-ops does not run:
+        // monitoring disabled, no Windows credential, no guest-ops client, or a
+        // failing ready() precondition (the recon's prime suspect). Behavior-
+        // neutral: the gate predicate below is unchanged.
+        if (cfg.windowsMonitoring == WindowsMonitoring.DISABLED) {
+            result.guestopsReady = "not evaluated (Windows Monitoring disabled)";
+        } else if (!cfg.hasWindowsCredential()) {
+            result.guestopsReady = "not evaluated (no Windows Guest Credential)";
+        } else if (guestOps == null) {
+            result.guestopsReady =
+                    "false (guest-ops client unavailable: guestOperationsManager "
+                    + "fileManager/processManager not resolved this cycle)";
+        } else {
+            result.guestopsReady = guestOps.readyReason();
+        }
 
         boolean guestEnabled = cfg.windowsMonitoring != WindowsMonitoring.DISABLED
                 && cfg.hasWindowsCredential()
@@ -96,7 +197,11 @@ final class VmCollector {
             }
         }
         log.info("VmCollector: stitched " + result.stitched + "/" + vms.size()
-                + " VM(s); guest-ops attempted=" + result.guestVmsAttempted
+                + " VM(s); guest-ops ready=" + result.guestopsReady
+                + " considered=" + result.guestVmsConsidered
+                + " passed=" + result.guestVmsPassed
+                + " skipped=" + result.guestVmsSkipped
+                + " attempted=" + result.guestVmsAttempted
                 + " degraded=" + result.guestVmsDegraded);
         return result;
     }
@@ -142,19 +247,19 @@ final class VmCollector {
         stats.put("vCommunity|Configuration|SCSI Controllers|Count",
                 (double) ctrls.size());
         for (ScsiController c : ctrls) {
+            // Colon-instanced `Configuration|SCSI Controllers:{bus}|Type` is the
+            // ONLY form current upstream emits. The legacy pipe form
+            // `Config|SCSI Controllers|{bus}|Type` was RETIRED upstream in commit
+            // d4633a6 (2025-11-20, "Virtual Machine SCSI Controller bug, fixes
+            // #39"): that commit migrated the pipe key to this colon-instanced
+            // key, flipped Count from with_property to with_metric, and commented
+            // out the no-controller sentinel. The pipe key survives on prod only
+            // as a frozen ghost property from pre-Nov-2025 collection; the live
+            // source emits it nowhere. Re-emitting it would resurrect a key the
+            // upstream author deliberately deleted — do not add it back.
             props.put("vCommunity|Configuration|SCSI Controllers:" + c.busNumber
                     + "|Type", c.friendlyType);
-            // Legacy `Config` alias the prod original ALSO emits alongside the
-            // canonical `Configuration` path (same underlying data, second key
-            // path) — note the pipe-delimited index `|<bus>|Type`, not the
-            // colon-delimited `:<bus>|Type` of the Configuration path. Emitted
-            // verbatim for like-for-like parity.
-            props.put("vCommunity|Config|SCSI Controllers|" + c.busNumber
-                    + "|Type", c.friendlyType);
         }
-        // Legacy `Config` count alias (METRIC), parity with the prod original.
-        stats.put("vCommunity|Config|SCSI Controllers|Count",
-                (double) ctrls.size());
 
         // Guest OS / Operating System — VMware-Tools guest info (vim25 guest.*),
         // NOT the Windows-only in-guest PowerShell path. Populates for every VM
@@ -177,6 +282,8 @@ final class VmCollector {
             GuestOpsClient guestOps, GuestScripts scripts, Logger log,
             Result result) {
         MoRef vm = v.moRef;
+        // Every VM reaching the gate is "considered" for the anchor tally.
+        result.guestVmsConsidered++;
         // Gate (vmService.py:131): toolsOk AND windowsGuest. Skip silently.
         String toolsStatus;
         String guestFamily;
@@ -186,15 +293,36 @@ final class VmCollector {
         } catch (Exception ex) {
             log.warn("VmCollector: '" + v.name + "' guest gate read failed "
                     + "(isolated): " + ex.getMessage());
+            result.guestVmsSkipped++;
+            result.recordSkip(v.name, "READ_FAILED", "READ_FAILED", "READ_FAILED");
             return;
         }
         if (!"toolsOk".equals(toolsStatus)
                 || !"windowsGuest".equals(guestFamily)) {
-            return;   // not a manageable Windows guest — skip silently.
+            // Not a manageable Windows guest. Diagnostics only (behavior-neutral):
+            // log the actual gate values read so a wrongly-skipped Windows VM is
+            // visible in the adapter log (currently our only ground-truth window),
+            // and record the same values on the anchor skip summary (build 9) so a
+            // recon can read them without appliance log access. The extra guestId
+            // read happens only on the skip path — the happy path is untouched.
+            String guestId;
+            try { guestId = vs.vmGuestId(vm); }
+            catch (Exception ex) { guestId = "READ_FAILED"; }
+            log.warn("VmCollector: '" + v.name + "' skipped at guest-ops gate "
+                    + "(toolsStatus=" + toolsStatus
+                    + ", guestFamily=" + guestFamily
+                    + ", guestId=" + guestId + ")");
+            result.guestVmsSkipped++;
+            result.recordSkip(v.name, toolsStatus, guestFamily, guestId);
+            return;
         }
 
+        result.guestVmsPassed++;
         result.guestVmsAttempted++;
         boolean degraded = false;
+        // Build 10: reset the client's last-fault before this VM's guest-ops
+        // calls so any captured fault is attributable to THIS VM this cycle.
+        guestOps.clearLastFault();
 
         // Services
         if (cfg.windowsMonitoring.services() && svcUsable
@@ -281,6 +409,12 @@ final class VmCollector {
                     "DEGRADED — one or more guest-ops collectors returned no data "
                     + "this cycle (see adapter log)");
         }
+        // Build 10 (observability-only): surface the previously-swallowed
+        // guest-ops SOAP fault for THIS VM on the world anchor. Captured whether
+        // or not it tripped `degraded` (an empty-but-non-faulting cycle records
+        // nothing — recordFault ignores a null). No credential material: the
+        // string is operation + vim25 fault class/message only.
+        result.recordFault(v.name, guestOps.lastFault());
     }
 
     /** Original level→criticality mapping (collect_windows_event_logs.py:168). */

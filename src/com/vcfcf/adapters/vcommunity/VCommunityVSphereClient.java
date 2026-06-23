@@ -528,15 +528,44 @@ public final class VCommunityVSphereClient {
         return (t == null || t.isEmpty()) ? null : t;
     }
 
-    /** Guest tools status / family for the guest-ops gate. */
+    /**
+     * Guest tools status / family for the guest-ops gate.
+     *
+     * <p>Faithful port: the prod original (pyVmomi {@code vmService.py:129-131},
+     * {@code collect_windows_events.py:133-135}) reads the <em>full</em>
+     * {@code guest} (GuestInfo) managed-object property, then reads
+     * {@code toolsStatus} / {@code guestFamily} off the returned object — and
+     * gets reliably-populated values. Requesting the narrow sub-paths
+     * {@code guest.toolsStatus} / {@code guest.guestFamily} directly in the
+     * vim25 {@code RetrieveProperties} pathSet returned blank/stale for those
+     * fields, silently failing the Windows guest-ops gate. We retrieve the
+     * broad {@code guest} object the same way the original does (a single
+     * {@code RetrieveProperties} of {@code guest}) and read the child off it.
+     */
     public String vmGuestToolsStatus(MoRef vm) throws Exception {
         ensureConnected();
-        return getStringProperty(vm, "guest.toolsStatus");
+        Element guest = walkToNode(vm, dot("guest"));
+        return childText(guest, "toolsStatus");
     }
 
     public String vmGuestFamily(MoRef vm) throws Exception {
         ensureConnected();
-        return getStringProperty(vm, "guest.guestFamily");
+        Element guest = walkToNode(vm, dot("guest"));
+        return childText(guest, "guestFamily");
+    }
+
+    /**
+     * Configured guest OS identifier ({@code guest.guestId}, e.g.
+     * {@code windows2025_64Guest}) off the same broad {@code guest} GuestInfo
+     * object. Used by build-9 diagnostics only — surfaced in the per-VM gate
+     * skip-reason summary so a recon can see the actual guestId of a VM rejected
+     * at the gate (does not gate collection; returns null on absence, never
+     * throws).
+     */
+    public String vmGuestId(MoRef vm) throws Exception {
+        ensureConnected();
+        Element guest = walkToNode(vm, dot("guest"));
+        return childText(guest, "guestId");
     }
 
     /**

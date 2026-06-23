@@ -70,6 +70,23 @@ public final class GuestOpsClient {
     private volatile MoRef guestFileManager;
     private volatile MoRef guestProcessManager;
 
+    /**
+     * Last guest-ops SOAP fault captured this client's lifetime (build 10).
+     * Set whenever {@link #post} sees a non-2xx response carrying a SOAP
+     * {@code <faultstring>}; shaped {@code "<operation> -> <faultClass> (<msg>)"}.
+     * Diagnostic-only — never read by the collection logic, only surfaced on the
+     * world anchor by {@link VmCollector}. Cleared per-VM via {@link #clearLastFault}
+     * so each VM's recorded error reflects that VM's own cycle.
+     */
+    private volatile String lastFault;
+
+    /**
+     * Name of the VM whose guest-ops calls are currently in flight, for fault
+     * attribution in {@link #post} (build 10). Set by each public collector
+     * entry point; diagnostic-only.
+     */
+    private volatile String currentVmName;
+
     public GuestOpsClient(String vcenterUrl, String sessionCookie,
             SSLSocketFactory sslFactory, boolean trustAll,
             MoRef guestFileManager, MoRef guestProcessManager,
@@ -92,6 +109,33 @@ public final class GuestOpsClient {
         return guestFileManager != null && guestProcessManager != null
                 && winUser != null && !winUser.isEmpty();
     }
+
+    /**
+     * Human-readable {@link #ready()} outcome for the world-anchor diagnostics
+     * (build 9). Returns {@code "true"} when ready, else
+     * {@code "false (<first failing precondition>)"} naming the exact leg that
+     * blocked — guestFileManager null / guestProcessManager null / winUser empty.
+     * Behavior-neutral: pure observation of the same predicate {@link #ready()}
+     * evaluates, evaluated in the same order.
+     */
+    public String readyReason() {
+        if (guestFileManager == null) return "false (guestFileManager=null)";
+        if (guestProcessManager == null) return "false (guestProcessManager=null)";
+        if (winUser == null || winUser.isEmpty()) return "false (winUser=empty)";
+        return "true";
+    }
+
+    /**
+     * Last guest-ops SOAP fault captured (build 10), or {@code null} if no fault
+     * was seen since the last {@link #clearLastFault}. Shaped
+     * {@code "<operation> -> <faultClass> (<message>)"} — operation/fault-class/
+     * message only, never any credential material. Diagnostic-only; the
+     * collection path never branches on it.
+     */
+    public String lastFault() { return lastFault; }
+
+    /** Reset the captured fault before a VM's guest-ops calls (build 10). */
+    public void clearLastFault() { this.lastFault = null; }
 
     // =====================================================================
     // Service collector
@@ -117,6 +161,7 @@ public final class GuestOpsClient {
             byte[] scriptBytes, List<String> serviceNames) {
         List<ServiceRow> out = new ArrayList<>();
         String tempDir = null;
+        this.currentVmName = vmName;
         try {
             tempDir = createTempDir(vm, "-Services-TEMP");
             if (tempDir == null) return out;
@@ -182,6 +227,7 @@ public final class GuestOpsClient {
     /** Run {@code getWindowsOSInformation.ps1}. Empty on any failure. */
     public OsInfoRow collectOsInfo(MoRef vm, String vmName, byte[] scriptBytes) {
         String tempDir = null;
+        this.currentVmName = vmName;
         try {
             tempDir = createTempDir(vm, "-OSInfo-TEMP");
             if (tempDir == null) return null;
@@ -235,6 +281,7 @@ public final class GuestOpsClient {
             byte[] scriptBytes, String eventListXml) {
         List<EventRow> out = new ArrayList<>();
         String tempDir = null;
+        this.currentVmName = vmName;
         try {
             tempDir = createTempDir(vm, "-EventLog-TEMP");
             if (tempDir == null) return out;
@@ -450,9 +497,81 @@ public final class GuestOpsClient {
                 ? conn.getInputStream() : conn.getErrorStream();
         byte[] resp = drain(is);
         conn.disconnect();
-        if (code < 200 || code >= 300) return null;
+        if (code < 200 || code >= 300) {
+            // Build 10 (observability-only): a guest-ops fault comes back as
+            // HTTP 500 + a SOAP fault body. Prior builds discarded it silently
+            // (`return null`), so the fault was logged NOWHERE — the collector
+            // returned empty and the per-VM catch never fired (nothing threw).
+            // Mirror VCommunityVSphereClient.post()'s faultstring extraction so
+            // the exact vim25 fault is named at WARN and captured for the world
+            // anchor. Return value is UNCHANGED (still null): collection
+            // behavior is identical — this only makes the swallowed fault visible.
+            String op = operationName(soapAction);
+            String fault = extractFaultString(resp);
+            String vm = currentVmName != null ? currentVmName : "?";
+            if (fault != null) {
+                this.lastFault = op + " -> " + fault;
+                logWarn("guest-ops SOAP " + op + " on '" + vm + "' -> HTTP "
+                        + code + " fault: " + fault);
+            } else {
+                this.lastFault = op + " -> HTTP " + code
+                        + " (no SOAP faultstring in body)";
+                logWarn("guest-ops SOAP " + op + " on '" + vm + "' -> HTTP "
+                        + code + " (no SOAP faultstring in body)");
+            }
+            return null;
+        }
         if (resp == null || resp.length == 0) return null;
         return parseXml(new String(resp, StandardCharsets.UTF_8));
+    }
+
+    /** {@code "urn:vim25/StartProgramInGuest"} -> {@code "StartProgramInGuest"}. */
+    private static String operationName(String soapAction) {
+        if (soapAction == null) return "?";
+        int slash = soapAction.lastIndexOf('/');
+        return slash >= 0 ? soapAction.substring(slash + 1) : soapAction;
+    }
+
+    /**
+     * Pull the SOAP 1.1 {@code <faultstring>} (and, when present, the vim25 fault
+     * subtype via {@code <localizedMessage>}) out of a fault body (build 10).
+     * Mirrors {@link VCommunityVSphereClient}'s extractor. Returns null when the
+     * body is empty or carries no fault. Redacts any credential/token-shaped run
+     * so a session id or password never lands in a log line or anchor property.
+     */
+    private static String extractFaultString(byte[] body) {
+        if (body == null || body.length == 0) return null;
+        Document doc = parseXml(new String(body, StandardCharsets.UTF_8));
+        if (doc == null) return null;
+        Element fs = firstByLocalName(doc.getDocumentElement(), "faultstring");
+        String msg = (fs != null) ? elementText(fs) : null;
+        Element lm = firstByLocalName(doc.getDocumentElement(), "localizedMessage");
+        String localized = (lm != null) ? elementText(lm) : null;
+        String combined;
+        if (msg != null && localized != null && !localized.equals(msg)) {
+            combined = msg + " (" + localized + ")";
+        } else if (msg != null) {
+            combined = msg;
+        } else {
+            combined = localized;
+        }
+        return redactSecrets(combined);
+    }
+
+    /**
+     * Strip anything resembling a session id or credential token before it is
+     * logged or surfaced on the anchor (build 10). Conservative, mirrors
+     * {@link VCommunityVSphereClient}. The fault message carries operation/
+     * fault-class text only; this is belt-and-braces so no secret can leak.
+     */
+    private static String redactSecrets(String s) {
+        if (s == null) return null;
+        String r = s.replaceAll("(?i)(vmware_soap_session\\s*[=:]\\s*)\\S+",
+                "$1<redacted>");
+        r = r.replaceAll("(?i)(password\\s*[=:]\\s*)\\S+", "$1<redacted>");
+        r = r.replaceAll("(?i)((?:_sid|passwd|account)\\s*[=:]\\s*)\\S+",
+                "$1<redacted>");
+        return r;
     }
 
     private boolean httpPut(String urlStr, byte[] data) throws Exception {
