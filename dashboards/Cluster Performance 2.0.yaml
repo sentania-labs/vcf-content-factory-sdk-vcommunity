@@ -569,6 +569,7 @@ widgets:
     color_method: 0
     yellow_bound: 1.0
     orange_bound: 1.0
+    red_bound: 1.0
     is_string_metric: true
   - adapter_kind: VMWARE
     resource_kind: ClusterComputeResource
@@ -577,6 +578,7 @@ widgets:
     color_method: 0
     yellow_bound: 1.0
     orange_bound: 1.0
+    red_bound: 1.0
     label: DRS Enabled
     is_string_metric: true
   - adapter_kind: VMWARE
