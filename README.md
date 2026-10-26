@@ -25,6 +25,28 @@ metrics (counts stitched, guest-ops attempts/degradations, config-file status).
 See [`REFERENCE.md`](REFERENCE.md) for the full key catalog and
 [`docs/`](docs/README.md) for the inventory-tree docset.
 
+## Installing: allow unsigned paks first
+
+This pak is unsigned, like every pak the VCF Content Factory builds (Broadcom
+offers no way for a third party to sign one). VCF Operations 9.0 and 9.1 refuse
+unsigned paks out of the box; behavior on 8.x is unverified. The setting below
+must be on for each install or upgrade of an unsigned pak:
+
+1. Log in to `https://<primary node>/admin` as `admin`.
+2. Administrator Settings, Security Settings: click **Activate Unsigned PAK
+   Installation** on 9.1 (**Enable Unsigned PAK Installation** on 9.0). The
+   change is refused while any cluster node is down.
+3. When uploading the pak (**Administration > Integrations > Repository >
+   Add**), tick **Ignore the PAK file signature checking**. The box only
+   appears once the setting is on.
+
+With the setting off, the install fails with
+`unsigned_pak_installation.not.allowed`. This is a cluster-wide security
+setting: it lets any unsigned pak be installed, not only this one, so decide
+it deliberately and consider turning it off again after installing. If you do,
+it has to go back on before you install the next build. Upgraded appliances
+keep whatever state the setting had before the upgrade.
+
 ## Relationship to the original (side-by-side fork)
 
 This is a **distinct adapter kind** (`vcfcf_vcommunity`), not an in-place upgrade
